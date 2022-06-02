@@ -13,7 +13,7 @@
         <!-- HEADER SLIDE START HERE -->s
         <div class="bg-dark text-secondary px-4  mb-2 text-center">
             <div class="py-1">
-                <h1 class="display-6 fw-bold text-white">Discussion</h1>
+                <h1 class="display-6 fw-bold text-white">Prompts</h1>
             </div>
             <div class="overflow-hidden" style="max-height: 15vh;">
                 <div class="container px-3">

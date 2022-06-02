@@ -7,28 +7,24 @@
 <div class="container-fluid">
 
     <div class="container-fluid mt-20">
-        <div class="row">
+        <div class="row align-items-center justify-content-center">
             <!-- START Listed Topics here -->
-            <div class="col-lg-8">
+            <div class="col-lg-10">
             <!-- Start of Topic here  #################################################-->
             @if ($prompts->count())
                 @foreach($prompts as $prompt)
-                <a href="#" class="list-group-item list-group-item-action border d-block gap-3 py-2 m-2 bg-white " aria-current="true">
-                    <div class="d-block justify-content-center overflow-hidden mb-2" style="max-height: 25vh;">
-                        @if ($prompt ->topic -> image)
-                            <img src="{{ '/storage/images/topic/'.$prompt->topic->topic.'/'.$prompt->topic->image }}" alt="twbs" width="" height="" class="rounded flex-shrink-0 ">
+                <a href="#" class="m-2 list-group-item-action d-block gap-3 pb-2 bg-light" aria-current="true">
+                   
+                    <div class="col justify-content-center mb-2r bg-danger p-4" style="max-height: 35vh; ">
+                        @if ($prompt->user->image)
+                            <img src="{{ '/storage/images/'.$prompt->user->id.'/'.$prompt->user->image }}" alt="twbs" width="100" height="100" class="rounded-circle flex-shrink-0 border shadow-sm">
                         @else
-                            <img src="/images/icon-alliance/message.png" alt="twbs" width="150" height="150" class="rounded flex-shrink-0 shadow-sm p-1">
+                            <img src="/images/icon-alliance/message.png" alt="twbs" width="80" height="80" class="rounded-circle flex-shrink-0 shadow-sm ">
                         @endif
+                        <h5 class="opacity-50 text-white display-7 pt-3">{{ $prompt-> user->name }}</h5>
                     </div>
-                    <div class="d-flex gap-2 w-100 justify-content-between">
+                    <div class="p-2 d-flex gap-2 w-100 justify-content-between border">
                         <div>
-                            @if ($prompt->user->image)
-                                <img src="{{ '/storage/images/'.$prompt->user->id.'/'.$prompt->user->image }}" alt="twbs" width="45" height="45" class="rounded-circle flex-shrink-0 p-1 border border-info">
-                            @else
-                                <img src="/images/icon-alliance/message.png" alt="twbs" width="45" height="45" class="rounded-circle flex-shrink-0 shadow-sm p-1">
-                            @endif
-                            <small class="opacity-50 text-nowrap">{{ $prompt-> user->name }}</small>
                             <h6 class="mb-0 py-2">{{ $prompt-> question}}</h6>
                             <small class="opacity-50 text-nowrap">{{ $prompt-> created_at->diffForHumans() }}</small>
                             <div class="d-flex flex-wrap align-items-center px-0 pt-0"></div>

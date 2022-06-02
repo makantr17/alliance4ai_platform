@@ -5,11 +5,11 @@
     
         <div class="container-fluid">
             <div>
-                <div class="p-5 border-border">
+                <div class="p-4 border-border">
                     <h1 class="display-6 fw-bold pb-2" style="color:#D16A04">Calender</h1>
                     <div class="py-2">
                         <p class="fw-light py-1">See all ongoing discussion, login to create a new discussion</p>
-                        
+
                     </div>
                 </div>
 
@@ -28,7 +28,6 @@
                             <form class="needs-validation py-1" novalidate action="{{ route('users.calendardiscussion') }}" method="post">
                                 @csrf  
                                 <div class="d-flex align-items-center">
-                                    <i class="fa fa-filter pr-2" style="font-size:15px"></i>
                                     <select name="category" id="category"
                                         class="form-control  rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
                                         <option value="">Select all</option>
@@ -41,9 +40,15 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                    <button class="btn btn-info" type="submit">Filter</button>
+                                    <button class="btn btn-info" type="submit">Filter All</button>
                                 </div>
                             </form>
+                            @auth
+                                <form action="{{ route('users.calendardiscussion.mycalendar', auth()->user()->name) }}" method="get" >
+                                @csrf
+                                    <button type="submit" class="btn btn-md ml-1 text-white " style="background:#F87B06">My calender</button>
+                                </form>
+                            @endauth
                         </div>
                     </div>
                 </div>

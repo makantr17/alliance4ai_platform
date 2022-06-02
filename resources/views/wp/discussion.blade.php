@@ -29,16 +29,31 @@
                 </div>
                 <div class="">
                     <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
+                        @auth
+                        <div class="dropdown mx-2 p-2 px-3">
+                            <p>Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->count()}}</span> </p>
+                            <div class="dropdown-content">
+                                @foreach (auth()->user()->notifications as $notification) 
+                                <a href="" class="border-bottom p-1">
+                                    {{$notification->data['title']}} 
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endauth
+                    
+
+                        
                         <form class="needs-validation pr-2" novalidate action="{{ route('discussion') }}" method="get">
                             @csrf  
                             <div class="d-flex align-items-center">
-                                <i class="fa fa-sort pr-2" style="font-size:20px"></i>
+                                <i class="fa fa-sort pr-2" style="font-size:15px; color:gray"></i>
                                 <select name="period" id="period"
                                     class="form-control rounded-lg @error('period') border border-danger @enderror" value="{{ old('period')}}">
                                     <option value="">Select all</option>
-                                    <option value="Future Discussion">Future Discussion</option>
-                                    <option value="Past Discussion">Past Discussion</option>
-                                    <option value="Ongoing Discussion">Ongoing Discussion</option>
+                                    <option value="2">Future Discussion</option>
+                                    <option value="1">Past Discussion</option>
+                                    <option value="0">Ongoing Discussion</option>
                                 </select>
                                 @error('period')
                                 <div class="text-danger">
@@ -51,7 +66,7 @@
                         <form class="needs-validation pr-2" novalidate action="{{ route('discussion') }}" method="get">
                             @csrf  
                             <div class="d-flex align-items-center">
-                                <i class="fa fa-sort pr-2" style="font-size:20px"></i>
+                                <i class="fa fa-sort pr-2" style="font-size:15px; color:gray"></i>
                                 <select name="category" id="category"
                                     class="form-control rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
                                     <option value="">Select all</option>
@@ -72,7 +87,6 @@
                             @csrf
                                 <button type="submit" class="btn btn-info ">New Discussion</button>
                             </form>
-
                         @endauth
                         </span>
                     </div>
@@ -81,27 +95,53 @@
 
 
             <!-- DISPLAY CONTENTS HERE -->
-            <div class="container-fluid row justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center bg-white">
                 <!-- START Listed Topics here -->
-                <div class="col-sm-10 list-group mt-5">
+                <div class="col-sm-10 mt-5 ">
                     @if ($discussion -> count())
                         @foreach($discussion as $discussions)
-                        <a href="{{ route('discussion.details', $discussions) }}" class="list-group-item-action d-flex wrap mb-3 gap-3 border bg-white p-0 shadow-sm" aria-current="true">
-                            <div >
-                                @if ($discussions-> files )
-                                    <img src="{{ '/storage/images/discussion/'.$discussions->id.'/'.$discussions->files }}" alt="twbs" width="" height="150" class="rounded flex-shrink-0 ">
+                        <a href="{{ route('discussion.details', $discussions) }}" class="border-bottom list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 my-0 bg-white p-0" aria-current="true">
+                            <div class="col-sm-2 overflow-hidden"  style="max-height: 19vh;">
+                                @if ($discussions->category === '1' )
+                                    <img src="/images/icon/plan2.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                                @elseif ($discussions->category === '2' )
+                                    <img src="/images/icon/plan4.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
                                 @else
-                                    <img src="/images/icon-alliance/discussion.png" alt="twbs" width="" height="150" class="rounded flex-shrink-0">
+                                    <img src="/images/icon/plan7.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
                                 @endif
                             </div>
-                            <div class="d-flex gap-2 w-100 justify-content-between p-2">
+                            <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
                                 <div>
-                                    <h6 class="pt-2 fw-medium ">{{ $discussions-> title}}</h6>
-                                    <nav class="mb-0 opacity-75 my-1">{{ $discussions-> description}}</nav>
-                                    <nav class="mb-0 opacity-100 my-1 text-secondary"> <strong>Location</strong> {{ $discussions-> location}}</nav>
-                                    <nav class="mb-0 opacity-100 my-1 text-secondary"> <strong>Start_at</strong> {{ $discussions-> start_time}} <strong>End_at</strong> {{ $discussions-> start_time}}</nav>
+                                    <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$discussions-> title}} </p>
+                                    <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-black">{{ $discussions-> location}}</small></nav>
+                                    <nav class="mb-0 opacity-100 my-1 text-secondary"><i class="fa fa-calendar fa-1x fw-light"></i>  {{ $discussions-> date}}, From</small> {{ $discussions-> start_time}} <small>To</small> {{ $discussions-> end_time}}</nav>
+                                    <div class="d-flex align-items-start">
+                                        @if (($discussions -> date) > Carbon\Carbon::now() && $discussions -> start_time > (Carbon\Carbon::now())->toTimeString() )
+                                            <nav class="mb-0 opacity-100 my-1 text-muted"><small>upcoming</small></nav>
+                                        @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
+                                            (Carbon\Carbon::now() )->toTimeString() >= $discussions -> start_time && 
+                                            $discussions -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
+                                            <nav class="mb-0 opacity-100 my-1 text-muted"><small>ongoing</small></nav>
+                                        @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && 
+                                            (Carbon\Carbon::now()) ->toTimeString() > $discussions -> end_time )
+                                            <nav class="mb-0 opacity-100 my-1 text-muted"><small>past</small></nav>
+                                        @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
+                                            $discussions -> start_time  > (Carbon\Carbon::now())->toTimeString()) )
+                                            <nav class="mb-0 opacity-100 my-1 text-muted"><small>upcoming</small></nav>
+                                        @else
+                                            <nav class="mb-0 opacity-100 my-1 text-muted"><small>past</small></nav>
+                                        @endif
+                                        <nav class="mb-0 opacity-100 my-1 text-muted"><small>, hosted by {{ $discussions-> user->name}}</small></nav>
+                                    </div>
+                                    
                                 </div>
-                                <small class="opacity-50 text-nowrap">{{ $discussions-> created_at->diffForHumans() }}</small>
+                                <small class="opacity-80 text-nowrap">{{ $discussions-> created_at->diffForHumans() }} 
+                                    <nav> {{ $discussions->registeration->count() }} registered</nav>
+                                    <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                                        <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/5256931-kg.jpeg" title="Abhishek Kumar" alt="r">
+                                        <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Jason Sykes" alt="s">
+                                        <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10332673-kg.jpg" title="Ajith Pushparaj" alt="j"></div>
+                                </small>
                             </div>
                         </a>
                         @endforeach

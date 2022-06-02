@@ -4,7 +4,7 @@
    <!--====== PRELOADER PART START ======-->
     
         <div class="container-fluid my-5">
-            <div class="mx-5">
+            <div class="mx-0">
                 <div class="pb-5">
                     <h1 class="display-5 fw-bold pb-1" style="color:#F87B06">Circle</h1>
                     <p class="text-muted">Join our circle, Vision to create a network of 100 clubs across the entire Diaspora</p>
@@ -54,18 +54,7 @@
                             @csrf
                                 <button type="submit" class="btn btn-sm ml-2" style="background:#3E8F78; color:white; ">New Circle</button>
                             </form>
-
-                            <!-- <form action="#" method="get" class="mr-1">
-                            @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm ml-2" style="background:#3E8F78; color:white; " >Invite</button>
-                            </form>
-
-                            <form action="" method="post" class="mr-1">
-                            @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm ml-2 " style="background:#3E8F78; color:white; ">Collaborators</button>
-                            </form> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
                         @endauth
                     </div>
                 </div>
@@ -121,23 +110,26 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             @auth
+                                                <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" >
+                                                @csrf
+                                                    <button type="submit" class="btn btn-sm text-white " style="background:#F87B06">Open Circle</button>
+                                                </form>
                                                 @if (!$groups->joinedBy(auth()->user()))
                                                     <form action="{{ route('groups_details', [$groups->id]) }}" method="get" >
                                                     @csrf
                                                         <button type="submit" class="btn btn-sm btn-info btn-outline-secondary">Join</button>
                                                     </form>
-                                                @else
-                                                    <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" >
-                                                    @csrf
-                                                        <button type="submit" class="btn btn-sm text-white " style="background:#F87B06">Open Circle</button>
-                                                    </form>
                                                 @endif
                                             @endauth
                                             @guest
-                                                <form action="{{ route('groups_details', [$groups->id]) }}" method="get" >
+                                                <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" >
+                                                @csrf
+                                                    <button type="submit" class="btn btn-sm text-white " style="background:#F87B06">Open Circle</button>
+                                                </form>
+                                                <!-- <form action="{{ route('groups_details', [$groups->id]) }}" method="get" >
                                                 @csrf
                                                     <button type="submit" class="btn btn-sm btn-info btn-outline-secondary">More</button>
-                                                </form>
+                                                </form> -->
                                             @endguest
                                         </div>
                                         <small class="text-muted">{{ $groups-> created_at->diffForHumans() }}</small>

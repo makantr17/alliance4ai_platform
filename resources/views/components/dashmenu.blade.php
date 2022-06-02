@@ -21,7 +21,14 @@
             <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">27</span>
         </a>
     </li>
-    
+    @if (auth()->user()->isAdmin)
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('setting', auth()->user()->name)}}">
+            <span data-feather="user"></span>
+            Settings
+            </a>
+        </li>
+    @endif
 </ul>
 
 

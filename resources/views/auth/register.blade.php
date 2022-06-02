@@ -70,15 +70,8 @@
                         <label for="country" class="form-label">country</label>
                         <select type="text" name="country" id="country"
                         class="form-control py-2  rounded-lg @error('country') border border-danger @enderror" value="{{ old('country') }}">
-                            <option value="Africa">Africa</option>
-                            <option value="North America">North America</option>
-                            <option value="South America">South America</option>
-                            <option value="Asia">Asia</option>
-                            <option value="Europe">Europe</option>
-                            <option value="Middle East">Middle East</option>
-                            <option value="Australia">Australia</option>
+                            <x-country />
                         </select>
-
                         @error('country')
                             <div class="text-danger">
                                 {{ $message }}

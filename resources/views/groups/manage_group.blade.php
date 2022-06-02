@@ -59,7 +59,7 @@
 
 <div class="row">
     <!-- START list of Discussions -->
-    <div class="col-md-4">
+    <div class="col-sm-5">
         <div class="list-group bg-light">
             <h6 class="p-2">Created</h6>
             @if ($group -> count())
@@ -92,23 +92,23 @@
     </div>
     <!-- END LIST OF DISCUSSION -->
     <!-- Participated POSTED MESSAGE  -->
-    <div class="col-md-5">
+    <div class="col-sm-5">
         <div class="list-group bg-light">
-            <h6 class="p-2 mb-0">Topics</h6>
-            @if ($group_members -> count())
-                @foreach($group_members as $group_member)
+            <h6 class="p-2 mb-0">Particpants</h6>
+            @if ($group[0] ->group_member -> count())
+                @foreach($group[0] ->group_member as $group_members)
                   <a href="" class="list-group-item list-group-item-action border d-flex gap-3 py-2 m-2 bg-white" aria-current="true">
-                      @if ($group_member->user->image)
-                          <img src="{{ '/storage/images/'.$group_member->user->id.'/'.$group_member->user->image }}" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-1 border border-secondary">
+                      @if ($group_members->user->image)
+                          <img src="{{ '/storage/images/'.$group_members->user->id.'/'.$group_members->user->image }}" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-1 border border-secondary">
                       @else
                           <img src="/images/user.png" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-1 border border-secondary">
                       @endif
                       <div class="d-flex gap-2 w-100 justify-content-between">
                           <div>
-                              <h6 class="mb-0">{{ $group_member-> user->name}}</h6>
-                              <nav>{{ $group_member-> user-> email}}</nav>
+                              <h6 class="mb-0">{{ $group_members-> user->name}}</h6>
+                              <nav>{{ $group_members-> user-> email}}</nav>
                           </div>
-                          <small class="opacity-50 text-nowrap">Joined {{ $group_member-> created_at->diffForHumans() }}</small>
+                          <small class="opacity-50 text-nowrap">Joined {{ $group_members-> created_at->diffForHumans() }}</small>
                       </div>
                   </a>
                 @endforeach
@@ -126,35 +126,6 @@
         </div>
     </div>
     <!-- END POSTED MESSAGE -->
-
-    <!-- START LIST NOTIFICATION START HERE -->
-    <div class="col-md-3">
-        <h6 class="border-bottom pb-2 mb-0">Notifications</h6>
-        <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Timeline</h6>
-                <small class="text-muted">start_at -end_at</small>
-                </div>
-                <span class="text-muted">1week</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Remplir les info</h6>
-                <small class="text-muted">Corectement remplir les info</small>
-                </div>
-                <span class="text-muted">100</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Athentification</h6>
-                <small class="text-muted">Informations correctes</small>
-                </div>
-                <span class="text-muted">100</span>
-            </li>
-        </ul>
-    </div>
-    <!-- END LIST NOTIFICATION START HERE -->
 </div>
 
 

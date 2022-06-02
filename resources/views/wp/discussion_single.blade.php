@@ -3,75 +3,121 @@
 @section('content')
    <!--====== PRELOADER PART START ======-->
 
-<div class="container-fluid row justify-content-center align-items-center">
+<div class="container-fluid ml-0 row justify-content-center align-items-center bg-light">
     @if ($discussion -> id)
-    <div class="col-lg-9 list-group-item list-group-item-action border d-block gap-3 py-2 m-0 bg-light">
-        <div class="d-block justify-content-center overflow-hidden mb-2" style="max-height: 55vh;">
+    <div class="col-sm-9 list-group-item list-group-item-action border d-block gap-3 py-3 bg-white mb-2">
+        <div class="d-block justify-content-center overflow-hidden mb-2" style="max-height: 40vh;">
             @if ($discussion-> files )
-                <img src="{{ '/storage/images/discussion/'.$discussion->id.'/'.$discussion->files }}" alt="twbs" width="" class="flex-shrink-0 shadow-sm mr-3 my-1">
+                <img src="{{ '/storage/images/discussion/'.$discussion->id.'/'.$discussion->files }}" alt="twbs" width="100%" class="flex-shrink-0 shadow-sm mr-3 my-1">
             @else
-                <img src="/images/icon-alliance/discussion.png" alt="twbs" width=""  class="rounded flex-shrink-0 shadow-sm p-1">
+                <img src="/images/-min.jpg" alt="twbs" width="100%"  class="rounded flex-shrink-0 shadow-sm p-1">
             @endif
         </div>
         <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
-                @if ($discussion->user->image)
-                    <img src="{{ '/storage/images/'.$discussion->user->id.'/'.$discussion->user->image }}" alt="twbs" width="45" height="45" class="rounded-circle flex-shrink-0 p-1 border border-info">
+                <small class="opacity-100 text-nowrap">by {{ $discussion-> user->name }}</small>
+                <h5 class="mb-0 pt-4 pb-2">{{$discussion-> title}}</h5>
+                @if ($discussion->category === '1' )
+                    <img src="/images/icon/plan2.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
+                @elseif ($discussion->category === '2' )
+                    <img src="/images/icon/plan4.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @else
-                    <img src="/images/icon-alliance/user.png" alt="twbs" width="45" height="45" class="rounded-circle flex-shrink-0 shadow-sm p-1">
+                    <img src="/images/icon/plan7.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @endif
-                <small class="opacity-50 text-nowrap">{{ $discussion-> user->name }}</small>
-                <h4 class="mb-0 pt-4 pb-2">{{$discussion-> title}}</h4>
-                <nav>{{ $discussion-> description}}</nav>
-                <small class="opacity-50 text-nowrap">{{ $discussion-> created_at->diffForHumans() }}</small>
-                <div class="d-flex flex-wrap align-items-center px-0 pt-0">
-                    <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> 
-                        <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">20 joined</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle"></span> </span> 
-                    </div>
-                </div>
-                
-                <div class="row col-lg-12 d-flex justify-content-between align-items-center px-0 pt-0">
-                    <div class="col-sm-10">Join the meeting</div>
-                    <div class="col-sm-2">
-                        @auth
-                            <form action="" method="get" class="mr-1 m-2">
-                            @csrf
-                                <button type="submit"class="btn btn-secondary">Join</button>
-                            </form>
-                        </a>
-                        @endauth
-                    </div>
-                </div>
-                
+                <small class="opacity-100 text-nowrap"><i class="fa fa-calendar fa-1x fw-light"></i> Meeting: {{ $discussion-> date }}</small>
             </div>
+            <div class="d-flex justify-content-between align-items-center px-0 pt-0">
+                <div class="">
+                    <div>
+                        @if (($discussion -> date) > Carbon\Carbon::now() && $discussion -> start_time > (Carbon\Carbon::now())->toTimeString() )
+                            <nav class="mb-0 opacity-75 my-1 text-black"><small>upcoming</small></nav>
+                            @auth
+                                @if (!$discussion->participatedBy(auth()->user()))
+                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                                    @csrf
+                                        <button type="submit" class="btn btn-primary btn-md">register</button>
+                                    </form>
+                                @endif
+                            @endauth
+                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
+                            $discussion -> start_time  > (Carbon\Carbon::now())->toTimeString()) )
+                            <nav class="opacity-75 my-1 text-black"><small>upcoming</small></nav>
+                            @auth
+                                @if (!$discussion->participatedBy(auth()->user()))
+                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                                    @csrf
+                                        <button type="submit" class="btn btn-secondary">register</button>
+                                    </form>
+                                @else
+                                    <form action="" method="get" class="">
+                                    @csrf
+                                        <button type="submit"class="btn btn-success">Join</button>
+                                    </form>
+                                @endif
+                            @endauth
+                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
+                            (Carbon\Carbon::now() )->toTimeString() >= $discussion -> start_time && 
+                            $discussion -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
+                            <!-- If ongoing or live -->
+                            @auth
+                                @if (!$discussion->participatedBy(auth()->user()))
+                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                                    @csrf
+                                        <button type="submit" class="btn btn-secondary btn-sm">register live</button>
+                                    </form>
+                                @else
+                                    <form action="" method="get" class="">
+                                    @csrf
+                                        <button type="submit"class="btn btn-success btn-sm">Join live</button>
+                                    </form>
+                                @endif
+                            @endauth
+                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && 
+                            (Carbon\Carbon::now()) ->toTimeString() > $discussion -> end_time )
+                            <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
+                        
+                        @else
+                            <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
+                        @endif
+                        <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j"></div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3 pt-2">
+            <div class="list-discussion">
+                @if ($discussion-> count())
+                    <div href="" class="d-col gap-3 d-flex justify-content-between pt-0" aria-current="true">
+                        <nav class="opacity-100 text-nowrap py-1"><strong>Country</strong></nav>
+                        <nav class="opacity-100 text-nowrap py-1">{{ $discussion-> location}}</nav>
+                    </div>
+                    <div href="" class="d-col gap-3 d-flex justify-content-between pt-0" aria-current="true">
+                        <nav class="opacity-100 text-nowrap py-1"><strong>admin</strong></nav>
+                        <nav>{{ $discussion-> admin_1}}</nav>
+                    </div>
+                    <div href="" class="d-col gap-3 d-flex justify-content-between pt-0" aria-current="true">
+                        <nav class="opacity-100 text-nowrap py-1"><i class="fa fa-time"></i><strong>Time</strong> </nav>
+                        <nav>From {{ $discussion-> start_time}} To {{ $discussion-> end_time}}</nav>
+                    </div>
+                    
+                @endif
+                <div class="pt-3">
+                    @if (sizeof($topics) > 0 )
+                        <nav class="opacity-100 text-muted py-0"><i class="fa fa-external-link pr-1"></i> Read the ressources related to the topic <br>
+                            <a class="py-1" href="{{ route('topics.details', [$topics[0]-> id]) }}">{{ $topics[0] -> topic}}</a>
+                        </nav>
+                    @endif
+                </div>
+            </div>
+            <div class="row my-1 py-2"></div> 
         </div>
     </div>
     @endif  
-
-    <div class="col-lg-9 my-1 mb-3 list-group-item list-group-item-action border d-block gap-3 py-2 m-2 bg-light">
-        <div class="row mt-2">
-            <div class="col">
-                <div class="list-discussion">
-                    <div>
-                        <p>{{ $discussion-> topics}} </p>
-                        <a href="https//a4ai_group.org/topic/andela">https//a4ai_group.org/topic/andela</a>
-                    </div>
-                    
-                    @if ($discussion-> count())
-                        <div href="" class="d-col gap-3" aria-current="true">
-                            <nav class="opacity-50 text-nowrap py-1"><i class="fa fa-map-marker"></i> <strong>Location:</strong> {{ $discussion-> location}}</nav>
-                            <nav class="opacity-50 text-nowrap py-1"><strong>Admin_1:</strong> <br> {{ $discussion-> admin_1}} </nav>
-                            <nav class="opacity-50 text-nowrap py-1"><strong>Admin_2:</strong> <br> {{ $discussion-> admin_2}} </nav>
-                            <nav class="opacity-50 text-nowrap py-1"><i class="fa fa-time"></i> <strong>Start at:</strong> {{ $discussion-> start_time}} <strong>- End at:</strong> {{ $discussion-> start_time}}</nav>
-                        </div>
-                    @endif
-                </div>
-                <div class="row my-1 py-2"></div> 
-            </div>
-            <!-- JOIN Button End heere -->
-        
-        </div>
-    </div>
 
     
 </div> 

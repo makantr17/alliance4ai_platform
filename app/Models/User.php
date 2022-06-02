@@ -27,6 +27,8 @@ use App\Models\CommentPrompts;
 use App\Models\CommentFiles;
 use App\Models\course_user;
 use App\Models\Competitor;
+use App\Models\Registeration;
+use App\Models\RoleAccess;
 
 class User extends Authenticatable
 {
@@ -90,6 +92,10 @@ class User extends Authenticatable
 
     public function group_member(){
         return $this->hasMany(Group_member::class);
+    }
+
+    public function registeration(){
+        return $this->hasMany(Registeration::class);
     }
 
     public function usercourse(){
@@ -162,6 +168,10 @@ class User extends Authenticatable
 
     public function competitors(){
         return $this->hasMany(Competitor::class);
+    }
+
+    public function access_role(){
+        return $this->hasMany(RoleAccess::class);
     }
     
 }

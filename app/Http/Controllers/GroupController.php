@@ -57,13 +57,11 @@ class GroupController extends Controller
     }
 
     public function manage(User $user, Group $group){
-        $group_member = $user->group_member()->get();
-        $groups = $user->group()->where('id', '=', $group->id)->get();
-       
+        $groups = $user->group()->where('id', '=', $group->id)->with(['group_member']) ->get();
+        
         return view('groups.manage_group', [
             'user'=> $user,
             'group'=> $groups,
-            'group_members'=>$group_member
         ]);
     }
 }

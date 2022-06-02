@@ -5,7 +5,7 @@
 
 <div class="pt-5 text-center">
     <h2>New Discussion</h2>
-    <p>create a discussion and share with circles and peoples</p>
+    <p class="fw-light">The discussion will be shared with circles and peoples invited in</p>
 </div>
 <div class="container ">
     <div class="row g-5 py-2  d-flex justify-content-center align-items-center">
@@ -15,9 +15,9 @@
           <div class="row g-3">
             @csrf
             <div class="col-md-12">
-                <label for="title" class="form-label">Titre</label>
+                <label for="title" class="form-label">Meeting Title</label>
                 <input type="text" name="title" id="title" placeholder="title" 
-                class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="">
+                class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ old('title')}}">
 
                 @error('title')
                     <div class="text-danger">
@@ -26,9 +26,17 @@
                 @enderror
             </div>
 
+            <div class="topicList container-fluid d-flex border bg-white fw-light text-secondary">
+                @if ($listoftopics -> count())
+                    @foreach($listoftopics as $topics)
+                        <label class="p-1 m-1 border bg-light rounded"><input type="checkbox" value="{{$topics->id}}"> {{$topics->topic}}</label><br>
+                    @endforeach
+                @else
+                    <option value="">no user</option>
+                @endif 
+            </div>
             <div class="col-md-12">
-                <label for="topics" class="form-label">Chose Topics</label>
-                <textarea type="text" name="topics" id="topics" placeholder="topics" cols="20" rows="3"
+                <textarea type="text" name="topics" id="topics" placeholder="added topics" cols="15" rows="2"
                 class="form-control py-2 text-info  rounded-lg @error('topics') border border-danger @enderror" value=""></textarea>
 
                 @error('topics')
@@ -37,23 +45,13 @@
                     </div>
                 @enderror
             </div>
-            <div class="topicList col-md-12 d-flex border p-2 bg-white fw-light text-secondary">
-                @if ($listoftopics -> count())
-                    @foreach($listoftopics as $topics)
-                        <label class="p-1 m-1 border bg-light rounded"><input type="checkbox" value="{{$topics->topic}}"> {{$topics->topic}}</label><br>
-                    @endforeach
-                @else
-                    <option value="">no user</option>
-                @endif 
-            </div>
-
+            
 
 
             <div class="col-md-6">
-                <label for="date" class="form-label">Date meeting</label>
+                <label for="date" class="form-label">Meeting Date</label>
                 <input type="date" name="date" id="date" placeholder="date" 
-                class="form-control py-2  rounded-lg @error('date') border border-danger @enderror" value="">
-
+                class="form-control py-2  rounded-lg @error('date') border border-danger @enderror" value="{{ old('date')}}">
                 @error('date')
                     <div class="text-danger">
                         {{ $message }}
@@ -64,7 +62,7 @@
             <div class="col-md-6">
                 <label for="start_time" class="form-label">Start_time</label>
                 <input type="time" name="start_time" id="start_time" placeholder="start_time" 
-                class="form-control py-2  rounded-lg @error('start_time') border border-danger @enderror" value="">
+                class="form-control py-2  rounded-lg @error('start_time') border border-danger @enderror" value="{{ old('start_time')}}">
 
                 @error('start_time')
                     <div class="text-danger">
@@ -76,7 +74,7 @@
             <div class="col-md-6">
                 <label for="end_time" class="form-label">End_time</label>
                 <input type="time" name="end_time" id="end_time" placeholder="end_time" 
-                class="form-control py-2  rounded-lg @error('end_time') border border-danger @enderror" value="">
+                class="form-control py-2  rounded-lg @error('end_time') border border-danger @enderror" value="{{ old('end_time')}}">
 
                 @error('end_time')
                     <div class="text-danger">
@@ -102,14 +100,13 @@
             </div>
 
             <div class="col-md-6">
-                <label for="location" class="form-label">Location</label>
+                <label for="location" class="form-label">Country</label>
                     <select name="location" id="location"
                         class="form-control py-2  rounded-lg @error('location') border border-danger @enderror" value="{{ old('location')}}">
-                        <option value="">Choose Location</option>
-                        <option value="Guinea">Guinea</option>
-                        <option value="South Africa">South Africa</option>
-                        <option value="Rwanda">Rwanda</option>
+                        <option value="">Choose country</option>
+                        <x-country />
                     </select>
+                    
                 @error('location')
                   <div class="text-danger">
                       {{ $message }}
@@ -117,21 +114,11 @@
                 @enderror
             </div>
 
+            
             <div class="col-md-12">
-                <label for="description" class="form-label">Description</label>
-                <input type="text" name="description" id="description" placeholder="description" 
-                class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" value="">
-
-                @error('description')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="col-md-12">
-                <label for="link" class="form-label">Add links</label>
-                <input type="text" name="link" id="link" placeholder="link" 
-                class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="">
+                <label for="link" class="form-label">Physical or Virtual meeting address</label>
+                <input type="text" name="link" id="link" placeholder="address" 
+                class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="{{ old('link')}}">
 
                 @error('link')
                     <div class="text-danger">
@@ -184,7 +171,7 @@
             <div class="col-md-12">
                 <label for="peoples" class="form-label">Invite Peoples</label>
                 <textarea type="text" name="peoples" id="peoples" placeholder="peoples" cols="20" rows="3"
-                class="form-control py-2 text-info  rounded-lg @error('peoples') border border-danger @enderror" value=""></textarea>
+                class="form-control py-2 text-info  rounded-lg @error('peoples') border border-danger @enderror" value="{{ old('peoples')}}"></textarea>
 
                 @error('peoples')
                     <div class="text-danger">
@@ -207,7 +194,7 @@
             <div class="col-md-12">
                 <label for="groups" class="form-label">Add Groups</label>
                 <textarea type="text" name="groups" id="groups" placeholder="groups" cols="20" rows="3"
-                class="form-control py-2  rounded-lg @error('groups') border border-danger @enderror" value=""></textarea>
+                class="form-control py-2  rounded-lg @error('groups') border border-danger @enderror" value="{{ old('groups')}}"></textarea>
 
                 @error('groups')
                     <div class="text-danger">
@@ -225,10 +212,25 @@
                 @endif
             </div>
 
+            <div class="col-md-12">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" name="description" id="description" placeholder="description" 
+                class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" value="">
+                @error('description')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
           </div>
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Sauvegarde</button>
+          <div class="d-flex">
+            <button class="w-100 btn btn-primary btn-lg mr-1" type="submit">Register</button>
+            <button class="w-100 btn btn-danger btn-lg" type="submit">Cancel</button>
+          </div>
+          
         </form>
 
 

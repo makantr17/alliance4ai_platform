@@ -70,19 +70,19 @@ class DiscussionController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'title'=> 'required|max:255',
+            'title'=> 'required|unique:discussions|max:255',
             'category'=> 'required|max:255',
-            'description'=>'required|max:1000',
+            'description'=>'max:200',
             'location'=>'required',
             'admin_1'=>'required',
-            'admin_2'=>'required',
+            'date'=>'required|date|after:yesterday',
             'start_time'=>'required',
-            'end_time'=>'required',
+            'end_time'=>'required|after:start_time',
             'peoples',
-            'date'=>'required',
+            
         ]);
 
-        $request->user()->discussion()->create([
+        $discussion =$request->user()->discussion()->create([
             'title'=> $request-> title,
             'category'=> $request-> category,
             'description'=>$request-> description,
@@ -98,6 +98,11 @@ class DiscussionController extends Controller
             'topics'=>$request-> topics,
             'date'=>$request-> date,
         ]);
+        if ($discussion) {
+            auth()->user()->notify(new \App\Notifications\DiscussionCreated($request->title, 
+            $request->start_time, $request->end_time, auth()->user()->name, $request->link));
+        }
+        
         return redirect()->route('users.discussion',  auth()->user()->name);
     }
 }

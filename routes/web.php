@@ -35,6 +35,7 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\CourseUserController;
 use App\Http\Controllers\CompetitorController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,7 @@ Route::post('/topics/prompts/{prompts}', [CommentPromptsController::class, 'post
 
 Route::get('/discussion', [NavigationController::class, 'discussion'])->name('discussion');
 Route::get('/discussion/details/{discussion}', [NavigationController::class, 'discussion_details'])->name('discussion.details');
+Route::post('/discussion/details/{discussion}', [NavigationController::class, 'registerTo_discussion']);
 
 Route::get('/learning/course/{course}', [NavigationController::class, 'course_details'])->name('learning.course');
 Route::post('/learning/course/{course}', [CourseUserController::class, 'takecourse']);
@@ -92,9 +94,12 @@ Route::post('/discussion/topic/messages/{message}/likescomment', [CommentlikesCo
 Route::delete('/discussion/topic/messages/{message}/likescomment', [CommentlikesController::class, 'destroy'])->name('discussion.topic.messages.likescomment');
 Route::delete('/discussion/topic/messages/{message}', [MessageController::class, 'destroy'])->name('discussion.topic.messages');
 
+
+
 Route::get('/groups', [NavigationController::class, 'groups'])->name('groups');
 Route::get('/groups_details/{group}', [NavigationController::class, 'circle_details'])->name('groups_details');
 Route::get('/groups/members/{group}', [NavigationController::class, 'group_member'])->name('groups.members');
+Route::get('/groups/members/joined/{group}', [NavigationController::class, 'joined'])->name('groups.members.joined');
 Route::post('/groups_details/{group}', [NavigationController::class, 'join_member']);
 
 Route::get('/groups/members/topics/{topic_circle}', [NavigationController::class, 'group_topic_message'])->name('groups.members.topics');
@@ -199,6 +204,7 @@ Route::get('/user/{topic}/takeexercise', [ExerciseController::class, 'take'])->n
 Route::post('/user/{topic}/addexercise', [ExerciseController::class, 'upload']);
 
 Route::get('/user/calendardiscussion', [CalenderController::class, 'index'])->name('users.calendardiscussion');
+Route::get('/user/calendardiscussion/{user:name}', [CalenderController::class, 'mycalendar'])->name('users.calendardiscussion.mycalendar');
 Route::post('/user/calendardiscussion', [CalenderController::class, 'filter']);
 
 Route::get('/fullcalendareventmaster', [FullCalendarEventMasterController::class, 'index'])->name('fullcalendareventmaster');
@@ -207,6 +213,9 @@ Route::post('/fullcalendareventmaster', [FullCalendarEventMasterController::clas
 Route::post('/fullcalendareventmaster', [FullCalendarEventMasterController::class, 'destroy']);
 
 
+Route::get('/setting/{user:name}', [AdminController::class, 'index'])->name('setting');
+Route::post('/setting/{user:name}', [AdminController::class, 'admin']);
+Route::get('/setting/{user:name}/grant-admin', [AdminController::class, 'find'])->name('setting.grant-admin');
 
 
 

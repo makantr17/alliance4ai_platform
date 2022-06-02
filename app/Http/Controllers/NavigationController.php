@@ -17,6 +17,7 @@ use App\Models\Question;
 use App\Models\Exercise;
 use App\Models\Group_member;
 use App\Models\Hackerthon;
+use App\Models\Registeration;
 use App\Models\Topic_circle;
 use App\Models\group_message;
 
@@ -72,44 +73,41 @@ class NavigationController extends Controller
     }
 
 
-    
-
     public function themes(){
         return view('wp.theme_discussion');
     }
 
     public function discussion(){
         if(request('period') != ''){
-            $mytime = Carbon\Carbon::now();
-            $start = $mytime->toDateString();
-            $time = $mytime->toTimeString();
-            if (request('period') === 'Future Discussion') {
-                $discussion = Discussion::where('date','>=',$start)
-                    ->orwhere('date','=',$start)-> where(function($query){
-                        $query->whereDate('end_time','>=',$time);
-                    })->get();
-
-            }elseif (request('period') === 'Past Discussion') {
-                $discussion = Discussion::whereDate('date','<=',$start)
-                ->where('start_time','<=',$time)
-                ->get();
-            }elseif (request('period') === 'Ongoing Discussion') {
-                $discussion = Discussion::whereDate('date','=',$start)
-                ->where('start_time','<=',$time)
-                ->get();
+            if (request('period') === '2') {
+                $discussion = Discussion::latest()->where('date','>=',carbon\carbon::now()->todatestring())
+                ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
+                    $query->whereDate('start_time','>=',carbon\carbon::now()->totimestring());
+                })->with(['registeration'])->get();
+            }elseif (request('period') === '1') {
+                $discussion = Discussion::latest()->where('date','<=',carbon\carbon::now()->todatestring())
+                ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
+                    $query->whereDate('end_time','<',carbon\carbon::now()->totimestring());
+                })->with(['registeration'])->get();
+            }elseif (request('period') === '0') {
+                $discussion = Discussion::latest()->whereDate('date','=',carbon\carbon::now()->todatestring())
+                ->where('start_time','<=',carbon\carbon::now()->totimestring())
+                ->where('end_time','>',carbon\carbon::now()->totimestring())
+                ->with(['registeration'])->get();
             }else {
                 # code...
             }
-            
         }else{
             $discussion = Discussion::when(request('category'), function($query){
                 return $query->where('category', request('category'));
-            })->latest()->get(); 
+            })->latest()->with(['registeration'])->get(); 
         }
         return view('wp.discussion', [
             'discussion'=> $discussion,
         ]);
     }
+
+
 
     public function groups(){
         if(request('search') != ''){
@@ -165,12 +163,31 @@ class NavigationController extends Controller
     public function group_member(Group $group){
         $group_member = Group_member::latest()->where('group_id', '=', $group->id)->get();
         $groups = Group::latest()->where('id', '=', $group->id)->get();
-        $discussion = Discussion::latest()->get();
-        // explode()
+        // The actuel day is past of day or the we are in the same day but past time
+        $future_discussion = Discussion::latest()->where('date','>=',carbon\carbon::now()->todatestring())
+                ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
+                    $query->whereDate('start_time','>=',carbon\carbon::now()->totimestring());
+                })->with(['registeration'])->get();
+        // The actual day isnot arrived or the same day but the time is not arrived 
+        $past_discussion = Discussion::latest()->where('date','<=',carbon\carbon::now()->todatestring())
+                ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
+                    $query->whereDate('end_time','<',carbon\carbon::now()->totimestring());
+                })->with(['registeration'])->get();
         return view('wp.group_member', [
             'group' => $groups,
             'group_members'=> $group_member,
-            'discussions' => $discussion,
+            'past_discussions' => $past_discussion,
+            'future_discussions' => $future_discussion,
+        ]);
+    }
+
+    public function joined(Group $group){
+        $group_member = Group_member::latest()->where('group_id', '=', $group->id)->get();
+        $groups = Group::latest()->where('id', '=', $group->id)->get();
+        // explode()
+        return view('wp.group_member_joined', [
+            'group' => $groups,
+            'group_members'=> $group_member,
         ]);
     }
 
@@ -235,9 +252,30 @@ class NavigationController extends Controller
     }
 
     public function discussion_details(Discussion $discussion){
+        $topics = [];
+        if ($discussion->topics ) {
+            $list = explode(',', $discussion->topics);
+            $topics = Topic::latest()->where('id', '=', $list[0])->get();
+        }
+        
         return view('wp.discussion_single', [
-            'discussion'=> $discussion
+            'discussion'=> $discussion,
+            'topics'=> $topics,
         ]);
+    }
+
+    public function registerTo_discussion(Request $request, Discussion $discussion){
+        $participants = Registeration::latest()->where('discussion_id', '=', $discussion->id)->where('user_id', '=', auth()->user()->id)->get();
+        if ($participants -> count()) {
+            return back();
+        }
+        else {
+            $request->user()->registeration()->create([
+                'discussion_id'=> $discussion-> id,
+                'user_id'=> auth()->user()->id,
+            ]);
+        }
+        return redirect()->route('discussion.details', [$discussion->id]);
     }
 
 

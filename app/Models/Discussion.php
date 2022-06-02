@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Topic;
 use App\Models\Discussion;
+use App\Models\Registeration;
 
 class Discussion extends Model
 {
@@ -26,6 +27,10 @@ class Discussion extends Model
         'date',
     ];
 
+    public function participatedBy(User $user){
+        return $this->registeration->contains('user_id', $user->id);
+    }
+
     
     public function user(){
         return $this->belongsTo(User::class);
@@ -33,5 +38,9 @@ class Discussion extends Model
 
     public function topic(){
         return $this->hasMany(Topic::class);
+    }
+
+    public function registeration(){
+        return $this->hasMany(Registeration::class);
     }
 }
