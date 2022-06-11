@@ -14,3 +14,6 @@
         <a href="#"class="text-info">{{ $group_member -> user ->profession}}</a>
     </p>
 </div>
+
+
+

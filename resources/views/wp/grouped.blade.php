@@ -2,22 +2,22 @@
 
 @section('content')
    <!--====== PRELOADER PART START ======-->
+   
     
         <div class="container-fluid my-5">
-            <div class="mx-0">
-                <div class="pb-5">
-                    <h1 class="display-5 fw-bold pb-1" style="color:#F87B06">Circle</h1>
-                    <p class="text-muted">Join our circle, Vision to create a network of 100 clubs across the entire Diaspora</p>
-                </div>
-                <div class="bg-dark text-secondary mb-2 text-center rounded" style="opacity:0.8">
-                    <div class="overflow-hidden" style="max-height: 35vh;" >
-                        <div class="" >
-                            <img src="/icons/background-groups.jpg" class="img-fluid rounded shadow-lg mb-4 rounded" alt="Example image" width="100%" height="400"  loading="lazy">
+
+        
+            <div class="mb-5">
+                <div class="bg-white text-secondary mb-2 text-center rounded">
+                    <div class="py-3">
+                        <h1 class="display-6 fw-bold" style="color:#D16A04" >Circles</h1>
+                        <p class="text-muted">Learn different courses shared by Futur makers and increase your score</p>
+                    </div>
+                    <div class="overflow-hidden" style="max-height: 30vh;">
+                        <div class="">
+                            <img src="icons/bg-second.png" class="img-fluid rounded-3 shadow-lg mb-4 rounded" alt="Example image" width="60%" height="500" loading="lazy">
                         </div>
                     </div>
-                </div>
-                <div class="py-4">
-                    
                 </div>
             </div>
 

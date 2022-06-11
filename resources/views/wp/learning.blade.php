@@ -12,9 +12,9 @@
                         <h1 class="display-6 fw-bold" style="color:#D16A04" >Learning</h1>
                         <p class="text-muted">Learn different courses shared by Futur makers and increase your score</p>
                     </div>
-                    <div class="overflow-hidden" style="max-height: 25vh;">
+                    <div class="overflow-hidden" style="max-height: 30vh;">
                         <div class="">
-                            <img src="/icons/AI_event_1.jpg" class="img-fluid rounded-3 shadow-lg mb-4 rounded" alt="Example image" width="60%" height="500" loading="lazy">
+                            <img src="images/icon/bg-a4ai.png" class="img-fluid rounded-3 shadow-lg mb-4 rounded" alt="Example image" width="60%" height="500" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                 <div class="singel-course mt-2 border shadow-sm">
                                     <div class="thum">
                                         <div class="image">
-                                            <img src="images/course/cu-1.jpg" alt="Course">
+                                            <img src="images/course/courseai.jpg" alt="Course">
                                         </div>
                                         <div class="price">
                                             <span>Free</span>

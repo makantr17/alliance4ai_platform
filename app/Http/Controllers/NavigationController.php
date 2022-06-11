@@ -83,24 +83,24 @@ class NavigationController extends Controller
                 $discussion = Discussion::latest()->where('date','>=',carbon\carbon::now()->todatestring())
                 ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
                     $query->whereDate('start_time','>=',carbon\carbon::now()->totimestring());
-                })->with(['registeration'])->get();
+                })->with(['registeration'])->paginate(5);
             }elseif (request('period') === '1') {
                 $discussion = Discussion::latest()->where('date','<=',carbon\carbon::now()->todatestring())
                 ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
                     $query->whereDate('end_time','<',carbon\carbon::now()->totimestring());
-                })->with(['registeration'])->get();
+                })->with(['registeration'])->paginate(5);
             }elseif (request('period') === '0') {
                 $discussion = Discussion::latest()->whereDate('date','=',carbon\carbon::now()->todatestring())
                 ->where('start_time','<=',carbon\carbon::now()->totimestring())
                 ->where('end_time','>',carbon\carbon::now()->totimestring())
-                ->with(['registeration'])->get();
+                ->with(['registeration'])->paginate(5);
             }else {
                 # code...
             }
         }else{
             $discussion = Discussion::when(request('category'), function($query){
                 return $query->where('category', request('category'));
-            })->latest()->with(['registeration'])->get(); 
+            })->latest()->with(['registeration'])->paginate(5); 
         }
         return view('wp.discussion', [
             'discussion'=> $discussion,
@@ -161,7 +161,7 @@ class NavigationController extends Controller
     }
 
     public function group_member(Group $group){
-        $group_member = Group_member::latest()->where('group_id', '=', $group->id)->get();
+        $group_member = Group_member::latest()->where('group_id', '=', $group->id)->paginate(5);
         $groups = Group::latest()->where('id', '=', $group->id)->get();
         // The actuel day is past of day or the we are in the same day but past time
         $future_discussion = Discussion::latest()->where('date','>=',carbon\carbon::now()->todatestring())
@@ -182,7 +182,7 @@ class NavigationController extends Controller
     }
 
     public function joined(Group $group){
-        $group_member = Group_member::latest()->where('group_id', '=', $group->id)->get();
+        $group_member = Group_member::latest()->where('group_id', '=', $group->id)->paginate(20);
         $groups = Group::latest()->where('id', '=', $group->id)->get();
         // explode()
         return view('wp.group_member_joined', [

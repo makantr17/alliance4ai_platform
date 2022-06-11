@@ -12,25 +12,39 @@
             <!-- Start of Topic here  #################################################-->
             @if ($topics -> count())
                 @foreach($topics as $topic)
-                <a href="#" class="m-2 list-group-item-action d-block gap-3 pb-2 bg-light" aria-current="true">
-                    <div class="col justify-content-center mb-2r bg-danger p-4" style="max-height: 35vh; ">
+                <a href="#" class="m-2 list-group-item-action d-block gap-3 bg-light" aria-current="true">
+                    @if ($topic->category === '1' )
+                    <div class="col justify-content-center p-4 rounded"  style="height: 35vh;  background-image: url('/images/icon/back-col5.png');">
                         @if ($topic->user->image)
-                            <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="100" height="100" class="rounded-circle flex-shrink-0 border shadow-sm">
+                            <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="130" height="130" class="shadow mt-5 rounded-circle flex-shrink-0 shadow-sm">
                         @else
-                            <img src="/images/icon-alliance/message.png" alt="twbs" width="80" height="80" class="rounded-circle flex-shrink-0 shadow-sm ">
+                            <img src="/images/cxc.jpg" alt="twbs" width="130" height="130" class="shadow mt-5 rounded-circle flex-shrink-0 shadow-sm">
                         @endif
-                        <h5 class="opacity-50 text-white display-7 pt-3">{{ $topic-> user->name }}</h5>
                     </div>
-                    <div class="p-2 d-flex gap-2 w-100 justify-content-between border">
+                    @elseif ($topic->category === '2' )
+                    <div class="col justify-content-center p-4 rounded"  style="height: 35vh;  background-image: url('/images/icon/back-col6.png');">
+                        @if ($topic->user->image)
+                            <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="130" height="130" class="shadow mt-5 rounded-circle flex-shrink-0 shadow-sm">
+                        @else
+                            <img src="/images/cxc.jpg" alt="twbs" width="130" height="130" class="shadow mt-5 rounded-circle flex-shrink-0 shadow-sm">
+                        @endif
+                    </div>
+                    @else
+                        <div class="col justify-content-center p-4 rounded"  style="height: 35vh;  background-image: url('/images/icon/back-col8.png');">
+                            @if ($topic->user->image)
+                                <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="130" height="130" class="shadow mt-5 rounded-circle flex-shrink-0 shadow-sm">
+                            @else
+                                <img src="/images/cxc.jpg" alt="twbs" width="130" height="130" class="shadow mt-5 rounded-circle flex-shrink-0 shadow-sm">
+                            @endif
+                        </div>
+                    @endif
+                    
+                    <div class="p-3 d-flex gap-2 w-100 justify-content-between border">
                         <div>
-                            <h3 class="mb-0 py-3 text-danger">{{ $topic-> topic}}</h3>
+                            <h4 class="mb-0 py-2 text-black">{{ $topic-> topic}}</h4>
+                            <small class="opacity-50 display-7 pt-2">By {{ $topic-> user->name }}, </small>
                             <!-- <nav>{{ $topic-> description}}</nav> -->
-                            <small class="opacity-50 text-nowrap">{{ $topic-> created_at->diffForHumans() }}</small>
-                            <div class="d-flex flex-wrap align-items-center px-0 pt-0">
-                                <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> 
-                                    <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">{{ $topic-> likes ->count() }}</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4">  </span> 
-                                </div>
-                            </div>
+                            <small class="opacity-50 text-info">{{ $topic-> created_at->diffForHumans() }}</small>
                         </div>
                     </div>
                 </a>
@@ -43,6 +57,12 @@
                 No topic posted
             </div>
             @endif
+
+            <div class="container d-flex flex-row-reverse">
+                <a href="{{ route('topics')}}">
+                    <button class="btn btn-primary border "> back</button>
+                </a>
+            </div>
             <!-- END Topic here  #################################################-->
             <!-- START CONTENT Topics here  #################################################-->
             <div class="my-2">

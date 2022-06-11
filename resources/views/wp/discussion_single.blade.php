@@ -13,10 +13,15 @@
                 <img src="/images/-min.jpg" alt="twbs" width="100%"  class="rounded flex-shrink-0 shadow-sm p-1">
             @endif
         </div>
+        <div class="container d-flex flex-row-reverse">
+            <a href="{{ route('discussion')}}">
+                <button class="btn btn-primary border btn-sm"> <i class="fa fa-arrow-left pr-1" aria-hidden="true"></i> back</button>
+            </a>
+        </div>
+                <h5 class="mb-1 pt-4 m-0">{{$discussion-> title}} </h5>
+                <small class="text-muted m-0 p-0">By- {{ $discussion-> user->name }}</small>
         <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
-                <small class="opacity-100 text-nowrap">by {{ $discussion-> user->name }}</small>
-                <h5 class="mb-0 pt-4 pb-2">{{$discussion-> title}}</h5>
                 @if ($discussion->category === '1' )
                     <img src="/images/icon/plan2.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @elseif ($discussion->category === '2' )
@@ -24,7 +29,7 @@
                 @else
                     <img src="/images/icon/plan7.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @endif
-                <small class="opacity-100 text-nowrap"><i class="fa fa-calendar fa-1x fw-light"></i> Meeting: {{ $discussion-> date }}</small>
+                    <small class="opacity-100 text-nowrap"><i class="fa fa-calendar fa-1x fw-light"></i> Meeting: {{ $discussion-> date }}</small>   
             </div>
             <div class="d-flex justify-content-between align-items-center px-0 pt-0">
                 <div class="">

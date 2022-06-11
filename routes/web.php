@@ -49,7 +49,7 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', function () {
-    return view('wp.home');
+    return view('wp.home0');
 });
 
 Route::get('/community', [NavigationController::class, 'community'])->name('community');

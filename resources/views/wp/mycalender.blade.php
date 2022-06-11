@@ -3,15 +3,11 @@
 @section('content')
    <!--====== PRELOADER PART START ======-->
     
+   
         <div class="container-fluid">
+            
             <div>
-                <div class="p-4 border-border">
-                    <h1 class="display-6 fw-bold pb-2" style="color:#D16A04">Calender</h1>
-                    <div class="py-2">
-                        <p class="fw-light py-1">See all ongoing discussion, login to create a new discussion</p>
-
-                    </div>
-                </div>
+               
 
                 <div class="d-flex gap-2 w-100 justify-content-between my-2">
                     <div class="col">

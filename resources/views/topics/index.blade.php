@@ -3,14 +3,27 @@
 @section('content')
    <!--====== PRELOADER PART START ======-->
 
+   <header class="masthead2">
+        <div class="container px-1 px-lg-1 h-100">
+            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-6 align-self-end">
+                    <h1 class="text-black font-weight-bold">Topics</h1>
+                    <hr class="divider" />
+                </div>
+                <div class="col-lg-6 align-self-baseline">
+                    <!-- <p class="text-white-75 mb-5">Start Alliance4ai can help you build better experience with the Future Maker!</p> -->
+                </div>
+            </div>
+        </div>
+    </header>
 
 <div class="container-fluid col-xxl-8 px-0 py-2 px-4 mb-3">
     <div class="rounded">
         <!-- HEADER SLIDE START HERE -->
-        <div class="mx-5">
+        <!-- <div class="mx-5">
             <div class="pb-2">
                 <h1 class="display-5 fw-bold pb-1" style="color:#F87B06">Topics</h1>
-                <p class="text-muted">Read Topics, watch class material early and facilitate group discussion with their presentation</p>
+                <p class="text-muted">Read Topics, watch class material early and facilitate group topics with their presentation</p>
             </div>
             <div class="bg-white text-secondary mb-2 text-center rounded" style="opacity:0.8">
                 <div class="overflow-hidden" style="max-height: 35vh;" >
@@ -22,7 +35,7 @@
             <div class="py-4">
                 
             </div>
-        </div>
+        </div> -->
 
         <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
         <div class="mx-5 mb-3">
@@ -69,160 +82,68 @@
     </div>
 </div>
 
-
-
-
-
-
-<div class="container-fluid p-5">
-    <div class="row ">
-        <div class="d-flex flex-wrap">
-            <div class=" d-flex flex-wrap bg-light justify-content-around wrap">
-                <div class="list-group-item list-group-item-action border d-block gap-3 py-2 bg-white col-lg-4"  aria-current="true">
-                    <div class="d-block justify-content-center mb-5 mt-3">
-                        <!-- <img src="/images/icon-alliance/message.png" alt="twbs" width="100%" height="" class="rounded flex-shrink-0"> -->
-                        <div class="overflow-hidden" style="max-height: 30vh;" >
-                            <img src="/icons/background_futurtech.png" class="img-fluid rounded mb-4" alt="Example image" width="100%" height=""  loading="lazy">
-                        </div>
-                    </div>
-                    <h3 class="p-0 pb-3 fw-light text-success">Futur Tech</h3>
-                    <ul class="nav flex-column">
-                    @if ($topics -> count())
-                        @foreach($topics as $topic)
-                            @if($topic -> category === "0")
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href=" {{ route('topics.details', [$topic->id]) }}" style="color:#115978">
-                                    <i class="fa fa-check pr-1" aria-hidden="true" style="font-size:20px; color:#115978"></i>
-                                    {{ $topic-> topic}}
-                                    </a>
-                                </li>
-                            @endif
-                        @endforeach
-                    @endif
-                    </ul>
-                </div>
-
-                <div class="list-group-item list-group-item-action border d-block gap-3 py-2 bg-white col-lg-4" aria-current="true">
-                    <div class="d-block justify-content-center mb-5 mt-3">
-                        <!-- <img src="/images/icon-alliance/message.png" alt="twbs" width="100%" height="" class="rounded flex-shrink-0"> -->
-                        <div class="overflow-hidden" style="max-height: 30vh;" >
-                            <img src="/icons/background_fm.png" class="img-fluid rounded mb-4" alt="Example image" width="100%" height=""  loading="lazy">
-                        </div>
-                    </div>
-                    <h3 class="p-0 pb-3 fw-light text-success">Workplace Skills</h3>
-                    <ul class="nav flex-column">
-                    @if ($topics -> count())
-                        @foreach($topics as $topic)
-                            @if($topic -> category === "1")
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href=" {{ route('topics.details', [$topic->id]) }}" style="color:#115978">
-                                    <i class="fa fa-check pr-1" aria-hidden="true" style="font-size:20px; color:#115978"></i>
-                                    {{ $topic-> topic}}
-                                    </a>
-                                </li>
-                            @endif
-                        @endforeach
-                    @endif
-                    </ul>
-                </div>
-
-                <div class="list-group-item list-group-item-action border d-block gap-3 py-2 bg-white col-lg-4" aria-current="true">
-                    <div class="d-block justify-content-center mb-5 mt-3">
-                        <!-- <img src="/images/icon-alliance/message.png" alt="twbs" width="100%" height="" class="rounded flex-shrink-0"> -->
-                        <div class="overflow-hidden" style="max-height: 30vh;" >
-                            <img src="/icons/background_education.png" class="img-fluid rounded mb-4" alt="Example image" width="100%" height=""  loading="lazy">
-                        </div>
-                    </div>
-                    <h3 class="p-0 pb-3 fw-light text-success">Ethics & History</h3>
-                    <ul class="nav flex-column">
-                    @if ($topics -> count())
-                        @foreach($topics as $topic)
-                            @if($topic -> category === "2")
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href=" {{ route('topics.details', [$topic->id]) }}" style="color:#115978">
-                                    <i class="fa fa-check pr-1" aria-hidden="true" style="font-size:20px; color:#115978"></i>
-                                    {{ $topic-> topic}}
-                                    </a>
-                                </li>
-                            @endif
-                        @endforeach
-                    @endif
-                    </ul>
-                </div>
-            </div>
+<div class="col-sm-12 d-flex justify-content-center align-items-start">
+    <div class="col-sm-10 d-flex gap-2 w-100 justify-content-between align-items-start">
+        <div>
+            <h1 class="pt-2 mt-2 mb-2 lh-1 text-info fw-bold"> Future Makers Topics </h1>
+            <nav class="mb-0 opacity-100 my-1 text-secondary"><small class="text-black">Learn from Future Makers</small></nav>
+            <img src="/images/icon/bg-dasha4ai.png" alt="twbs" width="" height="120" class="rounded flex-shrink-0">
+            
         </div>
+        <small class="opacity-80 text-nowrap">      
+            <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Abhishek Kumar" alt="r">
+                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Jason Sykes" alt="s">
+                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10332673-kg.jpg" title="Ajith Pushparaj" alt="j"></div>
+        </small>
     </div>
 </div>
 
 
 
-
-
-
-
-
-
-
-
-
-<!-- <div class="container-fluid px-5">
-
-    <div class="container-fluid mt-0 ">
-        <div class="row">
-            <div class="col-lg-12 d-flex flex-wrap">
-            @if ($topics -> count())
-                @foreach($topics as $topic)
-                <a href=" {{ route('topics.details', [$topic->id]) }} " class="list-group-item list-group-item-action border d-block gap-3 py-2 m-1 bg-white col-3" aria-current="true">
-                    <div class="d-block justify-content-center">
-                        @if ($topic -> image)
-                            <img src="{{ '/storage/images/topic/'.$topic->topic.'/'.$topic->image }}" alt="twbs" width="100%" height="200" class="rounded flex-shrink-0 ">
-                        @else
-                            <img src="/images/icon-alliance/message.png" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0">
-                        @endif
-                        <small class="opacity-50 text-nowrap">By {{ $topic->user->name }}</small>
-                    </div>
-                    <div class="d-flex gap-2 w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0">{{ $topic-> topic}}</h6>
-                            <nav>{{ $topic-> question_1}}</nav>
-                            <small class="opacity-50 text-nowrap">{{ $topic-> created_at->diffForHumans() }}</small>
-                            
-                            <div class="d-flex flex-wrap align-items-center px-0 pt-0">
-                                <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> 
-                                    <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">{{ $topic-> likes ->count() }}</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">{{ $topic-> message ->count() }}</span> </span> 
-                                </div>
-                                @auth
-                                    @if (!$topic->likedBy(auth()->user()))
-                                        <form action="{{ route('discussion.topic.messages.likes', $topic) }}" method="post" class="mx-2">
-                                        @csrf
-                                            <button type="submit" class="btn btn-light btn-sm border">Like</button>
-                                        </form>
-                                    @else
-                                        <form action="{{ route('discussion.topic.messages.likes', $topic) }}" method="post" class="mx-2">
-                                        @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-light btn-sm border">UnLike</button>
-                                        </form>
-                                    @endif
-                                @endauth
-                            </div>
+<!-- display all elements -->
+<div class="row justify-content-center align-items-center bg-white">
+    <!-- START Listed Topics here -->
+    <div class="col-sm-10 mt-4 ">
+        @if ($topics -> count())
+            @foreach($topics as $topic)
+            <a href="{{ route('topics.details', $topic) }}" class="border-bottom list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 my-0 bg-white p-0" aria-current="true">
+                <div class="col-sm-2 overflow-hidden"  style="max-height: 19vh;">
+                    @if ($topic->category === '1' )
+                        <img src="/icons/background_futurtech.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                    @elseif ($topic->category === '2' )
+                        <img src="/icons/background_fm.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                    @else
+                        <img src="/icons/background_education.png
+                        " alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                    @endif
+                </div>
+                <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
+                    <div>
+                        <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$topic-> topic}} </p>
+                        <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-black">{{ $topic-> topic}}</small></nav>
+                       <div class="d-flex align-items-start">
+                            <nav class="mb-0 opacity-100 my-1 text-muted"><small>, by {{ $topic-> user->name}}</small></nav>
                         </div>
                     </div>
-                </a>
-                @endforeach
-            @else
-            <div class="col-lg-12 text-center"> 
-                <div class="d-flex justify-content-center align-items-center">
-                    <img src="/images/icon-alliance/chat1.png" class="border-3" alt="twbs" width="" height="200" class="flex-shrink-0 ">
+                    <small class="opacity-80 text-nowrap">{{ $topic-> created_at->diffForHumans() }} 
+                        
+                        <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/5256931-kg.jpeg" title="Abhishek Kumar" alt="r">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Jason Sykes" alt="s">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10332673-kg.jpg" title="Ajith Pushparaj" alt="j"></div>
+                    </small>
                 </div>
-                No topic posted
-            </div>
+            </a>
+            @endforeach
+        @else
+            <p>No Topics Available or posted</p>
         @endif
-        </div>
     </div>
-</div>  -->
+    <!-- END Listed Topics here -->
+</div>
 
-    
+
     <!--====== COURSES SINGEl PART ENDS ======-->
     
 @endsection

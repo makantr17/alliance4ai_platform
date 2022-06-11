@@ -3,16 +3,19 @@
 @section('content')
    <!--====== PRELOADER PART START ======-->
     
+   <div class="px-4 py-5 my-0 text-center" style=" background-image: url('/images/icon/calendar.jpg');">
+        <!-- <img class="d-block mx-auto mb-4" src="" alt="" width="72" height="57"> -->
+        <h1 class="display-5 fw-bold text-black">Calender</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">See all ongoing discussion, login to create a new discussion.</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Hackerthon</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Join</button>
+            </div>
+        </div>
+    </div>
         <div class="container-fluid">
             <div>
-                <div class="p-4 border-border">
-                    <h1 class="display-6 fw-bold pb-2" style="color:#D16A04">Calender</h1>
-                    <div class="py-2">
-                        <p class="fw-light py-1">See all ongoing discussion, login to create a new discussion</p>
-
-                    </div>
-                </div>
-
                 <div class="d-flex gap-2 w-100 justify-content-between my-2">
                     <div class="col">
                         <div class=" d-flex flex-wrap align-items-center px-0 pt-0">

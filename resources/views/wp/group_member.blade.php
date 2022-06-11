@@ -13,9 +13,9 @@
                     <div class="overflow-hidden" style="max-height: 25vh;">
                         <div class="">
                             @if ($groups-> image )
-                                <img src="{{ '/storage/images/group/'.$groups->name.'/'.$groups->image }}" alt="twbs" width="100%" height="500" loading="lazy" class="img-fluid rounded shadow-lg mb-4 rounded">
+                                <img src="{{ '/storage/images/group/'.$groups->name.'/'.$groups->image }}" alt="twbs" width="85%" height="500" loading="lazy" class="img-fluid rounded shadow-lg mb-4 rounded">
                             @else
-                                <img src="/images/icon-alliance/discussion.png" alt="twbs" width="100%" height="500" loading="lazy" class="img-fluid rounded shadow-lg mb-4 rounded">
+                                <img src="/images/icon-alliance/discussion.png" alt="twbs" width="85%" height="500" loading="lazy" class="img-fluid rounded shadow-lg mb-4 rounded">
                             @endif
                             <!-- <img src="/icons/abstract_background.jpg" class="img-fluid rounded shadow-lg mb-4 rounded" alt="Example image" width="100%" height="500" loading="lazy"> -->
                         </div>
@@ -23,33 +23,33 @@
                 </div>
             </a>
         </div>
+        
         <div class="d-flex col-sm-12 gap-2 w-100 justify-content-center flex-wrap align-items-center my-4">
-            <nav class="col-sm-10 py-3">
-                    <div class="">
-                        <h1 class="display-6 pb-2 fw-bold text-black">{{ $groups-> name}}</h1>
-                        <nav class="opacity-80">{{ $groups-> description}}</nav>
-                    </div>
-                    <p> <i class="fa fa-map-marker text-danger" aria-hidden="true"></i> <small>{{ $groups-> location}}</small> </p>
-            </nav>
-            <div class="col-sm-10 d-flex my-3 border-bottom justify-content-right">
-
+            <div class="col-sm-10 d-flex my-3 justify-content-right">
                 <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" class="mr-1">
                 @csrf
-                    <button type="submit"class="btn btn-secondary btn-sm">Discussion</button>
+                    <button type="submit"class="btn btn-light btn-sm border">Discussion</button>
                 </form>
                 <form action="{{ route('groups.members.joined', [$groups ->id]) }}" method="get" class="mr-1">
                 @csrf
-                    <button type="submit"class="btn btn-secondary btn-sm">Members</button>
+                    <button type="submit"class="btn btn-light btn-sm border">Members</button>
                 </form>
                 @guest
-                    <a class="btn btn-secondary btn-sm" href="{{ route('login') }}" >Signin</a>
+                    <a class="btn btn-light btn-sm border" href="{{ route('login') }}" >Signin</a>
                 @endguest
                 <div class="container d-flex flex-row-reverse">
                     <a href="{{ route('groups')}}">
-                        <button class="btn btn-light btn-sm">back</button>
+                        <button class="btn btn-light btn-sm border">back</button>
                     </a>
                 </div>
             </div>
+            <nav class="col-sm-10 py-3 border bg-light">
+                <div class="">
+                    <h3 class="display-7 pb-2 fw-bold text-black">{{ $groups-> name}}</h3>
+                    <small class="opacity-50">{{ $groups-> description}}</small>
+                </div>
+                <p> <i class="fa fa-map-marker text-danger" aria-hidden="true"></i> <small>{{ $groups-> location}}</small> </p>
+            </nav>
         </div>
       <!-- <hr class="my-1"> -->
       @endforeach
@@ -64,7 +64,7 @@
             <div class="col-sm-8">
                 <div class="my-1 bg-body rounded ">
                 <!-- Highlight Futur Discussion -->
-                <h4 class="pt-3 m-3 fw-bold text-dark ">Future Discussion Tagged</h4>
+                <h5 class="pt-3 m-3 fw-bold text-dark ">Future Discussion Tagged</h5>
                 <div class="col-lg-12 pt-3">
                     @if ($future_discussions -> count())
                         @foreach($future_discussions as $discussion)
@@ -144,10 +144,11 @@
                         <p class="text-muted"></p>
                     @endif
                     </div>
+                    <nav class="col-12 p-3 bg-light"></nav>
                 </div>
                 <!-- Past Discussion -->
                 <div class="my-3 bg-body rounded">
-                    <h4 class="pt-3 m-3 fw-bold text-dark ">Past Discussion Tagged</h4>
+                    <h5 class="pt-3 m-3 fw-bold text-dark ">Past Discussion Tagged</h5>
                     <div class="col-sm-12 py-3">
                         @if ($past_discussions -> count())
                             @foreach($past_discussions as $discussion)
@@ -184,11 +185,13 @@
                         @else
                             <p class="text-muted"></p>
                         @endif
+                        <nav class="col-12 p-3 bg-light"></nav>
                     </div>
+                    
                 </div>
             </div>
 
-            <div class="col-md-4 bg-white">
+            <div class="col-md-4 bg-light">
                 <div class="my-3 p-1 rounded">
                 <h6 class=" pb-4 mb-0">Future Makers</h6>
                 @if ($group_members -> count())
@@ -200,6 +203,10 @@
                 @else
                     <p></p>
                 @endif
+
+                <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+                    {{ $group_members -> links()}}
+                </div>
                 </div>
             </div>
         </div>
