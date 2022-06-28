@@ -143,8 +143,10 @@ Route::get('/user/{user:name}/course/manage/{course}', [CourseController::class,
 Route::get('/user/{user:name}/createcourse', [CourseController::class, 'create'])->name('users.createcourse');
 Route::post('/user/{user:name}/createcourse', [CourseController::class, 'store']);
 
-Route::get('/user/{user:name}/createlessons', [LessonsController::class, 'index'])->name('users.createlessons');
-Route::post('/user/{user:name}/createlessons', [LessonsController::class, 'store']);
+Route::get('/user/{user:name}/createlessons/{course}', [LessonsController::class, 'index'])->name('users.createlessons');
+Route::post('/user/{user:name}/createlessons/{course}', [LessonsController::class, 'store']);
+
+Route::get('/user/{user:name}/lesson/details/{lesson}', [LessonsController::class, 'details'])->name('users.lesson.details');
 
 Route::get('/user/{lesson:title}/updatelessons', [LessonsController::class, 'update'])->name('users.updatelessons');
 Route::post('/user/{lesson:title}/updatelessons', [LessonsController::class, 'updatestore']);
@@ -169,8 +171,8 @@ Route::get('/user/{user:name}/hackerthon/manage/{hackerthon}', [HackerthonContro
 Route::get('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'create'])->name('users.create_hackerthon');
 Route::post('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'store']);
 
-Route::get('/user/{hackerthon:titre}/update_hackerthon', [HackerthonController::class, 'update'])->name('users.update_hackerthon');
-Route::post('/user/{hackerthon:titre}/update_hackerthon', [HackerthonController::class, 'updatestore']);
+Route::get('/user/{hackerthon:title}/update_hackerthon', [HackerthonController::class, 'update'])->name('users.update_hackerthon');
+Route::post('/user/{hackerthon:title}/update_hackerthon', [HackerthonController::class, 'updatestore']);
 
 Route::get('/user/{user:name}/discussion', [DiscussionController::class, 'index'])->name('users.discussion');
 Route::get('/user/{user:name}/discussion/manage/{discussion}', [DiscussionController::class, 'manage'])->name('users.discussion.manage');

@@ -23,30 +23,67 @@
             </a>
         </div>
         
-        <div class="d-flex col-sm-12 gap-2 w-100 justify-content-center flex-wrap align-items-center my-4">
-            <div class="col-sm-10 d-flex my-3 justify-content-right">
+        <div class="d-flex col-sm-12 gap-2 w-100 justify-content-center flex-wrap align-items-center my-2">
+        
+            <div class="col-sm-10 d-flex my-2 justify-content-right">
                 <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" class="mr-1">
                 @csrf
-                    <button type="submit"class="btn btn-light btn-sm border">Discussion</button>
+                    <button type="submit"class="btn btn-muted btn-sm "><i class='fa fa-quote-left' style='color:rgba(216,212,206,255); font-size:15px; padding:1px'></i> Discussion</button>
                 </form>
                 <form action="{{ route('groups.members.joined', [$groups ->id]) }}" method="get" class="mr-1">
                 @csrf
-                    <button type="submit"class="btn btn-light btn-sm border">Members</button>
+                    <button type="submit"class="btn btn-muted btn-sm border-bottom"><i class="fa fa-user-circle-o" style="color:rgba(216,212,206,255); font-size:15px; padding:1px"></i> Members</button>
                 </form>
-                @guest
-                    <a class="btn btn-light btn-sm border" href="{{ route('login') }}" >Signin</a>
-                @endguest
+                
                 <div class="container d-flex flex-row-reverse">
-                    <a href="{{ route('groups')}}">
-                        <button class="btn btn-light btn-sm border">back</button>
+                    <a href="{{ route('groups.members', [$groups ->id]) }}">
+                        <button class="btn btn-muted text-info btn-sm">Back</button>
                     </a>
+                
+                @auth
+                    @if ($group_members -> count())
+                        @if (!$group_members -> contains('user_id', auth()->user()->id ))
+                            <form class="mx-1" novalidate action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
+                                @csrf
+                                <div class="">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button type="submit" class="btn btn-primary my-3">Join Circle</button>
+                                    </div>
+                                </div>
+                            </form>
+                        @endif
+                    @else
+                        <form class="mx-1"novalidate  action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
+                            @csrf
+                            <div class="col-lg-12">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <button type="submit" class="btn btn-primary btn-sm my-0">Join Circle</button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
+                @endauth
+                @auth
+                    @if ($groups->joinedBy(auth()->user()))
+                        <a href="" class="p-1 m-0 text-secondary"> <i class="fa fa-bookmark-o"></i> joined</a>
+                    @endif
+                @endauth
                 </div>
             </div>
-            <nav class="col-sm-10">
+        </div>
+        <div class="d-flex col-sm-12 gap-2 w-100 justify-content-center flex-wrap align-items-center my-2">
+            <nav class="col-sm-10 py-3">
                 <div class="">
-                    <h3 class="display-7 pb-1 fw-bold text-black">{{ $groups-> name}}</h3>
+                    <h3 class="display-7 pb-2 fw-bold text-black" style="color: rgba(9,74,127,255)">{{ $groups-> name}}</h3>
+                    <small class="opacity-50">{{ $groups-> description}}</small>
                 </div>
-                <p> <i class="fa fa-map-marker text-secondary" aria-hidden="true"></i> <small>{{ $groups-> location}}</small> </p>
+                <p> <i class="fa fa-map-marker text-danger" aria-hidden="true"></i> <small>{{ $groups-> location}} , </small> <small class="text-info text-right">{{ $groups-> created_at->diffForHumans() }}</small> </p>
+                <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j"></div>
+                </div>
+                
             </nav>
         </div>
       <!-- <hr class="my-1"> -->
@@ -60,32 +97,37 @@
     <div class="row justify-content-center col-md-12">
         <div class="row bg-white py-2 justify-content-center col-md-10">
             <div class="col-sm-12">
-                <h5 class="pt-3 m-1 fw-bold text-info ">Future Makers</h5>
+                <h5 class="pt-1 m-0 fw-bold text-info ">Future Makers</h5>
+                @auth
+                    @if ($groups->joinedBy(auth()->user()))
+                        <a href="" class="p-1 m-0  text-secondary"> <i class="fa fa-bookmark-o"></i> {{ $group_members->count() }} members</a>
+                    @endif
+                @endauth
                     <div class="row justify-content-center align-items-center bg-white">
                         <!-- START Listed Topics here -->
                         <div class="col-sm-12 mt-5 ">
                             @if ($group_members -> count())
                                 @foreach($group_members as $group_member)
-                                <a href="#" class="border-bottom list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 my-0 bg-white p-0" aria-current="true">
+                                <a href="#" class="border-bottom list-group-item-action d-flex  justify-content-between gap-3 py-2 my-0 bg-white p-0" aria-current="true">
                                     <div class=" overflow-hidden"  style="max-height: 19vh;">
                                     @if ($group_member ->user->image)
                                         <img class="bd-placeholder-img flex-shrink-0 rounded-circle border shadow-sm" width="80" height="80" src="{{ '/storage/images/'.$group_member->user_id.'/'.$group_member -> user ->image}}" alt="12">
                                     @else
-                                        <img class="bd-placeholder-img flex-shrink-0 rounded-circle border " width="80" height="80" src="/images/icon-alliance/man.png" alt="default">
+                                        <img class="bd-placeholder-img flex-shrink-0 rounded-circle shadow-sm " width="80" height="80" src="/images/icon-alliance/man.png" alt="default">
                                     @endif
                                     </div>
                                     <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-center">
                                         <div>
                                             <p class="pt-0 mt-2 mb-2 lh-1 text-black fw-bold"> {{$group_member -> user ->name}} </p>
-                                            <p class="pt-0 mt-2 mb-1 lh-1 text-black fw-bold"> {{$group_member -> user ->profession}} </p>
-                                            <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-black">{{ $group_member -> user -> country}}</small></nav>
+                                            <p class="pt-0 mt-2 mb-1 lh-1 text-black fw-bold"> {{$group_member -> user ->profession}},  </p>
+                                            
                                         </div>
-                                        <small class="opacity-80 text-nowrap">{{ $group_member-> created_at->diffForHumans() }}</small>
+                                        <small class="opacity-80 text-nowrap">{{ $group_member-> created_at->diffForHumans() }} <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-black">{{ $group_member -> user -> country}}</small></nav></small>
                                     </div>
                                 </a>
                                 @endforeach
                             @else
-                                <p>No Discussion Available or posted</p>
+                                <nav class="py-2 d-col text-center justify-content-center"><i class="fa fa-braille fa-2x text-secondary" aria-hidden="true"></i> <p style="font-size:12px">no participants</p></nav>
                             @endif
                         </div>
                         <!-- END Listed Topics here -->

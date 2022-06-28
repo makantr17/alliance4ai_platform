@@ -32,10 +32,10 @@ class NavigationController extends Controller
     }
 
     public function topics(){
-        $topics =  Topic::latest()->get();
+        $topics =  Topic::latest()->paginate(15);
         $topic = Topic::when(request('category'), function($query){
             return $query->where('category', request('category'));
-        })->get();
+        })->paginate(15);
         return view('topics.index', [
             'topics'=> $topic,
         ]);
@@ -135,6 +135,7 @@ class NavigationController extends Controller
     
     public function learning(){
         $course =  Course::latest()->get();
+        // $course =  Course::latest()->where('isvalidate')->get();
         return view('wp.learning', [
             'course'=> $course,
         ]);
@@ -237,11 +238,9 @@ class NavigationController extends Controller
     
     public function course_details(Course $course){
         $lessons = lessons::latest()->where('course_id', '=', $course->id)->get();
-        $courses = Course::latest()->where('id', '=', $course->id)->get();
-        
         return view('wp.course_single', [
             'lessons' => $lessons,
-            'course'=> $courses
+            'course'=> $course
         ]);
     }
 

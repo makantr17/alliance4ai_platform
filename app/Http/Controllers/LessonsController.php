@@ -12,11 +12,19 @@ use Illuminate\Support\Facades\DB;
 class LessonsController extends Controller
 {
    
-    public function index(User $user){
-        $courses = $user->course()->get();
+    public function index(User $user, Course $course){
+        // $courses = $user->course()->get();
         return view('lessons.create_lesson', [
             'user'=> $user,
-            'course'=> $courses
+            'course'=> $course
+        ]);
+    }
+
+    public function details(User $user, lessons $lesson){
+        // $courses = $user->course()->get();
+        return view('lessons.lesson_details', [
+            'user'=> $user,
+            'lesson'=> $lesson
         ]);
     }
 
@@ -37,23 +45,34 @@ class LessonsController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request, User $user, Course $course){
         $this->validate($request, [
-            'course_id'=> 'required',
             'title'=> 'required',
+            'description'=>'required',
             'content'=>'required',
-            'estimate_time'=>'required'
+            'subtitle1'=>'required',
+            'description1'=>'required',
+            
         ]);
-
         
         $request->user()->lessons()->create([
-            'course_id'=> $request-> course_id,
+            'course_id'=> $course->id,
             'title'=> $request-> title,
+            'description'=>$request-> description,
             'content'=>$request-> content,
+            'subtitle1'=> $request-> subtitle1,
+            'description1'=>$request-> description1,
+            'code1'=>$request-> code1,
+            'link1'=>$request-> link1,
+            'subtitle2'=>$request-> subtitle2,
+            'description2'=>$request-> description2,
+            'code2'=>$request-> code2,
+            'link2'=>$request-> link2,
+            'subtitle3'=>$request-> subtitle3,
+            'description3'=>$request-> description3,
+            'code3'=>$request-> code3,
+            'link3'=>$request-> link3,
             'status'=>false,
-            'link'=> $request-> link,
-            'estimate_time'=>$request-> estimate_time,
-            
         ]);
 
         return redirect()->route('dashboard');

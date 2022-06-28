@@ -26,13 +26,13 @@
                 @enderror
             </div>
 
-            <div class="topicList container-fluid d-flex border bg-white fw-light text-secondary">
+            <div class="topicList container-fluid d-flex border p-2 bg-white fw-light text-secondary">
                 @if ($listoftopics -> count())
                     @foreach($listoftopics as $topics)
                         <label class="p-1 m-1 border bg-light rounded"><input type="checkbox" value="{{$topics->id}}"> {{$topics->topic}}</label><br>
                     @endforeach
                 @else
-                    <option value="">no user</option>
+                    <option value="">no topics</option>
                 @endif 
             </div>
             <div class="col-md-12">
@@ -131,7 +131,7 @@
                 <label for="admin_1" class="form-label">Admin_1</label>
                     <select name="admin_1" id="admin_1"
                         class="form-control py-2  rounded-lg @error('admin_1') border border-danger @enderror" value="{{ old('admin_1')}}">
-                        <option value="">Choose Admin_1</option>
+                        <option value="">Choose Admin</option>
                         @if ($listofusers -> count())
                             @foreach($listofusers as $userof)
                                 <option value="{{ $userof->email}}"> {{$userof->name}}</option>
@@ -146,27 +146,6 @@
                   </div>
                 @enderror
             </div>
-
-            <div class="col-md-6">
-                <label for="admin_2" class="form-label">Admin_2</label>
-                    <select name="admin_2" id="admin_2"
-                        class="form-control py-2  rounded-lg @error('admin_2') border border-danger @enderror" value="{{ old('admin_2')}}">
-                        <option value="">Choose Admin_2</option>
-                        @if ($listofusers -> count())
-                            @foreach($listofusers as $userof)
-                                <option value="{{$userof->email}}"> {{$userof->name}}</option>
-                            @endforeach
-                        @else
-                            <option value="">no user</option>
-                        @endif
-                    </select>
-                @error('admin_2')
-                  <div class="text-danger">
-                      {{ $message }}
-                  </div>
-                @enderror
-            </div>
-
 
             <div class="col-md-12">
                 <label for="peoples" class="form-label">Invite Peoples</label>

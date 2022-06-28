@@ -89,7 +89,6 @@ class DiscussionController extends Controller
             'status'=>false,
             'location'=>$request-> location,
             'admin_1'=>$request-> admin_1,
-            'admin_2'=>$request-> admin_2,
             'start_time'=>$request-> start_time,
             'end_time'=>$request-> end_time,
             'link'=>$request-> link,
@@ -99,7 +98,7 @@ class DiscussionController extends Controller
             'date'=>$request-> date,
         ]);
         if ($discussion) {
-            auth()->user()->notify(new \App\Notifications\DiscussionCreated($request->title, 
+            auth()->user()->notify(new \App\Notifications\DiscussionCreated($request->title, $discussion->id,
             $request->start_time, $request->end_time, auth()->user()->name, $request->link));
         }
         

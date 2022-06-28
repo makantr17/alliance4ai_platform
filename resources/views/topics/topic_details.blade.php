@@ -97,23 +97,35 @@
                 <h6 class="px-2 p-1 fw-bold text-dark"><i class="p-1 fa fa-file" style="font-size:25px; color:#05B37E" aria-hidden="true"></i> Ressources</h6>
                 @if ($topics[0]->content-> count())
                     @foreach($topics[0]->content as $content)
-                    <a href="{{ route('topics.content.details', $content) }}" class="d-flex justify-content-between list-group-item list-group-item-action bg-light d-flex gap-3 m-2 my-3 border" aria-current="true">
-                        <div class="d-flex">
-                            @if ($content->type === "application/pdf")
-                            <div id="detail_div_a4">
-                                <i class="fa fa-file-pdf-o pr-2 text-dark" style="font-size:15px" aria-hidden="true"></i>                     
-                                <embed src="{{ '/storage/images/content/'.$content->topic_id.'/'.$content->file }}" type="application/pdf" width="160" height="40">
+                        @if ($content->type)
+                        <a href="{{ route('topics.content.details', $content) }}" class="d-flex justify-content-between list-group-item list-group-item-action bg-light d-flex gap-3 m-2 my-3 border" aria-current="true">
+                            <div class="d-flex">
+                                @if ($content->type === "application/pdf")
+                                <div id="detail_div_a4">
+                                    <i class="fa fa-file-pdf-o pr-2 text-dark" style="font-size:15px" aria-hidden="true"></i>                     
+                                    <embed src="{{ '/storage/images/content/'.$content->topic_id.'/'.$content->file }}" type="application/pdf" width="160" height="40">
+                                </div>
+                                @elseif ($content->type === "video/mp4")
+                                    <p class=""> <i class="fa fa-video-camera pr-2 text-dark" style="font-size:15px" aria-hidden="true"></i> {{$content->title}} </p>
+                                @elseif ($content->type === "image/jpeg" || $content->type === "image/jpg" || $content->type === "image/png")
+                                    <p class=""><i class="fa fa-file-image-o pr-2 text-dark" style="font-size:15px" aria-hidden="true"></i> {{$content->title}} </p>
+                                @endif
                             </div>
-                            @elseif ($content->type === "video/mp4")
-                                <p class=""> <i class="fa fa-video-camera pr-2 text-dark" style="font-size:15px" aria-hidden="true"></i> {{$content->title}} </p>
-                            @elseif ($content->type === "image/jpeg" || $content->type === "image/jpg" || $content->type === "image/png")
-                                <p class=""><i class="fa fa-file-image-o pr-2 text-dark" style="font-size:15px" aria-hidden="true"></i> {{$content->title}} </p>
-                            @endif
-                        </div>
-                        <div>
-                            <small class="opacity-50 text-nowrap">{{ $content-> created_at->diffForHumans() }}</small>
-                        </div>
-                    </a>
+                            <div>
+                                <small class="opacity-50 text-nowrap">{{ $content-> created_at->diffForHumans() }}</small>
+                            </div>
+                        </a>
+                        @else
+                            <a href="#" style="background:#F2F2F2" class="list-group-item list-group-item-action border d-flex bg-light gap-3 py-2 m-2" aria-current="true">
+                                <div class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <p class="text-info " >{{ $content->title}}</p>
+                                        <p class="opacity-50 text-nowrap">{{ $content->link}}</p>
+                                        <p class="opacity-50 text-nowrap">{{ $content->description }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endif
                     @endforeach
                 @else
                 <div class="px-2 py-2 text-muted my-1 bg-light ">

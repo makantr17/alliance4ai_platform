@@ -8,18 +8,7 @@
         @foreach($hackerthon as $hackerthons)
         <div class="p-4 mb-2 rounded-3 d-flex align-items-center" style="height: 35vh;  background-image: url('/images/icon/back-col7.png');">
             <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-                <img class="mx-3 my-3"  width="80" height="80" src="/images/icon-alliance/diploma.png" alt="enterprise">
-                <h3 class="display-6 fw-bold text-white">{{ $hackerthons-> titre}}</h3>
-                <div class="col-md-2">
-                    @auth
-                        @if (!$hackerthons->isCompeting(auth()->user()))
-                            <form nonvalidate action="{{ route('hackathons.details',  $hackerthons->id) }}" method="post" class="mr-1">
-                            @csrf
-                                <button type="submit" class="btn btn-danger btn-lg">Join Hackathon</button>
-                            </form>
-                        @endif
-                    @endauth
-                </div>
+                <h3 class="display-6 fw-bold text-white">{{ $hackerthons-> title}}</h3>
             </a>
         </div>
         @endforeach
@@ -31,11 +20,14 @@
                 <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> 
                 <small class="opacity-80 text-nowrap">      
                     <div class="sc-fUqQNk jDAUBC avatar-group--dense">
-                        <img width="25" height="25" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="\images\icon-alliance\avatar.png" title="Abhishek Kumar" alt="r">
-                        <img width="25" height="25" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="\images\icon-alliance\teacher.png" title="Jason Sykes" alt="s">
-                        <img width="25" height="25" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="\images\Mamady_Kante.jpg" title="Ajith Pushparaj" alt="j"></div>
+                        <img width="35" height="35" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="\images\Mamady_Kante.jpg" title="Ajith Pushparaj" alt="j"></div>
                 </small>    
-                &nbsp;  </span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> &nbsp; <small class="align-middle text-info">{{$hackerthon[0]->competitors -> count()}} joined</small> </span> </div>
+                &nbsp;  </span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-2"> &nbsp; 
+                <p class="align-middle text-secondary" style="font-size:13px">
+                    <a href="{{ route('hackathons.participants',  $hackerthons->id) }}">{{$hackerthon[0]->competitors -> count()}} joined</a>,
+                    {{ $hackerthon[0]-> created_at->diffForHumans() }}
+                </p>
+                </span> </div>
             </div>
         </div>
         <div class=" d-flex flex-wrap align-items-center px-0 py-3 ">
@@ -43,56 +35,94 @@
                 @if (!$hackerthons->isCompeting(auth()->user()))
                     <form nonvalidate action="{{ route('hackathons.details',  $hackerthons->id) }}" method="post" class="mr-1">
                     @csrf
-                        <button type="submit" class="btn btn-primary btn">Join Hackathon</button>
+                        <button type="submit" class="btn btn-muted text-info btn-sm">Join Hackathon</button>
                     </form>
                 @endif
             @endauth
-            <form action="{{ route('hackathons.participants',  $hackerthons->id) }}" method="" class="mr-1">
-                @csrf
-                    <button type="submit" class="btn btn-primary">Participants</button>
-                </form>
-            </span>
             <div class="">
                 <a href="{{ route('hackathons')}}">
-                    <button class="btn btn-primary border "> back</button>
+                    <button class="btn btn-primary border ">Back</button>
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="row g-5 py-2">
+    <div class="row g-5 py-2 d-flex justify-content-center">
       
-      <div class="col-md-9 col-lg-12">
+      <div class="col-md-12 col-lg-10">
         <div>
             <div class="">
                 @if($hackerthon)
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                            <div class="overview-description">
-                                <h4 class="fw-bold text-info mt-5">{{ $hackerthon[0]-> titre}}</h4>
-                                <div class="singel-description pt-30 pb-20">
-                                    <h6>Description</h6>
-                                    <nav class="text-muted">{{ $hackerthon[0]-> description }}</nav>
+                            <div class="overview-description1">
+                                <!-- <h3 class="fw-bold text-black mt-1">{{ $hackerthon[0]-> title}}</h3> -->
+                                
+                                <div class="singel-description1 pt-30 pb-20">
+                                    <h4 style="padding-bottom: 2px"   class="py-2">{{ $hackerthon[0]-> subtitle1}}</h4 style="padding-bottom: 2px"  >
+                                    <nav class="text-muted" style="line-height:30px">{{ $hackerthon[0]-> description1 }}</nav>
                                 </div>
-                                <div class="bg-light rounded p-5 my-2">
-                                    <img src="/images/course/cu-1.jpg" width="100%" alt="Courses">
+                                @if( $hackerthon[0]-> images)
+                                    <div class="bg-light rounded  my-2">
+                                        <img src="{{'.images/hackathon/'.$hackerthon[0]->title.'/'.$hackerthon[0]->images}} " width="100%" alt="Courses">
+                                    </div>
+                                    
+                                @endif
+
+                                @if( $hackerthon[0]-> subtitle2 &&  $hackerthon[0]-> description2)
+                                    <div class="singel-description1 pt-30 pb-20">
+                                        <h4 style="padding-bottom: 2px"   class="py-2">{{ $hackerthon[0]-> subtitle2}}</h4 style="padding-bottom: 2px"  >
+                                        <nav class="text-muted" style="line-height:30px">{{ $hackerthon[0]-> description2 }}</nav>
+                                    </div>
+                                @endif
+                                
+                                <div class="singel-description1 pt-30">
+                                    <h4 style="padding-bottom: 2px"  >Instruction</h4 style="padding-bottom: 2px"  >
+                                    <nav class="text-muted" style="line-height:30px">{{ $hackerthon[0]-> instructions }}</nav>
+
+                                    @if( $hackerthon[0]-> limit_group)
+                                        <nav class="text-muted mt-4" style="line-height:30px">Number of allowed user by group <strong class="text-info"> {{ $hackerthon[0]-> limit_group }} </strong></nav>
+                                    @endif
+                                    @if( $hackerthon[0]-> first_prize)
+                                        <h6 class="py-2 text-info">The competition will be awarded based on each group' performance:</h6>
+                                        <ul>
+                                            <li>First Prize:  ${{ $hackerthon[0]-> first_prize }}</li>
+                                            <li>Second Prize:  ${{ $hackerthon[0]-> second_prize }}</li>
+                                            <li>Third Prize:  ${{ $hackerthon[0]-> third_prize }}</li>
+                                        </ul>
+                                    @endif
                                 </div>
                                 
-                                <div class="singel-description pt-30">
-                                    <h6>Instruction</h6>
-                                    <nav class="text-muted">{{ $hackerthon[0]-> instructions }}</nav>
-                                </div>
+                                @if( $hackerthon[0]-> rules)
+                                    <div class="singel-description1 pt-30">
+                                        <h4 style="padding-bottom: 2px"  >Rules</h4 style="padding-bottom: 2px"  >
+                                        <nav class="text-muted" style="line-height:30px">{{ $hackerthon[0]-> rules }}</nav>
+                                    </div>
+                                @endif
+
                                 <!-- ########## Paragraph 2 -->
-                                <div class="singel-description pt-30">
-                                    <h6>Tasks</h6>
-                                    <nav class="text-muted">{{ $hackerthon[0]-> description }}</nav>
-                                    <a href="" class="text-info py-2">Follow this link</a>
+                                @if( $hackerthon[0]-> evaluation)
+                                    <div class="singel-description1 pt-30">
+                                        <h4 style="padding-bottom: 2px"  >Evaluation</h4 style="padding-bottom: 2px"  >
+                                        <nav class="text-muted" style="line-height:30px">{{ $hackerthon[0]-> evaluation }}</nav>
+                                    </div>
+                                @endif
+
+
+                                <div class="singel-description1 pt-30">
+                                    <h6 style="padding-bottom: 2px" >Ressources</h6>
+                                    <nav class="text-muted">Learn more about this Hackathon by exploring the
+                                        <a href="{{ $hackerthon[0]-> link1 }}" class="text-info py-2">link</a>  
+                                        @if( $hackerthon[0]-> link2)
+                                            and <a href="{{ $hackerthon[0]-> link1 }}" class="text-info py-2">the link</a>
+                                        @endif
+                                    </nav>
                                 </div>
                                 <!--###########IF detaills CODE 2 -->
-                                <div class="bg-light rounded p-4 my-2">
-                                    <nav class="text-muted">{{ $hackerthon[0]-> tasks }}</nav>
+                                <div class="bg-light rounded pt-4 my-2">
+                                    <nav class="text-muted">{{ $hackerthon[0]-> link1 }}</nav>
                                 </div>
-                            </div> <!-- overview description -->
+                            </div> <!-- overview description1 -->
                         </div>
                     </div> 
                 @else

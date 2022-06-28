@@ -23,33 +23,72 @@
                 </div>
             </a>
         </div>
+
         
-        <div class="d-flex col-sm-12 gap-2 w-100 justify-content-center flex-wrap align-items-center my-4">
-            <div class="col-sm-10 d-flex my-3 justify-content-right">
+        <div class="d-flex col-sm-12 gap-2 w-100 justify-content-center flex-wrap align-items-center my-2">
+        
+            <div class="col-sm-10 d-flex my-2 justify-content-right">
                 <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" class="mr-1">
                 @csrf
-                    <button type="submit"class="btn btn-light btn-sm border">Discussion</button>
+                    <button type="submit"class="btn btn-muted btn-sm border-bottom"><i class='fa fa-quote-left' style='color:rgba(216,212,206,255); font-size:15px; padding:1px'></i> Discussion</button>
                 </form>
                 <form action="{{ route('groups.members.joined', [$groups ->id]) }}" method="get" class="mr-1">
                 @csrf
-                    <button type="submit"class="btn btn-light btn-sm border">Members</button>
+                    <button type="submit"class="btn btn-muted btn-sm "><i class="fa fa-user-circle-o" style="color:rgba(216,212,206,255); font-size:15px; padding:1px"></i> Members</button>
                 </form>
-                @guest
-                    <a class="btn btn-light btn-sm border" href="{{ route('login') }}" >Signin</a>
-                @endguest
+                
                 <div class="container d-flex flex-row-reverse">
                     <a href="{{ route('groups')}}">
-                        <button class="btn btn-light btn-sm border">back</button>
+                        <button class="btn btn-muted text-info btn-sm">Back</button>
                     </a>
+                
+                @auth
+                    @if ($group_members -> count())
+                        @if (!$group_members -> contains('user_id', auth()->user()->id ))
+                            <form class="mx-1" novalidate action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
+                                @csrf
+                                <div class="">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button type="submit" class="btn btn-primary my-3">Join Circle</button>
+                                    </div>
+                                </div>
+                            </form>
+                        @endif
+                    @else
+                        <form class="mx-1"novalidate  action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
+                            @csrf
+                            <div class="col-lg-12">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <button type="submit" class="btn btn-primary btn-sm my-0">Join Circle</button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
+                @endauth
+                @auth
+                    @if ($groups->joinedBy(auth()->user()))
+                        <a href="" class="p-1 m-0 text-secondary"> <i class="fa fa-bookmark-o"></i> joined</a>
+                    @endif
+                @endauth
                 </div>
             </div>
-            <nav class="col-sm-10 py-3 border bg-light">
+        </div>
+        <div class="d-flex col-sm-12 gap-2 w-100 justify-content-center flex-wrap align-items-center my-2">
+            <nav class="col-sm-10 py-3">
                 <div class="">
-                    <h3 class="display-7 pb-2 fw-bold text-black">{{ $groups-> name}}</h3>
+                    <h3 class="display-7 pb-2 fw-bold text-black" style="color: rgba(9,74,127,255)">{{ $groups-> name}}</h3>
                     <small class="opacity-50">{{ $groups-> description}}</small>
                 </div>
-                <p> <i class="fa fa-map-marker text-danger" aria-hidden="true"></i> <small>{{ $groups-> location}}</small> </p>
+                <p> <i class="fa fa-map-marker text-danger" aria-hidden="true"></i> <small>{{ $groups-> location}}, </small> <small class="text-info text-right">{{ $groups-> created_at->diffForHumans() }}</small> </p>
+                
+                    <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                        <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                        <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                        <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
+                    </div>
+                </div>
             </nav>
+            
         </div>
       <!-- <hr class="my-1"> -->
       @endforeach
@@ -61,14 +100,18 @@
     </div> -->
     <div class="row justify-content-center col-md-12">
         <div class="row bg-white py-2 justify-content-center col-md-10">
+
             <div class="col-sm-8">
                 <div class="my-1 bg-body rounded ">
                 <!-- Highlight Futur Discussion -->
-                <h5 class="pt-3 m-3 fw-bold text-dark ">Future Discussion Tagged</h5>
+                <h5 class="pt-3 pb-2 m-3 fw-bold text-dark border-bottom">Future Discussion Tagged</h5>
                 <div class="col-lg-12 pt-3">
+                @php $i = 0; @endphp
                     @if ($future_discussions -> count())
+                    
                         @foreach($future_discussions as $discussion)
                             @if (str_contains($discussion->groups, $groups->id)) 
+                            @php $i += 1 @endphp
                             <!-- USER TOPIC START HERE -->
                             <a href="{{ route('discussion.details', [$discussion->id]) }}" class="list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 border-bottom" aria-current="true">
                                 <div class="">    
@@ -131,7 +174,7 @@
                                                 @endif
                                             @endauth
                                         @else
-                                            <nav class="mb-0 opacity-75 my-1 text-light"><i class="fa fa-calendar-times-o fa-1x text-secondary" aria-hidden="true"></i></nav>
+                                            <nav></nav>
                                         @endif
                                         <!-- End -->
                                     </div>
@@ -140,19 +183,22 @@
                             <!-- USER TOPIC END HERE -->
                             @endif
                         @endforeach
-                    @else
-                        <p class="text-muted"></p>
                     @endif
                     </div>
-                    <nav class="col-12 p-3 bg-light"></nav>
+                    @if($i <= 0 )
+                        <nav class="py-2 d-col text-center justify-content-center"><i class="fa fa-braille fa-1x text-secondary" aria-hidden="true"></i> <p style="font-size:12px">no discussion</p></nav>
+                    @endif
                 </div>
                 <!-- Past Discussion -->
                 <div class="my-3 bg-body rounded">
-                    <h5 class="pt-3 m-3 fw-bold text-dark ">Past Discussion Tagged</h5>
+                    <h5 class="pt-3 pb-2 m-3 fw-bold text-dark border-bottom">Past Discussion Tagged</h5>
                     <div class="col-sm-12 py-3">
+                        @php $past = 0 @endphp
                         @if ($past_discussions -> count())
+                            
                             @foreach($past_discussions as $discussion)
-                                @if (str_contains($discussion->groups, $groups->id)) 
+                                @if (str_contains($discussion->groups, $groups->id))
+                                @php $past += 1 @endphp 
                                 <!-- USER TOPIC START HERE -->
                                 <a href="{{ route('discussion.details', [$discussion->id]) }}" class="list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 border-bottom" aria-current="true">
                                     <div class="">    
@@ -182,10 +228,10 @@
                                 <!-- USER TOPIC END HERE -->
                                 @endif
                             @endforeach
-                        @else
-                            <p class="text-muted"></p>
                         @endif
-                        <nav class="col-12 p-3 bg-light"></nav>
+                        @if($past <= 0 )
+                            <nav class="py-2 d-col text-center justify-content-center"><i class="fa fa-braille fa-1x text-secondary" aria-hidden="true"></i> <p style="font-size:12px">no discussion</p></nav>
+                        @endif
                     </div>
                     
                 </div>

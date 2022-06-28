@@ -19,62 +19,52 @@
 
 <div class="container-fluid col-xxl-8 px-0 py-2 px-4 mb-3">
     <div class="rounded">
-        <!-- HEADER SLIDE START HERE -->
-        <!-- <div class="mx-5">
-            <div class="pb-2">
-                <h1 class="display-5 fw-bold pb-1" style="color:#F87B06">Topics</h1>
-                <p class="text-muted">Read Topics, watch class material early and facilitate group topics with their presentation</p>
-            </div>
-            <div class="bg-white text-secondary mb-2 text-center rounded" style="opacity:0.8">
-                <div class="overflow-hidden" style="max-height: 35vh;" >
-                    <div class="" >
-                        <img src="/icons/backview1.png" class="img-fluid rounded shadow-lg rounded" alt="Example image" width="100%" height="400"  loading="lazy">
-                    </div>
-                </div>
-            </div>
-            <div class="py-4">
-                
-            </div>
-        </div> -->
 
         <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
         <div class="mx-5 mb-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
                 <div class="col">
-                    <div class=" d-flex flex-wrap align-items-center px-0 pt-2">
-                        <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-sliders text-muted fsize-3"></i>&nbsp; {{ $topics-> count()}} </span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
-                    </div>
+                    <div class=" d-flex flex-wrap align-items-center px-0"></div>
                 </div>
-                <div class="">
-                    <div class=" d-flex flex-wrap align-items-center px-0 pt-2">
-                        <form class="needs-validation pr-2" novalidate action="{{ route('topics') }}" method="get">
-                            @csrf  
-                            <div class="d-flex align-items-center">
-                                <i class="fa fa-sort pr-2" style="font-size:20px"></i>
-                                <select name="category" id="category"
-                                    class="form-control rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
-                                    <option value="">Select all</option>
-                                    <option value="1">Futur Tech</option>
-                                    <option value="2">History & Ethics</option>
-                                    <option value="3">Workplace Skills</option>
-                                </select>
-                                @error('category')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                                <button class="btn btn-info ml-0" type="submit">Filter</button>
+                <div class=" d-flex flex-wrap align-items-center px-0 pt-2">
+                    @auth
+                        <div class="dropdown mx-2 p-2 px-3">
+                            <p style="font-size: 14px; opacity: 0.7;"> <i class="fa fa-bell-o"></i> Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->where('type', 'App\Notifications\TopicCreated')->count()}}</span> </p>
+                            <div class="dropdown-content">
+                                @foreach (auth()->user()->notifications->where('type', 'App\Notifications\TopicCreated') as $notification) 
+                                <a href="{{ route('topics.details', $notification->data['id']) }}" style="font-size: 14px; opacity: 0.7; color:black" class="border-bottom p-1">
+                                    {{$notification->data['topic']}} 
+                                </a>
+                                @endforeach
                             </div>
+                        </div>
+                    @endauth
+                    <form class="needs-validation pr-2 m-1" novalidate action="{{ route('topics') }}" method="get">
+                        @csrf  
+                        <div class="d-flex align-items-center">
+                            <!-- <i class="fa fa-sort pr-2" style="font-size:20px"></i> -->
+                            <select name="category" id="category" style="font-size: 14px; opacity: 0.7;"
+                                class="form-control rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
+                                <option value="">Select all</option>
+                                <option value="1">Futur Tech</option>
+                                <option value="2">History & Ethics</option>
+                                <option value="3">Workplace Skills</option>
+                            </select>
+                            @error('category')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                            <button class="btn btn-info ml-0" style="font-size: 14px;" type="submit">Filter</button>
+                        </div>
+                    </form>
+                    @auth
+                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="m-1">
+                        @csrf
+                            @method('DELETE')
+                            <button type="submit" style="font-size: 14px;" class="btn btn-info">New topic</button>
                         </form>
-                        @auth
-                            <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
-                            @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-info">New topic</button>
-                            </form>
-                        @endauth
-                        </span>
-                    </div>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -82,19 +72,17 @@
     </div>
 </div>
 
-<div class="col-sm-12 d-flex justify-content-center align-items-start">
+<div class="col-sm-12 d-flex justify-content-center align-items-start mb-3">
     <div class="col-sm-10 d-flex gap-2 w-100 justify-content-between align-items-start">
         <div>
             <h1 class="pt-2 mt-2 mb-2 lh-1 text-info fw-bold"> Future Makers Topics </h1>
-            <nav class="mb-0 opacity-100 my-1 text-secondary"><small class="text-black">Learn from Future Makers</small></nav>
-            <img src="/images/icon/bg-dasha4ai.png" alt="twbs" width="" height="120" class="rounded flex-shrink-0">
-            
+            <nav class="mb-0 opacity-100 my-1"><p class="text-gray opacity-50">Learn from Future Makers, post your topics</p></nav>
+            <nav class="mb-0 opacity-100 my-1 text-secondary opacity-40"> <i class="fa fa-list fa-1x text-gray opacity-50"></i> 5 topics</nav>
         </div>
         <small class="opacity-80 text-nowrap">      
             <div class="sc-fUqQNk jDAUBC avatar-group--dense">
-                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Abhishek Kumar" alt="r">
-                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Jason Sykes" alt="s">
-                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10332673-kg.jpg" title="Ajith Pushparaj" alt="j"></div>
+                <img width="" height="80" class="flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/icon/bg-dasha4ai.png" title="Abhishek Kumar" alt="r">
+            </div>
         </small>
     </div>
 </div>
@@ -121,18 +109,25 @@
                 <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
                     <div>
                         <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$topic-> topic}} </p>
-                        <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-black">{{ $topic-> topic}}</small></nav>
-                       <div class="d-flex align-items-start">
-                            <nav class="mb-0 opacity-100 my-1 text-muted"><small>, by {{ $topic-> user->name}}</small></nav>
-                        </div>
+                        <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> 
+                            @if ($topic->category === '1' )
+                                <small class="text-black"> Future Tech</small>
+                            @elseif ($topic->category === '2' )
+                                <small class="text-black">History & Ethics</small>
+                            @else
+                                <small class="text-black">Workplace Skills</small>
+                            @endif
+                        </nav>
+                        <nav class="mb-0 opacity-100 my-1 text-muted">
+                            @if ($topic->user->image)
+                                <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                            @else
+                                <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                            @endif
+                            <small>, by {{ $topic-> user->name}}</small>
+                        </nav>
                     </div>
-                    <small class="opacity-80 text-nowrap">{{ $topic-> created_at->diffForHumans() }} 
-                        
-                        <div class="sc-fUqQNk jDAUBC avatar-group--dense">
-                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/5256931-kg.jpeg" title="Abhishek Kumar" alt="r">
-                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Jason Sykes" alt="s">
-                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10332673-kg.jpg" title="Ajith Pushparaj" alt="j"></div>
-                    </small>
+                    <small class="opacity-80 text-nowrap text-info">{{ $topic-> created_at->diffForHumans() }}</small>
                 </div>
             </a>
             @endforeach
@@ -141,6 +136,9 @@
         @endif
     </div>
     <!-- END Listed Topics here -->
+    <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+        {{ $topics -> links()}}
+    </div>
 </div>
 
 

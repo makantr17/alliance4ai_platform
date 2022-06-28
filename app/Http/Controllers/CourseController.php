@@ -49,14 +49,23 @@ class CourseController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'titre'=> 'required',
+            'name'=> 'required',
+            'category'=> 'required',
             'description'=>'required'
         ]);
 
+        $filename='';
+        if ($request->hasFile('image')) {
+            $filename= $request->image->getClientOriginalName();
+            $request->image->storeAs('images/course/'.$request->name, $filename,'public');
+        }
         
         $request->user()->course()->create([
-            'titre'=> $request-> titre,
-            'description'=>$request-> description
+            'name'=> $request-> name,
+            'category'=> $request-> category,
+            'description'=>$request-> description,
+            'images'=> $filename,
+            'isvalidate'=>false,
         ]);
         return redirect()->route('dashboard');
     }

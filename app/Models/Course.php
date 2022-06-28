@@ -10,8 +10,11 @@ use App\Models\course_user;
 class Course extends Model
 {
     protected $fillable = [
-        'titre',
+        'name',
+        'category',
         'description',
+        'image',
+        'isvalidate'
     ];
     
     public function user(){

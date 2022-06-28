@@ -7,7 +7,7 @@
         <div class="container-fluid my-5">
 
         
-            <div class="mb-5">
+            <div class="mb-2">
                 <div class="bg-white text-secondary mb-2 text-center rounded">
                     <div class="py-3">
                         <h1 class="display-6 fw-bold" style="color:#D16A04" >Circles</h1>
@@ -22,7 +22,7 @@
             </div>
 
             <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
-            <div class="d-flex gap-2 w-100 justify-content-between my-5">
+            <div class="d-flex gap-2 w-100 justify-content-between my-3">
                 <div class="col">
                     <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                         <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">2</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
@@ -30,11 +30,22 @@
                 </div>
                 <div class="mx-5">
                     <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
+                        @auth
+                        <div class="dropdown mx-2 p-2 px-3">
+                            <p style="font-size: 14px; opacity: 0.7;"> <i class="fa fa-bell-o"></i> Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->where('type', 'App\Notifications\CircleCreated')->count()}}</span> </p>
+                            <div class="dropdown-content">
+                                @foreach (auth()->user()->notifications->where('type', 'App\Notifications\CircleCreated') as $notification) 
+                                <a href="{{ route('groups.members', $notification->data['id']) }}" style="font-size: 13px; opacity: 0.7; color:black" class="border-bottom p-1">
+                                    {{$notification->data['titre']}} 
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endauth
                         <form class="needs-validation pr-2" novalidate action="{{ route('groups') }}" method="get">
                             @csrf  
                             <div class="d-flex align-items-center">
-                                <i class="fa fa-sort pr-2" style="font-size:20px"></i>
-                                <select name="location" id="location"
+                                <select name="location" id="location" style="font-size: 14px; opacity: 0.7;"
                                     class="form-control rounded-lg @error('location') border border-danger @enderror" value="{{ old('location')}}">
                                     <option value="">-- all location</option>
                                     @foreach($location as $locations)
@@ -46,13 +57,13 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
-                                <button class="btn btn-sm ml-2" style="background:#3E8F78; color:white;" type="submit">Filter</button>
+                                <button class="btn btn-md" style="font-size: 14px; background:#3E8F78; color:white;" type="submit">Filter</button>
                             </div>
                         </form>
                         @auth
                             <form action="{{ route('users.creategroups',  auth()->user()->name) }}" method="get" class="mr-1">
                             @csrf
-                                <button type="submit" class="btn btn-sm ml-2" style="background:#3E8F78; color:white; ">New Circle</button>
+                                <button type="submit" class="btn btn-md" style="font-size: 14px; background:#3E8F78; color:white;">New Circle</button>
                             </form>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
                         @endauth
@@ -60,6 +71,20 @@
                 </div>
             </div>
             <!-- NAVBAR COLLECTION FOR HEADER END HERE-->
+            <div class="col-sm-12 d-flex justify-content-center align-items-start mb-3">
+                <div class="col-sm-11 d-flex gap-2 w-100 justify-content-between align-items-start">
+                    <div>
+                        <h1 class="pt-2 mt-2 mb-2 lh-1 fw-bold" style="color:#3E8F78;"> Future Makers Circles </h1>
+                        <nav class="mb-0 opacity-100 my-1"><p class="text-gray opacity-50">Join Future Makers Circles, Participate the circle activities</p></nav>
+                        <nav class="mb-0 opacity-100 my-1 text-secondary opacity-40"><i class="fa fa-bookmark-o fa-1x" aria-hidden="true"></i> {{ $group -> count() }} topics</nav>
+                    </div>
+                    <small class="opacity-80 text-nowrap">      
+                        <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                            <img width="" height="80" class="flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/icon/bg-dasha4ai.png" title="Abhishek Kumar" alt="r">
+                        </div>
+                    </small>
+                </div>
+            </div>
 
             <div class="row mt-2">
                 <div class="col-md-12">

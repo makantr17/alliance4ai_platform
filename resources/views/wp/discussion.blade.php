@@ -6,10 +6,9 @@
 <section id="courses-part" class="pb-120 ">       
     <header class="masthead">
         <div class="container px-1 px-lg-1 h-100">
-            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                <div class="col-lg-6 align-self-end">
+            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center ">
+                <div class="col-lg-6 align-self-center pl-5">
                     <h1 class="text-black font-weight-bold">Future Maker Discussions</h1>
-                    <hr class="divider" />
                 </div>
                 <div class="col-lg-6 align-self-baseline">
                     <!-- <p class="text-white-75 mb-5">Start Alliance4ai can help you build better experience with the Future Maker!</p> -->
@@ -19,48 +18,18 @@
     </header>
 
     <div class="container-fluid">
-        <!-- <div>
-            <div class=" text-secondary mb-2 text-center rounded" style="background:#019DE2">
-            <div class="py-2">
-                <h1 class="display-6 fw-bold text-light py-2">Discussion</h1>
-                </div>
-                    <div class="overflow-hidden" style="max-height: 30vh;">
-                        <div class="">
-                            <img src="/icons/AI_event_1.jpg" class="img-fluid rounded-3 shadow-lg mb-4 rounded" alt="Example image" width="60%" height="500" loading="lazy">
-                        </div>
-                        
-                    </div>
-                </div>
-        </div> -->
-
         <!-- Navbar -->
         <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
-        <div class="d-flex gap-2 w-100 justify-content-between py-4">
-            <div class="col">
-                <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
-                    <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">0</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
-                </div>
-            </div>
+        <div class="d-flex gap-2 w-100 justify-content-between py-4 ">
+            <div class="col "></div>
             <div class="">
                 <div class="d-flex flex-wrap align-items-center px-0 pt-0">
-                    @auth
-                    <div class="dropdown mx-2 p-2 px-3">
-                        <p>Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->count()}}</span> </p>
-                        <div class="dropdown-content">
-                            @foreach (auth()->user()->notifications as $notification) 
-                            <a href="{{ route('discussion.details', '2') }}" class="border-bottom p-1">
-                                {{$notification->data['title']}} 
-                            </a>
-                            @endforeach
-                        </div>
-                    </div>
-                    @endauth
                     
-                    <form class="needs-validation pr-2" novalidate action="{{ route('discussion') }}" method="get">
+                    
+                    <form class="needs-validation pr-2 m-1" novalidate action="{{ route('discussion') }}" method="get">
                         @csrf  
                         <div class="d-flex align-items-center">
-                            <i class="fa fa-sort pr-2" style="font-size:15px; color:gray"></i>
-                            <select name="period" id="period"
+                            <select name="period" id="period" style="font-size: 14px; opacity: 0.9;"
                                 class="form-control rounded-lg @error('period') border border-danger @enderror" value="{{ old('period')}}">
                                 <option value="">Select all</option>
                                 <option value="2">Future Discussion</option>
@@ -72,14 +41,13 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                            <button class="btn btn-info ml-0" type="submit">Period</button>
+                            <button class="btn btn-info ml-0" style="font-size: 14px;" type="submit">Period</button>
                         </div>
                     </form> 
-                    <form class="needs-validation pr-2" novalidate action="{{ route('discussion') }}" method="get">
+                    <form class="needs-validation pr-2 m-1" novalidate action="{{ route('discussion') }}" method="get">
                         @csrf  
                         <div class="d-flex align-items-center">
-                            <i class="fa fa-sort pr-2" style="font-size:15px; color:gray"></i>
-                            <select name="category" id="category"
+                            <select name="category" id="category" style="font-size: 14px; opacity: 0.9;"
                                 class="form-control rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
                                 <option value="">Select all</option>
                                 <option value="1">Futur Tech</option>
@@ -91,31 +59,41 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                            <button class="btn btn-info ml-0" type="submit">Filter</button>
+                            <button class="btn btn-info ml-0" style="font-size: 14px;" type="submit">Filter</button>
                         </div>
                     </form>
                     @auth
-                        <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit" class="btn btn-info ">New Discussion</button>
-                        </form>
+                    <div class="dropdown mx-2 p-2 px-3">
+                        <p style="font-size: 14px; opacity: 0.9;"> <i class="fa fa-bell-o"></i> Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated')->count()}}</span> </p>
+                        <div class="dropdown-content">
+                            @foreach (auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated') as $notification) 
+                            <a href="{{ route('discussion.details', $notification->data['id']) }}" style="font-size: 14px; opacity: 0.9; color:black" class="border-bottom p-1">
+                                {{$notification->data['title']}} 
+                            </a>
+                            @endforeach
+                        </div>
+                    </div>
                     @endauth
+                    @auth
+                        <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-0">
+                        @csrf
+                            <button type="submit" class="btn btn-sm btn-muted " style="opacity:0.8"><i class="fa fa-comment-o fa-1x"></i> New discussion</button>
+                        </form>
+                    @endauth    
+                    
                     </span>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-12 gap-2 w-100 text-center pt-5">
-            <p class="fw-light small">Search information</p>
-        </div>
         <div class="col-lg-12 d-flex gap-2 w-100 justify-content-center pt-0">
-            <div class="col-lg-6 row d-flex justify-content-between align-items-center">
-                <div class="input-group">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                    <button type="button" class="btn btn-outline-secondary">search</button>
-                </div>
+            <div class="col-lg-10 ">
+                <h3 class="pt-2 mt-2 mb-2 lh-1 text-info fw-bold"> Discussions </h3>
+                <nav class="mb-0 opacity-100 my-1"><p class="text-gray opacity-50">Join Future Makers hosted discussions</p></nav>
+                <nav class="mb-0 opacity-100 my-1 text-secondary opacity-40">{{$discussion -> count()}} discussions</nav>
             </div>
         </div>
+        
         
         <!-- DISPLAY CONTENTS HERE -->
         <div class="row justify-content-center align-items-center bg-white">
@@ -136,40 +114,46 @@
                         <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
                             <div>
                                 <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$discussions-> title}} </p>
-                                <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-black">{{ $discussions-> location}}</small></nav>
-                                <nav class="mb-0 opacity-100 my-1 text-secondary"><i class="fa fa-calendar fa-1x fw-light"></i>  {{ $discussions-> date}}, From</small> {{ $discussions-> start_time}} <small>To</small> {{ $discussions-> end_time}}</nav>
+                                <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-info">{{ $discussions-> location}}</small></nav>
+                                <nav class="mb-0 opacity-100 my-1 text-secondary">  {{ $discussions-> date}}, From</small> {{ $discussions-> start_time}} <small>To</small> {{ $discussions-> end_time}}</nav>
                                 <div class="d-flex align-items-start">
+                                    <nav class="mb-0 opacity-100 mr-2 text-muted">
+                                        <nav class="mb-0 opacity-100 my-1 text-muted">
+                                            @if ($discussions->user->image)
+                                                <img src="{{ '/storage/images/'.$discussions->user->id.'/'.$discussions->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                                            @else
+                                                <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                                            @endif
+                                            <small>, by {{ $discussions-> user->name}}</small>
+                                        </nav>
+                                    </nav>
                                     @if (($discussions -> date) > Carbon\Carbon::now() && $discussions -> start_time > (Carbon\Carbon::now())->toTimeString() )
-                                        <nav class="mb-0 opacity-100 my-1 text-muted"><small>upcoming</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>upcoming</small></nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
                                         (Carbon\Carbon::now() )->toTimeString() >= $discussions -> start_time && 
                                         $discussions -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
-                                        <nav class="mb-0 opacity-100 my-1 text-muted"><small>ongoing</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>ongoing</small></nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && 
                                         (Carbon\Carbon::now()) ->toTimeString() > $discussions -> end_time )
-                                        <nav class="mb-0 opacity-100 my-1 text-muted"><small>past</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>past</small></nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
                                         $discussions -> start_time  > (Carbon\Carbon::now())->toTimeString()) )
-                                        <nav class="mb-0 opacity-100 my-1 text-muted"><small>upcoming</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>upcoming</small></nav>
                                     @else
-                                        <nav class="mb-0 opacity-100 my-1 text-muted"><small>past</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>past</small></nav>
                                     @endif
-                                    <nav class="mb-0 opacity-100 my-1 text-muted"><small>, hosted by {{ $discussions-> user->name}}</small></nav>
+                                   
                                 </div>
                                 
                             </div>
                             <small class="opacity-80 text-nowrap">{{ $discussions-> created_at->diffForHumans() }} 
                                 <nav> {{ $discussions->registeration->count() }} registered</nav>
-                                <div class="sc-fUqQNk jDAUBC avatar-group--dense">
-                                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/5256931-kg.jpeg" title="Abhishek Kumar" alt="r">
-                                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10161132-gr.jpg" title="Jason Sykes" alt="s">
-                                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="https://storage.googleapis.com/kaggle-avatars/thumbnails/10332673-kg.jpg" title="Ajith Pushparaj" alt="j"></div>
                             </small>
                         </div>
                     </a>
                     @endforeach
                 @else
-                    <p>No Discussion Available or posted</p>
+                <nav class="py-2 d-col text-center justify-content-center"><i class="fa fa-braille fa-2x text-secondary" aria-hidden="true"></i> <p style="font-size:12px">no discussion</p></nav>
                 @endif
             </div>
             <!-- END Listed Topics here -->

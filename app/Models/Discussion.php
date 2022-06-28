@@ -17,7 +17,6 @@ class Discussion extends Model
         'category',
         'location',
         'admin_1',
-        'admin_2',
         'start_time',
         'end_time',
         'link',

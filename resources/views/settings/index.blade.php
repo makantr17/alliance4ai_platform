@@ -45,20 +45,9 @@
                 </div>
                 <div class="col-sm-8 row">
                     <div class="col-sm-12">
-                        <h1 class="h1 fw-lighter py-2 text--center">Information</h1>
+                        <h1 class="h1 fw-lighter py-2 text--center border-bottom">Information</h1>
                     </div>
-                    <div class="col-sm-5 border shadow-sm">
-                        <h5 class="fw-normal my-2 text-info">Confirm Notifications</h5>
-                        <div>
-                            <a href="" class="d-flex justify-content-between list-group-item list-group-item-action bg-light d-flex gap-3 m-0 border" aria-current="true">
-                                <div class="d-flex">
-                                    <p class=""> <i class="fa fa-video-camera pr-1 text-dark" style="font-size:15px" aria-hidden="true"></i> New notification </p>
-                                </div>
-                                <div><small class="opacity-50 text-nowrap">2 hours ago</small></div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-12">
                         <table class="table table-bordered style-comments">
                             <thead>
                                 <tr>

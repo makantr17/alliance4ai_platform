@@ -50,7 +50,7 @@
                         @if ($course -> count())
                             @foreach($course as $courses)
                             <div class="col-lg-3 col-md-6">
-                                <div class="singel-course mt-2 border shadow-sm">
+                                <div class="singel-course pd-0 mt-2 border shadow-sm">
                                     <div class="thum">
                                         <div class="image">
                                             <img src="images/course/courseai.jpg" alt="Course">
@@ -60,22 +60,28 @@
                                         </div>
                                     </div>
                                     <div class="cont">
-                                        <a href="{{ route('learning.course', [$courses->id]) }}"><h4 class="py-1 m-0">{{ $courses-> titre}}</h4></a>
+                                        <a href="{{ route('learning.course', [$courses->id]) }}"><h5 class="py-1 m-0">{{ $courses-> name}}</h5></a>
                                         <nav><small>By- {{$courses->user->name}} </small></nav>
-                                        <nav class="text-muted"> {{ Str :: limit($courses-> description, 25) }} </nav>
+                                        <nav class="text-muted"> {{ Str :: limit($courses-> description, 30) }} </nav>
                                         @auth
                                             @if (!$courses->isTaken(auth()->user()))
-                                                <form action="{{ route('learning.course', [$courses->id]) }}" method="get" >
-                                                @csrf
-                                                    <button type="submit" class="btn btn-sm my-2 btn-secondary">Join</button>
-                                                </form>
+                                                <small class=" text-info">start now</small>
                                             @else
-                                                <form action="{{ route('learning.course', [$courses->id]) }}" method="get">
-                                                @csrf
-                                                    <button type="submit" class="btn btn-sm my-1 btn-success">Open</button>
-                                                </form>
+                                                <small>loaded in</small>
                                             @endif
                                         @endauth
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <form action="{{ route('learning.course', [$courses->id]) }}" method="get" >
+                                            @csrf
+                                                <button type="submit" class="btn btn-sm my-2 btn-secondary">Open</button>
+                                            </form>
+                                            <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div> <!-- singel course -->
                             </div>

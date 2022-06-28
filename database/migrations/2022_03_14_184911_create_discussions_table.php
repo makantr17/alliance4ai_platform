@@ -18,10 +18,10 @@ class CreateDiscussionsTable extends Migration
             $table->string('title')->nullable();
             $table->string('description');
             $table->string('category');
+            $table->string('topics')->nullable();
             $table->string('location');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('admin_1');
-            $table->string('admin_2')->nullable();
             $table->time('start_time');
             $table->time('end_time');
             $table->string('link')->nullable();

@@ -12,10 +12,21 @@ class lessons extends Model
     protected $fillable = [
         'course_id',
         'title',
+        'description',
         'content',
-        'link',
-        'estimate_time',
-        'status'
+        'subtitle1',
+        'description1',
+        'code1',
+        'link1',
+        'subtitle2',
+        'description2',
+        'code2',
+        'link2',
+        'subtitle3',
+        'description13',
+        'code3',
+        'link3',
+        'status',
     ];
     
     public function user(){

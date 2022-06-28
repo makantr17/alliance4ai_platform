@@ -14,8 +14,10 @@ class ProfileController extends Controller
     }
 
     public function index(User $user){
+        $admin_access = User::latest()->where('id', $user->id)->with(['access_role']) ->get();
         return view ('users.profile',[
             'user' => $user,
+            'admin' => $admin_access,
         ]);
     }
 
@@ -34,8 +36,10 @@ class ProfileController extends Controller
 
 
     public function update(User $user){
+        $admin_access = User::latest()->where('id', $user->id)->with(['access_role']) ->get();
         return view ('users.update-profile',[
             'user' => $user,
+            'admin' => $admin_access,
         ]);
     }
 

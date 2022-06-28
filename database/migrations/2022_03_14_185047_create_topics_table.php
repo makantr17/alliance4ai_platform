@@ -15,11 +15,11 @@ class CreateTopicsTable extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
-            $table->string('topic')->nullable();
+            $table->string('topic');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('category');
-            $table->string('description');
-            $table->string('image');
+            $table->string('description')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('status');
             $table->timestamps();
         });

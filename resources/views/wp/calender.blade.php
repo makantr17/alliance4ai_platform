@@ -28,10 +28,22 @@
                                 @csrf  
                                 <div class="d-flex align-items-center"></div>
                             </form>
+                            @auth
+                            <div class="dropdown mx-2 p-2 px-3">
+                                <p style="font-size: 14px; opacity: 0.7;">Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated')->count()}}</span> </p>
+                                <div class="dropdown-content">
+                                    @foreach (auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated') as $notification) 
+                                    <a href="{{ route('discussion.details', $notification->data['id']) }}" style="font-size: 14px; opacity: 0.7;" class="border-bottom p-1">
+                                        {{$notification->data['title']}} 
+                                    </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endauth
                             <form class="needs-validation py-1" novalidate action="{{ route('users.calendardiscussion') }}" method="post">
                                 @csrf  
                                 <div class="d-flex align-items-center">
-                                    <select name="category" id="category"
+                                    <select name="category" id="category" style="font-size: 14px; opacity: 0.7;"
                                         class="form-control  rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
                                         <option value="">Select all</option>
                                         <option value="0">Futur Tech</option>
@@ -43,13 +55,13 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                    <button class="btn btn-info" type="submit">Filter All</button>
+                                    <button class="btn btn-info" style="font-size: 14px; " type="submit">Filter</button>
                                 </div>
                             </form>
                             @auth
                                 <form action="{{ route('users.calendardiscussion.mycalendar', auth()->user()->name) }}" method="get" >
                                 @csrf
-                                    <button type="submit" class="btn btn-md ml-1 text-white " style="background:#F87B06">My calender</button>
+                                    <button type="submit" class="btn btn-md ml-1 text-white" style="font-size: 14px; background:#F87B06">My calender</button>
                                 </form>
                             @endauth
                         </div>

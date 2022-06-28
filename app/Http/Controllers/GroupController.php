@@ -41,7 +41,7 @@ class GroupController extends Controller
         if ($request->hasFile('image')) {
             $filename= $request->image->getClientOriginalName();
             $request->image->storeAs('images/group/'.$request->name, $filename,'public');
-            $request->user()->group()->create([
+            $circle = $request->user()->group()->create([
                 'name'=> $request-> name,
                 'titre'=> $request-> titre,
                 'description'=>$request-> description,
@@ -50,6 +50,11 @@ class GroupController extends Controller
                 'image'=>$filename,
                 'isavailable'=>false,
             ]);
+            // circle notification
+            if ($circle) {
+                auth()->user()->notify(new \App\Notifications\CircleCreated($circle->titre, $circle->id));
+            }
+
             return redirect()->route('users.group',  auth()->user()->name);
          }
 

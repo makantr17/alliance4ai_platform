@@ -10,13 +10,25 @@ use App\Models\Competitor;
 class Hackerthon extends Model
 {
     protected $fillable = [
-        'titre',
+        'title',
         'category',
-        'description',
+        'subtitle1',
+        'description1',
+        'subtitle2',
+        'description2',
+        'images',
         'instructions',
-        'tasks',
+        'evaluation',
+        'rules',
         'limit_group',
-        'isavailable',
+        'first_prize',
+        'second_prize',
+        'third_prize',
+        'start_date',
+        'deadline',
+        'link1',
+        'link2',
+        'isvalidate',
     ];
     
     public function user(){

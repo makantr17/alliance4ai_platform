@@ -24,7 +24,7 @@ class HackerthonController extends Controller
     }
 
     public function manage(User $user, Hackerthon $hackerthon){
-        $hackerthon = $user->hackerthon()->where('id', '=', $hackerthon->id)->get();
+        // $hackerthon = $user->hackerthon()->where('id', '=', $hackerthon->id)->get();
         return view('hackerton.manage_hackerton', [
             'user'=> $user,
             'hackerthon'=> $hackerthon,
@@ -42,30 +42,52 @@ class HackerthonController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'titre'=> 'required',
+            'title'=> 'required',
             'category'=> 'required',
-            'description'=> 'required',
+            'subtitle1'=> 'required',
+            'description1'=> 'required',
             'instructions'=> 'required',
-            'tasks'=> 'required',
-            'limit_group'=> 'required',
+            'start_date'=> 'required',
+            'deadline'=> 'required',
         ]);
-
-        $request->user()->hackerthon()->create([
-            'titre'=> $request-> titre,
+        
+        $filename='';
+        if ($request->hasFile('image')) {
+            $filename= $request->image->getClientOriginalName();
+            $request->image->storeAs('images/hackathon/'.$request->title, $filename,'public');
+        }
+        $hackerthon = $request->user()->hackerthon()->create([
+            'title'=> $request-> title,
             'category'=> $request-> category,
-            'description'=> $request-> description,
+            'subtitle1'=> $request-> subtitle1,
+            'description1'=> $request-> description1,
+            'subtitle2'=> $request-> subtitle2,
+            'description2'=> $request-> description2,
+            'images'=> $filename,
             'instructions'=> $request-> instructions,
-            'tasks'=> $request-> tasks,
+            'evaluation'=> $request-> evaluation,
+            'rules'=> $request-> rules,
             'limit_group'=> $request-> limit_group,
-            'isavailable'=>false,
+            'first_prize'=> $request-> first_prize,
+            'second_prize'=> $request-> second_prize,
+            'third_prize'=> $request-> third_prize,
+            'start_date'=> $request-> start_date,
+            'deadline'=> $request-> deadline,
+            'link1'=> $request-> link1,
+            'link2'=> $request-> link2,
+            'isvalidate'=>false,
         ]);
 
-        return redirect()->route('dashboard');
+        if ($hackerthon) {
+            auth()->user()->notify(new \App\Notifications\HackathonCreated($hackerthon->title, $hackerthon->id));
+        }
+
+        return redirect()->route('hackathons');
     }
 
     public function update(Hackerthon $hackerthon){
         return view('hackerton.edit_hackerthon', [
-            'hackerthons'=> $hackerthon
+            'hackerthon'=> $hackerthon
         ]);
     }
 

@@ -8,6 +8,7 @@ use App\Models\Topic;
 use App\Models\Prompts;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class TopicController extends Controller
 {
@@ -42,64 +43,68 @@ class TopicController extends Controller
         $data =$request->validate([
             'topic'=> 'required',
             'category'=>'required',
-            'description'=>'required',
-            'image'=>'required',
             'questions.*.question' => 'required',
             'exercises.*.question' => 'required',
             'content.*.title' => 'max:300',
             'content.*.link' => 'max:300',
             'content.*.description' => 'max:300',
-            'content.*.image',
+            // 'content.*.image',
             'content.*.type',
         ]);
 
-       
-        if ($request->hasFile('image')) {
-            $filename= $request->image->getClientOriginalName();
+        dd($data['content']);
 
-            $request->image->storeAs('images/topic/'.$request-> topic, $filename,'public');
-            // save new topic
-            $topic= $request->user()->topic()->create([
-                'topic'=> $request-> topic,
-                'category'=>$request-> category,
-                'description'=>$request-> description,
-                'status'=> false,
-                'image'=> $filename,
+        $topic= $request->user()->topic()->create([
+            'topic'=> $request-> topic,
+            'category'=>$request-> category,
+            'description'=>$request-> description,
+            'status'=> false,
+        ]);
+
+        // save the prompts
+        foreach ($data['questions'] as $j => $choice_content) {
+            $request->user()->prompts()->create([
+                'topic_id'=> $topic-> id,
+                'question' => implode(", ", $choice_content),
             ]);
-
-           // save the prompts
-            foreach ($data['questions'] as $j => $choice_content) {
-                $request->user()->prompts()->create([
-                    'topic_id'=> $topic-> id,
-                    'question' => implode(", ", $choice_content),
-                ]);
-            }
-            // save the exercises
-            foreach ($data['exercises'] as $tel => $exercise) {
-                $request->user()->exercise()->create([
-                    'topic_id'=> $topic-> id,
-                    'question' => implode(", ", $exercise),
-                ]);
-            }
-            // save the contents
-            foreach ($data['content'] as $cont => $contento) {
-                foreach ($contento as $key => $value) {
-                    $request->user()->content()->create([
-                        'topic_id'=> $topic-> id,
-                        'type'=> '',
-                        'file'=> $value !== 'undefined' && $key === 'image' ?  $value : '',
-                        'link'=> $value !== 'undefined' && $key === 'link' ?  $value : '',
-                        'title'=> $value !== 'undefined' && $key === 'title' ?  $value : '',
-                        'description'=> $value !== 'undefined' && $key === 'description' ?  $value : '',
-                    ]);
-                }
-                
-            }
-
-        
-            return redirect()->route('topics');
         }
-
+        // save the exercises
+        foreach ($data['exercises'] as $tel => $exercise) {
+            $request->user()->exercise()->create([
+                'topic_id'=> $topic-> id,
+                'question' => implode(", ", $exercise),
+            ]);
+        }
+        // save the contents
+        foreach ($data['content'] as $cont => $contento) {
+            $title = '';
+            $content = '';
+            $type = '';
+            $filetype='';
+            foreach ($contento as $key => $value) {
+                if ($value !== 'undefined' && $key === 'title') {
+                    $title = $value;
+                }
+                if ($value !== 'undefined') {
+                    $type = $key;
+                    $content = $value;
+                }
+            }
+            $request->user()->content()->create([
+                'topic_id'=> $topic-> id,
+                'type'=> '',
+                // 'file'=> $content !== 'undefined' && $type === 'image' ?  $content : '',
+                'link'=> $content !== 'undefined' && $type === 'link' ?  $content : '',
+                'title'=> $title !== 'undefined' ?  $value : '',
+                'description'=> $content !== 'undefined' && $type === 'description' ?  $content : '',
+            ]);
+        }
+        // send notification
+        if ($topic) {
+            auth()->user()->notify(new \App\Notifications\TopicCreated($topic->topic, $topic->id, auth()->user()));
+        }
+        
+        return redirect()->route('topics');
     }
 
 

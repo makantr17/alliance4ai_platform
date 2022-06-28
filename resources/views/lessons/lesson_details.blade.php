@@ -31,7 +31,7 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new course</button>
                         </form>
-                        <form action="{{ route('users.createlessons', [$course[0]->user, $course[0]->id]) }}" method="get" class="mr-1">
+                        <form action="" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add lesson</button>
                         </form>
@@ -50,52 +50,69 @@
 
 <div class="col-lg-12 row y-1">
     <div class="col-lg-4">
-        @if ($course -> count())
-            @foreach($course as $courses)
+        
             <div class="mb-4">
                 <div class="container-fluid">
-                    <h5 class="display-7 py-1 fw-bold">{{ $courses-> name}}</h5>
-                    <p style="font-size: 14px">{{ $courses-> description}}</p>
+                    <h3 class="text-info">Lessons</h3>
+                    <br>
+                    <p class="display-7 py-1 fw-bold">{{ $lesson-> course->name}}</p>
+                    <br>
+                    <h5 class="display-7 py-1 fw-bold">{{ $lesson-> title}}</h5>
+                    <p style="font-size: 14px">{{ $lesson-> description}}</p>
                 </div>
             </div>
-            @endforeach
-        @endif
+            
         <div class="d-flex justify-content-between align-items-center">
             <div class="sc-fUqQNk jDAUBC avatar-group--dense">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
             </div>
-            <form action="{{ route('learning.course', [$courses->id]) }}" method="get" >
-            @csrf
-                <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
-            </form>
         </div>
     </div>
     
 
     <div class="col-lg-8 py-1">
-        @if ($lessons -> count())
-            @foreach($lessons as $lesson)
-                <a href="{{ route('users.lesson.details', [$lesson->user, $lesson->id]) }}" class="list-group-item-action d-flex my-1 flex-wrap justify-content-between align-items-center gap-3 py-1 my-0 bg-light rounded" aria-current="true">
-                    <div class="col-sm-2 overflow-hidden" >
-                        <img src="/images/icon/plan2.png" alt="twbs" width="60px" height="60px" class="rounded flex-shrink-0">
-                    </div>
-                    <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
-                        <div>
-                            <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{ $lesson-> title}} </p>
-                            <nav class="mb-0 opacity-100 my-1 text-secondary"> 
-                                <small class="text-info">{{ Str :: limit($lesson-> description, 105) }}</small>
-                            </nav>
-                            <small class="opacity-80 text-nowrap">{{ $lesson-> created_at->diffForHumans() }}</small>
-                        </div>
-                    </div>
-                </a>
-            @endforeach
-        @else
-            <p class="text-center pt-5 fw-light">No lessons added</p>
-        @endif
-           
+        
+        
+        <div class="col-sm-12 col gap-2 w-100 justify-content-between align-items-start">
+            <div>
+                <h5 class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{ $lesson-> subtitle1}} </h5>
+                <nav class="p-3 bg-light opacity-100 my-4 text-secondary"> 
+                    <p class="text-muted">{{ $lesson-> description1 }}</p>
+                </nav>
+                <nav class="p-3 bg-light opacity-100 my-4 text-secondary"> 
+                    <p class="text-muted">{{ $lesson-> code1 }}</p>
+                </nav>
+                <nav class="mt-1 opacity-100 my-1 text-secondary"> 
+                    <a class="text-muted">{{ $lesson-> link1 }}</a>
+                </nav>
+            </div>
+            <div>
+                <h5 class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{ $lesson-> subtitle2}} </h5>
+                <nav class="opacity-100 my-4 text-secondary"> 
+                    <p class="text-muted">{{ $lesson-> description2 }}</p>
+                </nav>
+                <nav class="opacity-100 my-4 text-secondary"> 
+                    <p class="text-muted">{{ $lesson-> code2 }}</p>
+                </nav>
+                <nav class="opacity-100 my-4 text-secondary"> 
+                    <a class="text-muted">{{ $lesson-> link2 }}</a>
+                </nav>
+            </div>
+            <div>
+                <h5 class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{ $lesson-> subtitle3}} </h5>
+                <nav class="opacity-100 my-4 text-secondary"> 
+                    <p class="text-muted">{{ $lesson-> description3 }}</p>
+                </nav>
+                <nav class="mt-1 opacity-100 my-1 text-secondary"> 
+                    <p class="text-muted">{{ $lesson-> code3 }}</p>
+                </nav>
+                <nav class="mt-1 opacity-100 my-1 text-secondary"> 
+                    <a class="text-muted">{{ $lesson-> link3 }}</a>
+                </nav>
+            </div>
+        </div>
     </div>
         
 </div>

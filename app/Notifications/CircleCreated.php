@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class DiscussionCreated extends Notification
+class CircleCreated extends Notification
 {
     use Queueable;
 
@@ -16,14 +16,10 @@ class DiscussionCreated extends Notification
      *
      * @return void
      */
-    public function __construct($title, $id, $start_at, $end_at, $user, $link)
+    public function __construct($titre, $id)
     {
-        $this->title = $title;
+        $this->titre = $titre;
         $this->id = $id;
-        $this->start_at = $start_at;
-        $this->end_at = $end_at;
-        $this->user = $user;
-        $this->link = $link;
     }
 
     /**
@@ -47,18 +43,16 @@ class DiscussionCreated extends Notification
     {
         return (new MailMessage)
                     ->line('Hello Futur Maker, 
-                    You have hosted a new discussion on the A4ai-App. 
-                    As we settled, the meeting start-at:', $this->start_at,' to ', $this->end_at, '. Join the meeting via', $this->link)
-                    ->action('Go to discussion', url('discussion/details',$this->id))
+                    You have created a new topcic on the A4ai-App. 
+                    Topic:', $this->titre, '. Start reading via https://a4ai-App.com/groups/details', $this->id)
+                    ->action('Go to topic', url('groups/details',$this->id))
                     ->line('Thank you for using our application, see you soon!');
     }
 
     public function toDatabase(){
         return [
-            'title' => $this->title,
+            'titre' => $this->titre,
             'id' => $this->id,
-            'start_at' => $this->start_at,
-            'end_at' => $this->end_at,
         ];
     }
 
