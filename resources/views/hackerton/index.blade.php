@@ -38,9 +38,9 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add lesson</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Courses</button>
+                            <button type="submit"class="btn btn-muted btn-sm"> {{$hackerthons -> count()}} Hackathon</button>
                         </form>
                     @endauth
                 </div>
@@ -78,7 +78,7 @@
         @endforeach
 
         @else
-            <p>{{ $hackerthons->user ->name}} does not have any posts</p>
+            <div class="d-flex col-sm-12 justify-content-center"><i class="fa fa-braille fa-2x"></i></div>
         @endif
         
       </div>

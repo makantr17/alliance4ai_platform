@@ -10,8 +10,8 @@
             </div>
             <div class="col-sm-12 row">
                 
-                <div class="text--center col-sm-4">
-                    <h1 class="h1 fw-lighter py-2 text--center">Setting Board</h1>
+                <div class="col-sm-3">
+                    <h4 class="h4 fw-bold py-2 text--center">Setting Board</h4>
                     <div class="">
                         <p class="fw-light">Find user by email and grant or remove admin access</p>
                         <form class="" novalidate action="{{ route('setting.grant-admin', auth()->user()->name)}}" method="get">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-sm-8 row">
                     <div class="col-sm-12">
-                        <h1 class="h1 fw-lighter py-2 text--center border-bottom">Information</h1>
+                        <h4 class=" fw-lighter py-2 text--center border-bottom">Information</h4>
                     </div>
                     <div class="col-sm-12">
                         <table class="table table-bordered style-comments">

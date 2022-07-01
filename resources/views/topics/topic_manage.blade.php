@@ -1,8 +1,49 @@
+
 @extends('layouts.app')
 
 @section('content')
-   <!--====== PRELOADER PART START ======-->
 
+
+@auth
+    <x-menu />
+@endauth
+
+<div class="container-fluid col-xxl-8 px-0 py-2">
+    <div class="p-3 rounded ">
+        <!-- HEADER SLIDE START HERE -->
+        <!-- HEADER SLIDE START HERE -->
+        <div class="px-4  mb-2 text-center">
+            <div class="py-1">
+                <h1 class="display-6 fw-bold text-dark">My Topics</h1>
+            </div>
+            
+        </div>
+
+        <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
+        <div class="d-flex gap-2 w-100 justify-content-between border-bottom py-1">
+            <div class="col">
+                <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
+                    <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">2</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
+                </div>
+            </div>
+            <div class="">
+                <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
+                    @auth
+                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
+                        </form>
+                        <form action="{{ route('users.topics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Topics</button>
+                        </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
+        <!-- NAVBAR COLLECTION FOR HEADER END HERE-->
+    </div>
+</div>
 
 <div class="container-fluid">
 
@@ -12,36 +53,16 @@
             <div class="col-lg-12 shadow-sm">
             @if ($topics -> count())
                 @foreach($topics as $topic)
-                <a href=" {{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }} " class="list-group-item-action d-block gap-3 py-2 m-2 bg-white" aria-current="true">
+                <a href="#" class="list-group-item-action d-flex gap-3 py-2 m-2 bg-white" aria-current="true">
                     <!-- COVER DISCUSSION START HERE ########### -->
-                    <div class="d-block justify-content-center mb-4 overflow-hidden" style="max-height: 30vh;">
-                        @if ($topic -> image)
-                            <img src="{{ '/storage/images/topic/'.$topic->topic.'/'.$topic->image }}" alt="twbs" width="100%" class="rounded flex-shrink-0">
+                    <div class=" justify-content-center text--center align-items-center">
+                        @if ($topic->category === '1' )
+                            <img src="/icons/background_futurtech.png" alt="twbs" width="" height="80" class="rounded flex-shrink-0">
+                        @elseif ($topic->category === '2' )
+                            <img src="/icons/background_fm.png" alt="twbs" width="" height="80" class="rounded flex-shrink-0">
                         @else
-                            <img src="/images/icon-alliance/message.png" alt="twbs" width="100%" class="rounded flex-shrink-0">
+                            <img src="/icons/background_education.png" alt="twbs" width="" height="80" class="rounded flex-shrink-0">
                         @endif
-                        <small class="opacity-50 text-nowrap">By {{ $topic->user->name }}</small>
-                    </div>
-                    <!-- Create new Discussion START HERE ########### -->
-                    <div class="d-flex gap-2 w-100 justify-content-between">
-                        <div class="col">
-                            <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
-                                <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">0</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
-                            </div>
-                        </div>
-                        <div class="">
-                            <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
-                                @auth
-                                    <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
-                                    @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-info btn-sm">New topic</button>
-                                    </form>
-
-                                @endauth
-                                </span>
-                            </div>
-                        </div>
                     </div>
                     <!-- Modify Content START HERE ############### -->
                     <div class="d-flex gap-2 w-100 justify-content-between">
@@ -90,7 +111,7 @@
         <!-- END Listed Topics here  #################################################-->
         <!-- START CONTENT Topics here  #################################################-->
         <div class="col-lg-6 shadow-sm">
-            <h3 class="p-2 fw-light my-3 border-bottom">List of Contents</h3>
+            <h5 class="p-2 fw-bold text-info my-3 border-bottom">List of Contents</h5>
             @if ($topics[0]->content-> count())
                 @foreach($topics[0]->content as $content)
                 <a href="" class="list-group-item list-group-item-action border d-flex gap-3 py-2 my-2 bg-white shadow-sm" aria-current="true">
@@ -120,7 +141,7 @@
             </div>
             @endif
 
-            <h3 class="p-2 fw-light my-3 border-bottom">List of Prompts Questions</h3>
+            <h5 class="p-2 fw-bold text-info my-3 border-bottom">List of Prompts Questions</h5>
             <!-- START Prompts here #######################" -->
             @if ($topics[0]->prompts-> count())
                 @foreach($topics[0]->prompts as $prompts)
@@ -152,8 +173,8 @@
 
 
         <!-- START Notifications here -->
-        <div class="col-md-6 shadow-sm">
-            <h3 class="p-2 fw-light my-3 border-bottom">Questions</h3>
+        <div class="col-md-6">
+            <h5 class="p-2 fw-bold text-info my-3 border-bottom">Questions</h5>
              <!-- --------------------- START NEW TABLE --------------------->
             @if($topics[0]->exercise->isEmpty())
                 <div class="px-4 py-5 my-3 sm:px-6"></div>
@@ -166,7 +187,7 @@
                         <div class="d-flex gap-2 w-100 justify-content-between">
                             <div>
                                 <nav>{{ $question->question}}</nav>
-                                <div class="text-sm text-gray-900">Is_active- {{ $question->is_active === '1'  ? 'Yes' : 'No' }}</div>
+                                <div class="text-sm text-info"> {{ $question->is_active === '1'  ? 'active' : 'off' }}</div>
                                 <small class="opacity-50 text-nowrap">{{ $question-> created_at->diffForHumans() }}</small>
                                 <div class="d-flex flex-wrap align-items-center px-0 pt-1">
                                     @auth
@@ -178,7 +199,6 @@
                                             @csrf
                                             <button class="btn btn-info btn-sm">Create</button>
                                         </form>
-                                        <i class="fa-solid fa fa-toggle-off fa-2x text-info"></i>
                                     @endauth
                                 </div>
                             </div>

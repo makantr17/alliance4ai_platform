@@ -44,13 +44,15 @@ class DiscussionController extends Controller
     }
 
     public function manage(User $user, Discussion $discussion){
-        $topics = Topic::latest()->with(['content', 'likes', 'message'])->where('discussion_id', '=', $discussion->id)->where('user_id', '=', $user->id)->get();
-        // $topics = Topic::latest()->where('discussion_id', '=', $discussion->id)->where('user_id', '=', $user->id)->get();
-        $discussions = $user->discussion()->where('id', '=', $discussion->id)->get();
+        $topics = [];
+        if ($discussion->topics ) {
+            $list = explode(',', $discussion->topics);
+            $topics = Topic::latest()->where('id', '=', $list[0])->get();
+        }
+        
         return view('discussion.manage_discussion', [
-            'topics' => $topics,
-            'user'=> $user,
-            'discussion'=> $discussions
+            'discussion'=> $discussion,
+            'topics'=> $topics,
         ]);
     }
 

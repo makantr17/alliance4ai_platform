@@ -1,27 +1,30 @@
+
+
 @extends('layouts.app')
 
 @section('content')
-   <!--====== PRELOADER PART START ======-->
+
 
 @auth
     <x-menu />
 @endauth
 
 <div class="container-fluid col-xxl-8 px-0 py-2">
-    <div class="bg-light p-3 rounded ">
+    <div class="p-3 rounded ">
         <!-- HEADER SLIDE START HERE -->
-        <div class=" text-secondary px-4  mb-2 text-center">
+        <!-- HEADER SLIDE START HERE -->
+        <div class="px-4  mb-2 text-center">
             <div class="py-1">
-                <h1 class="display-6 fw-bold text-dark">Topics</h1>
+                <h1 class="display-6 fw-bold text-dark">My Topics</h1>
             </div>
             
         </div>
 
         <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
-        <div class="d-flex gap-2 w-100 justify-content-between my-3">
+        <div class="d-flex gap-2 w-100 justify-content-between border-bottom py-1">
             <div class="col">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
-                    <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">0</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
+                    <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">2</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
                 </div>
             </div>
             <div class="">
@@ -29,12 +32,13 @@
                     @auth
                         <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-info">Add topic</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
                         </form>
-
+                        <form action="{{ route('users.topics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Topics</button>
+                        </form>
                     @endauth
-                    </span>
                 </div>
             </div>
         </div>
@@ -43,56 +47,47 @@
 </div>
 
 
-<div class="container-fluid">
-
-    <div class="container-fluid mt-20">
-        <div class="row align-items-center justify-content-center">
-            <!-- START Listed Topics here -->
-            <div class="col-lg-10 ">
-            @if ($topics -> count())
-                @foreach($topics as $topic)
-                <a href=" {{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }} " class="border d-flex gap-3 my-4 bg-white" aria-current="true">
-                    <div class="d-block justify-content-center">
-                        @if ($topic -> image)
-                            <img src="{{ '/storage/images/topic/'.$topic->topic.'/'.$topic->image }}" alt="twbs" width="120" height="100" class="rounded flex-shrink-0">
-                        @else
-                            <img src="/images/icon-alliance/message.png" alt="twbs" width="120" height="70" class="rounded flex-shrink-0 border">
-                        @endif
-                    </div>
-                    <div class="d-flex gap-2 justify-content-between pt-2">
-                        <div>
-                            <h6 class="mb-0">{{ $topic-> topic}}</h6>
-                            <nav class="text-muted">{{ substr($topic->description, 0, 20) }}  </nav>
-                            <small class="opacity-50 text-muted">{{ $topic-> created_at->diffForHumans() }}</small>
-                            <div class="d-flex flex-wrap align-items-center">
-                                <div class="px-0 pr-3"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> 
-                                    <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">{{ $topic-> likes ->count() }}</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4">  </span> 
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                @endforeach
-               
-            @else
-            <div class="col-lg-12 text-center"> 
-                <div class="d-flex justify-content-center align-items-center">
-                    <img src="/images/icon-alliance/chat1.png" class="border-3" alt="twbs" width="" height="200" class="flex-shrink-0 ">
-                </div>
-                No topic posted
+<div class="album py-3 bg-white">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      @if ($topics -> count())
+        @foreach($topics as $topic)
+        <div class="col-lg-3">
+          <div class="card shadow-sm bg-light">
+            <div class=" justify-content-center text--center align-items-center">
+                @if ($topic->category === '1' )
+                    <img src="/icons/background_futurtech.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                @elseif ($topic->category === '2' )
+                    <img src="/icons/background_fm.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                @else
+                    <img src="/icons/background_education.png
+                    " alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                @endif
             </div>
+            <div class="card-body">
+              <h5 class="fw-bold pb-2" style="font-size:16px">{{ $topic-> topic}}</h5>
+              <p class="card-text pb-1" style="font-size:14px">{{ Str :: limit($topic-> description, 45) }}</p>
+              
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-topic">
+                    <form novalidate action="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}">
+                        <button class="btn btn-muted btn-sm border" type="submit"><i class="fa fa-wrench"></i> Manage</button>
+                    </form>
+                </div>
+                <small class="text-info">{{ $topic-> created_at->diffForHumans() }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endforeach
+
+        @else
+            <p>{{ $groups->user ->name}} does not have any posts</p>
         @endif
-        </div>
-            <!-- END Topics Notification here -->
-        </div>
-        <!-- END CONTENTS HERE -->
+        
+      </div>
     </div>
-
-    
-</div> 
-
-    
-    <!--====== COURSES SINGEl PART ENDS ======-->
-    
+</div>
+        
 @endsection
+

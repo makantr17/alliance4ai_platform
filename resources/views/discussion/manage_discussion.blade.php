@@ -1,31 +1,30 @@
+
+
 @extends('layouts.app')
 
 @section('content')
+
 
 @auth
     <x-menu />
 @endauth
 
-
 <div class="container-fluid col-xxl-8 px-0 py-2">
-    <div class="bg-light p-3 rounded ">
+    <div class="p-3 rounded ">
         <!-- HEADER SLIDE START HERE -->
-        <div class="bg-dark text-secondary px-4  mb-2 text-center">
+        <!-- HEADER SLIDE START HERE -->
+        <div class="px-4  mb-2 text-center">
             <div class="py-1">
-                <h1 class="display-6 fw-bold text-white">Discussion</h1>
+                <h1 class="display-6 fw-bold text-dark">Discussions</h1>
             </div>
-            <div class="overflow-hidden" style="max-height: 15vh;">
-                <div class="container px-3">
-                    <img src="/icons/abstract_background.jpg" class="img-fluid rounded-3 shadow-lg mb-4" alt="Example image" width="90%" height="500" loading="lazy">
-                </div>
-            </div>
+            
         </div>
 
         <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
-        <div class="d-flex gap-2 w-100 justify-content-between">
+        <div class="d-flex gap-2 w-100 justify-content-between border-bottom py-1">
             <div class="col">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
-                    <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">{{ $discussion-> count() }}</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div>
+                    <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">2</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
                 </div>
             </div>
             <div class="">
@@ -33,22 +32,17 @@
                     @auth
                         <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-light">Add discussion</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Host discussion</button>
                         </form>
-
-                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.discussion',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-light">New topic</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-edit"></i> Edit</button>
                         </form>
-
-                        <form action="" method="post" class="mr-1">
+                        <form action="{{ route('users.discussion',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-light">Collaborators</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Discussions</button>
                         </form>
                     @endauth
-                    </span>
                 </div>
             </div>
         </div>
@@ -57,142 +51,126 @@
 </div>
 
 
-
-
-<div class="row">
-    <!-- START list of Discussions -->
-    <div class="col-md-4">
-        <div class="list-group bg-light">
-            <h6 class="p-2">Created</h6>
-            @if ($discussion -> count())
-                @foreach($discussion as $discussions)
-                <a href="" class="list-group-item list-group-item-action border d-block gap-3 py-2 m-2 bg-white" aria-current="true">
+<div class="col-lg-12 row y-1">
+    <div class="col-lg-3 mx-2 bg-light py-2">
+        @if ($discussion -> count())
+            <div class="mb-4">
+                <div class="container-fluid">
                     <div class="d-flex justify-content-between mb-2">
-                        @if ($discussions-> files )
-                            <img src="{{ '/storage/images/discussion/'.$discussions->id.'/'.$discussions->files }}" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm border border-info p-1">
+                        @if ($discussion->category === '1' )
+                            <img src="/images/icon/plan2.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
+                        @elseif ($discussion->category === '2' )
+                            <img src="/images/icon/plan4.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                         @else
-                            <img src="/images/icon-alliance/discussion.png" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-1 border border-warning p-1">
+                            <img src="/images/icon/plan7.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                         @endif
-                        <small class="opacity-50 text-nowrap">{{ $discussions-> created_at->diffForHumans() }}</small>
                     </div>
-                    <div class="d-flex gap-2 w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0">{{ $discussions-> title}}</h6>
-                            <nav>{{ $discussions-> description}}</nav>
-                            <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
-                                <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">{{ $topics-> count() }}</span> </div> </div>
-                            </div>
+                    <h4 class="display-7 py-1 fw-bold ">{{ $discussion-> name}}</h4>
+                    <p style="font-size: 14px"><strong class=""> {{ $discussion-> titre}}</strong></p>
+                    <p style="font-size: 14px"><strong class="text-primary">Description </strong> {{ $discussion-> description}}</p>
+                    <p><small>hosted by</small> <small class="text-info">{{ $discussion-> user->name}}</small></p>
+                    <small class="opacity-50 text-nowrap">{{ $discussion-> created_at->diffForHumans() }}</small>
+                </div>
+                
+            </div>
+        @endif
+        <div class="d-flex justify-content-between align-items-center">
+            <small></small>
+            <form action="{{ route('discussion.details', $discussion) }}" method="get" >
+            @csrf
+                <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8 mx-2 bg-light py-2">
+        <div class="d-flex justify-content-between align-items-center px-0 py-2">
+                <div class="text-center align-items-center">
+                    <div >
+                        <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j"></div>
                         </div>
+                        @if (($discussion -> date) > Carbon\Carbon::now() && $discussion -> start_time > (Carbon\Carbon::now())->toTimeString() )
+                            <nav class="mb-0 opacity-75 my-1 text-black"><small>upcoming</small></nav>
+                            @auth
+                                @if (!$discussion->participatedBy(auth()->user()))
+                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                                    @csrf
+                                        <button type="submit" class="btn btn-primary btn-sm">register</button>
+                                    </form>
+                                @endif
+                            @endauth
+                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
+                            $discussion -> start_time  > (Carbon\Carbon::now())->toTimeString()) )
+                            <nav class="opacity-75 my-1 text-black"><small>upcoming</small></nav>
+                            @auth
+                                @if (!$discussion->participatedBy(auth()->user()))
+                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                                    @csrf
+                                        <button type="submit" class="btn btn-secondary">register</button>
+                                    </form>
+                                @else
+                                    <form action="" method="get" class="">
+                                    @csrf
+                                        <button type="submit"class="btn btn-success">Join</button>
+                                    </form>
+                                @endif
+                            @endauth
+                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
+                            (Carbon\Carbon::now() )->toTimeString() >= $discussion -> start_time && 
+                            $discussion -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
+                            <!-- If ongoing or live -->
+                            @auth
+                                @if (!$discussion->participatedBy(auth()->user()))
+                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                                    @csrf
+                                        <button type="submit" class="btn btn-secondary btn-sm">register live</button>
+                                    </form>
+                                @else
+                                    <form action="" method="get" class="">
+                                    @csrf
+                                        <button type="submit"class="btn btn-success btn-sm">Join live</button>
+                                    </form>
+                                @endif
+                            @endauth
+                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && 
+                            (Carbon\Carbon::now()) ->toTimeString() > $discussion -> end_time )
+                            <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
+                        
+                        @else
+                            <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
+                        @endif
                         
                     </div>
-                </a>
-                @endforeach
-            @else
-                <span>No discussion</span>
-            @endif
-        </div>
-    </div>
-    <!-- END LIST OF DISCUSSION -->
-    <!-- Participated POSTED MESSAGE  -->
-    <div class="col-md-5">
-        <div class="list-group bg-light">
-            <h6 class="p-2 mb-0">Topics</h6>
-            @if ($topics -> count())
-                @foreach($topics as $topic)
-                <a href="" class="list-group-item list-group-item-action border d-flex gap-3 py-2 m-2 bg-white" aria-current="true">
-                    <img src="/images/icon-alliance/message.png" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-2">
-                    <div class="d-flex gap-2 w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0">{{ $topic-> topic}}</h6>
-                            <nav>{{ $topic-> question_1}}</nav>
-                            <nav>
-                                @if ($topic-> content ->count() )
-                                    <img class="my-3 img-circle " style="border-radius: 10px;" alt="twbs" width="100%" height=""
-                                    src="{{ '/storage/images/content/'.$topic->content[0]->topic_id.'/'.$topic->content[0]->file }}" alt="ll">
-                                @endif
-                                <!-- <img src="/images/icon-alliance/discussion.png" alt="twbs" width="100%" height="" class="flex-shrink-0 m-2"> -->
-                            </nav>
-                            <div class="d-flex flex-wrap align-items-center px-0 pt-0">
-                                <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> 
-                                    <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">{{ $topic-> likes ->count() }}</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">{{ $topic-> message ->count() }}</span> </span> 
-                                </div>
-                                @auth
-                                    <!-- START CHECK IF USER HAS FILE OF CONTENT -->
-                                    @if ($topic->content->count() && $topic->content[0]->file)
-                                        <form action="" method="get" class="mr-1 m-2">
-                                        @csrf
-                                            <button type="submit"class="btn btn-light">Delete image</button>
-                                        </form>
-                                    @else
-                                        <form action="{{ route('users.addcontent',  $topic) }}" method="get" class="mr-1 m-2">
-                                        @csrf
-                                            <button type="submit"class="btn btn-light">Add content</button>
-                                        </form>
-                                    @endif
-                                    <!-- END CHECK IF USER HAS FILE -->
-                                    <!-- START DELETE TOPICS -->
-                                    <form action="{{ route('users.updatetopics',  $topic-> topic) }}" method="get" class="mr-1">
-                                    @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-light">update</button>
-                                    </form>
-                                    <!-- END DELETE TOPICS -->
-                                    <form action="" method="post" class="mr-1">
-                                    @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-light">Delete</button>
-                                    </form>
-                                @endauth
-                            </div>
-                        </div>
-                        <small class="opacity-50 text-nowrap">{{ $topic-> created_at->diffForHumans() }}</small>
-                    </div>
-                </a>
-                @endforeach
-            @else
-                <div class="col-lg-12 d-block justify-content-center align-items-center text-center mb-2">
-                    <img src="/images/icon-alliance/chat1.png" alt="twbs" width="220" height="" class="flex-shrink-0 p-1">
-                    @auth
-                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit"class="btn btn-info">Add Topic</button>
-                        </form>
-                    @endauth
                 </div>
+        <div class="list-discussion">
+            @if ($discussion-> count())
+                <div href="" class="d-col gap-3 d-flex justify-content-between pt-0" aria-current="true">
+                    <nav class="opacity-100 text-nowrap py-1"><strong>Country</strong></nav>
+                    <nav class="opacity-100 text-nowrap py-1">{{ $discussion-> location}}</nav>
+                </div>
+                <div href="" class="d-col gap-3 d-flex justify-content-between pt-0" aria-current="true">
+                    <nav class="opacity-100 text-nowrap py-1"><strong>admin</strong></nav>
+                    <nav>{{ $discussion-> admin_1}}</nav>
+                </div>
+                <div href="" class="d-col gap-3 d-flex justify-content-between pt-0" aria-current="true">
+                    <nav class="opacity-100 text-nowrap py-1"><i class="fa fa-time"></i><strong>Time</strong> </nav>
+                    <nav>From {{ $discussion-> start_time}} To {{ $discussion-> end_time}}</nav>
+                </div>
+                
             @endif
+            <div class="pt-3">
+                @if (sizeof($topics) > 0 )
+                    <nav class="opacity-100 text-muted py-0"><i class="fa fa-external-link pr-1"></i> Read the ressources related to the topic <br>
+                        <a class="py-1" href="{{ route('topics.details', [$topics[0]-> id]) }}">{{ $topics[0] -> topic}}</a>
+                    </nav>
+                @endif
+            </div>
         </div>
     </div>
-    <!-- END POSTED MESSAGE -->
 
-    <!-- START LIST NOTIFICATION START HERE -->
-    <div class="col-md-3">
-        <h6 class="border-bottom pb-2 mb-0">Recent Notifications</h6>
-        <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Timeline</h6>
-                <small class="text-muted">start_at -end_at</small>
-                </div>
-                <span class="text-muted">1week</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Remplir les info</h6>
-                <small class="text-muted">Corectement remplir les info</small>
-                </div>
-                <span class="text-muted">100</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Athentification</h6>
-                <small class="text-muted">Informations correctes</small>
-                </div>
-                <span class="text-muted">100</span>
-            </li>
-        </ul>
-    </div>
-    <!-- END LIST NOTIFICATION START HERE -->
 </div>
-
-
+    
 @endsection
+

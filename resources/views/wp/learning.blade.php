@@ -9,7 +9,7 @@
             <div class="mb-5">
                 <div class="bg-white text-secondary mb-2 text-center rounded">
                     <div class="py-3">
-                        <h1 class="display-6 fw-bold" style="color:#D16A04" >Learning</h1>
+                        <h1 class="display-6 fw-bold" style="color:#02873a" >Learning</h1>
                         <p class="text-muted">Learn different courses shared by Futur makers and increase your score</p>
                     </div>
                     <div class="overflow-hidden" style="max-height: 30vh;">

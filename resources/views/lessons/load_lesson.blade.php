@@ -15,16 +15,15 @@
                                 <p class="text-muted">{{ $lessons-> course-> description}}</p>
                             </div> 
                         @endif
-
                         <div class="course-terms mb-5">
                             <ul>
                                 <li>
                                     <div class="teacher-name">
                                         <div class="thum">
                                             @if ($lessons-> course-> user->image)
-                                            <img src="{{ '/storage/images/'.$lessons-> course->user->id.'/'.$lessons-> course->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                                            <img src="{{ '/storage/images/'.$lessons-> course->user->id.'/'.$lessons-> course->user->image }}" alt="twbs" width="50" height="50" class="rounded-circle flex-shrink-0 border border m-1 p-1">
                                             @else
-                                                <img src="/images/cxc.jpg" alt="twbs" width="40" height="40" class="rounded-circle flex-shrink-0">
+                                                <img src="/images/cxc.jpg" alt="twbs" width="50" height="50" class="rounded-circle flex-shrink-0 border border m-1 p-1">
                                             @endif
                                         </div>
                                         <div class="name">
@@ -50,6 +49,7 @@
                                                 <nav class="text-muted">{{ $lessons-> description }}</nav>
                                                 <br>
                                                 <nav class="text-muted">{{ $lessons-> content }}</nav>
+                                                <br>
                                                 @if($lessons-> link)
                                                 <div class="bg-light pl-2">
                                                     <a href="{{ $lessons-> link }}" class="text-info py-2">{{ $lessons-> link }}</a>
@@ -64,7 +64,8 @@
                                                 <nav class="text-muted">{{ $lessons-> description1 }}</nav>
                                                 <br>
                                                 <nav class="text-muted">{{ $lessons-> content1 }}</nav>
-                                                <code>{{ $lessons-> content1 }}</code>
+                                                <code>{{ $lessons-> code1 }}</code>
+                                                <br>
                                                 @if($lessons-> link1)
                                                 <div class="bg-light pl-2">
                                                     <a href="{{ $lessons-> link1 }}" class="text-info py-2">{{ $lessons-> link1 }}</a>
@@ -79,7 +80,9 @@
                                                     <nav class="text-muted">{{ $lessons-> description2 }}</nav>
                                                     <br>
                                                     <nav class="text-muted">{{ $lessons-> content2 }}</nav>
-                                                    <code>{{ $lessons-> content2 }}</code>
+                                                    <br>
+                                                    <code>{{ $lessons-> code2 }}</code>
+                                                    <br>
                                                     @if($lessons-> link2)
                                                     <div class="bg-light pl-2">
                                                         <a href="{{ $lessons-> link2 }}" class="text-info py-2">{{ $lessons-> link2 }}</a>
@@ -94,7 +97,9 @@
                                                 <nav class="text-muted">{{ $lessons-> description3 }}</nav>
                                                 <br>
                                                 <nav class="text-muted">{{ $lessons-> content3 }}</nav>
-                                                <code>{{ $lessons-> content3 }}</code>
+                                                <br>
+                                                <code>{{ $lessons-> code3 }}</code>
+                                                <br>
                                                 @if($lessons-> link3)
                                                 <div class="bg-light pl-2">
                                                     <a href="{{ $lessons-> link3 }}" class="text-info py-2">{{ $lessons-> link3 }}</a>

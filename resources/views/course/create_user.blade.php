@@ -41,16 +41,16 @@
                     </div>
                 @enderror
             </div>
+            
             <div class="col-md-12">
-                <label for="description" class="form-label">Description</label>
-                <input type="text" name="description" id="description" placeholder="description" 
-                class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" value="{{ old('description')}}">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="4" value="{{ $user->description}}"></textarea>
 
-                @error('description')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                @enderror
+              @error('description')
+                  <div class="text-danger">
+                      {{ $message }}
+                  </div>
+              @enderror
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Upload Cover</label>

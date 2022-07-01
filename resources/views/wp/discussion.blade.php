@@ -8,7 +8,7 @@
         <div class="container px-1 px-lg-1 h-100">
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center ">
                 <div class="col-lg-6 align-self-center pl-5">
-                    <h1 class="text-black font-weight-bold">Future Maker Discussions</h1>
+                        <h1 class="font-weight-bold" style="color:#ffc000">Future Maker Discussions</h1>
                 </div>
                 <div class="col-lg-6 align-self-baseline">
                     <!-- <p class="text-white-75 mb-5">Start Alliance4ai can help you build better experience with the Future Maker!</p> -->
@@ -41,7 +41,7 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                            <button class="btn btn-info ml-0" style="font-size: 14px;" type="submit">Period</button>
+                            <button class="btn btn-muted border ml-0" style="font-size: 14px; color:#316ce8" type="submit"><i class="fa fa-clock-o"></i> Period</button>
                         </div>
                     </form> 
                     <form class="needs-validation pr-2 m-1" novalidate action="{{ route('discussion') }}" method="get">
@@ -59,7 +59,7 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                            <button class="btn btn-info ml-0" style="font-size: 14px;" type="submit">Filter</button>
+                            <button class="btn btn-muted ml-0" style="font-size: 14px; color:#31ab0b" type="submit"><i class="fa fa-filter"></i> Filter</button>
                         </div>
                     </form>
                     @auth

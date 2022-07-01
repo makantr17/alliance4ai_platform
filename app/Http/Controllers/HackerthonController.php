@@ -31,6 +31,14 @@ class HackerthonController extends Controller
         ]);
     }
 
+    public function competitors(User $user, Hackerthon $hackerthon){
+        $hackerthons = Hackerthon::latest()->where('id', '=', $hackerthon->id)->with(['competitors'])->get();
+        return view('hackerton.manage_competitor', [
+            'user'=> $user,
+            'hackerthon'=> $hackerthons,
+        ]);
+    }
+
     public function create(User $user){
         $hackerthon = $user->hackerthon()->get();
         return view('hackerton.create_hackerthon', [

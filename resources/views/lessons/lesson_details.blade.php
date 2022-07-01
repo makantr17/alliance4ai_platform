@@ -82,7 +82,7 @@
                     <p class="text-muted">{{ $lesson-> description1 }}</p>
                 </nav>
                 <nav class="p-3 bg-light opacity-100 my-4 text-secondary"> 
-                    <p class="text-muted">{{ $lesson-> code1 }}</p>
+                    <code>{{ $lesson-> code1 }}</code>
                 </nav>
                 <nav class="mt-1 opacity-100 my-1 text-secondary"> 
                     <a class="text-muted">{{ $lesson-> link1 }}</a>
@@ -94,7 +94,7 @@
                     <p class="text-muted">{{ $lesson-> description2 }}</p>
                 </nav>
                 <nav class="opacity-100 my-4 text-secondary"> 
-                    <p class="text-muted">{{ $lesson-> code2 }}</p>
+                    <code>{{ $lesson-> code2 }}</code>
                 </nav>
                 <nav class="opacity-100 my-4 text-secondary"> 
                     <a class="text-muted">{{ $lesson-> link2 }}</a>
@@ -106,7 +106,8 @@
                     <p class="text-muted">{{ $lesson-> description3 }}</p>
                 </nav>
                 <nav class="mt-1 opacity-100 my-1 text-secondary"> 
-                    <p class="text-muted">{{ $lesson-> code3 }}</p>
+                    <p class="text-muted"></p>
+                    <code>{{ $lesson-> code3 }}</code>
                 </nav>
                 <nav class="mt-1 opacity-100 my-1 text-secondary"> 
                     <a class="text-muted">{{ $lesson-> link3 }}</a>

@@ -74,9 +74,9 @@
             <div class="col-sm-12 d-flex justify-content-center align-items-start mb-3">
                 <div class="col-sm-11 d-flex gap-2 w-100 justify-content-between align-items-start">
                     <div>
-                        <h1 class="pt-2 mt-2 mb-2 lh-1 fw-bold" style="color:#3E8F78;"> Future Makers Circles </h1>
+                        <h4 class="pt-2 mt-2 mb-2 lh-1 fw-bold" style="color:#3E8F78;"> Future Makers Circles </h4>
                         <nav class="mb-0 opacity-100 my-1"><p class="text-gray opacity-50">Join Future Makers Circles, Participate the circle activities</p></nav>
-                        <nav class="mb-0 opacity-100 my-1 text-secondary opacity-40"><i class="fa fa-bookmark-o fa-1x" aria-hidden="true"></i> {{ $group -> count() }} topics</nav>
+                        <nav class="mb-0 opacity-100 my-1 text-info opacity-40">{{ $group -> count() }} topics</nav>
                     </div>
                     <small class="opacity-80 text-nowrap">      
                         <div class="sc-fUqQNk jDAUBC avatar-group--dense">

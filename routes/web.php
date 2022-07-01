@@ -168,6 +168,7 @@ Route::post('/user/{user:name}/addjob', [UserJobsController::class, 'storejob'])
 
 Route::get('/user/{user:name}/hackerthon', [HackerthonController::class, 'index'])->name('users.hackerthon');
 Route::get('/user/{user:name}/hackerthon/manage/{hackerthon}', [HackerthonController::class, 'manage'])->name('users.hackerthon.manage');
+Route::get('/user/{user:name}/hackerthon/manage/competitors/{hackerthon}', [HackerthonController::class, 'competitors'])->name('users.hackerthon.manage.competitors');
 Route::get('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'create'])->name('users.create_hackerthon');
 Route::post('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'store']);
 

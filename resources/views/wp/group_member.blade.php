@@ -77,7 +77,7 @@
             <nav class="col-sm-10 py-3">
                 <div class="">
                     <h3 class="display-7 pb-2 fw-bold text-black" style="color: rgba(9,74,127,255)">{{ $groups-> name}}</h3>
-                    <small class="opacity-50">{{ $groups-> description}}</small>
+                    <p class="py-1" style="opacity:0.8">{{ $groups-> description}}</p>
                 </div>
                 <p> <i class="fa fa-map-marker text-danger" aria-hidden="true"></i> <small>{{ $groups-> location}}, </small> <small class="text-info text-right">{{ $groups-> created_at->diffForHumans() }}</small> </p>
                 
@@ -98,11 +98,11 @@
     <!-- <div>
         <h1 class='h1 py-2 pt-5'>Circles</h1>
     </div> -->
-    <div class="row justify-content-center col-md-12">
+    <div class="row justify-content-center col-md-12 bg-light">
         <div class="row bg-white py-2 justify-content-center col-md-10">
 
             <div class="col-sm-8">
-                <div class="my-1 bg-body rounded ">
+                <div class="my-1 bg-body rounded border">
                 <!-- Highlight Futur Discussion -->
                 <h5 class="pt-3 pb-2 m-3 fw-bold text-dark border-bottom">Future Discussion Tagged</h5>
                 <div class="col-lg-12 pt-3">
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="col-sm-10 d-flex gap-2 w-100 justify-content-between align-items-start">
                                     <div>
-                                        <h6 class="mb-2">{{ $discussion-> title}}</h6>
+                                        <p class="mb-2 fw-bold">{{ $discussion-> title}}</p>
                                         <nav class="mb-0 opacity-75">Meeting {{ $discussion-> date}} at {{ $discussion-> start_time}}</nav>
                                         <div>
                                             <small class="opacity-70 text-secondary">by {{ $discussion-> user->name }}</small>
@@ -190,7 +190,7 @@
                     @endif
                 </div>
                 <!-- Past Discussion -->
-                <div class="my-3 bg-body rounded">
+                <div class="my-3 bg-body rounded border">
                     <h5 class="pt-3 pb-2 m-3 fw-bold text-dark border-bottom">Past Discussion Tagged</h5>
                     <div class="col-sm-12 py-3">
                         @php $past = 0 @endphp
@@ -212,7 +212,7 @@
                                     </div>
                                     <div class="col-sm-10 d-flex gap-2 w-100 justify-content-between align-items-start">
                                         <div>
-                                            <h6 class="mb-2">{{ $discussion-> title}}</h6>
+                                            <p class="mb-2 fw-bold">{{ $discussion-> title}}</p>
                                             <nav class="mb-0 opacity-75">Meeting {{ $discussion-> date}} at {{ $discussion-> start_time}}</nav>
                                             <div>
                                                 <small class="opacity-70 text-secondary">by {{ $discussion-> user->name }}</small>
@@ -237,7 +237,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 bg-light">
+            <div class="col-md-4 bg-light border">
                 <div class="my-3 p-1 rounded">
                 <h6 class=" pb-4 mb-0">Future Makers</h6>
                 @if ($group_members -> count())

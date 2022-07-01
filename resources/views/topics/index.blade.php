@@ -75,9 +75,9 @@
 <div class="col-sm-12 d-flex justify-content-center align-items-start mb-3">
     <div class="col-sm-10 d-flex gap-2 w-100 justify-content-between align-items-start">
         <div>
-            <h1 class="pt-2 mt-2 mb-2 lh-1 text-info fw-bold"> Future Makers Topics </h1>
+            <h4 class="pt-2 mt-2 mb-2 lh-1 text-info fw-bold"> Future Makers Topics </h4>
             <nav class="mb-0 opacity-100 my-1"><p class="text-gray opacity-50">Learn from Future Makers, post your topics</p></nav>
-            <nav class="mb-0 opacity-100 my-1 text-secondary opacity-40"> <i class="fa fa-list fa-1x text-gray opacity-50"></i> 5 topics</nav>
+            <nav class="mb-0 opacity-100 my-1 text-secondary opacity-40"> {{ $topics -> count() }} topics</nav>
         </div>
         <small class="opacity-80 text-nowrap">      
             <div class="sc-fUqQNk jDAUBC avatar-group--dense">
@@ -95,8 +95,8 @@
     <div class="col-sm-10 mt-4 ">
         @if ($topics -> count())
             @foreach($topics as $topic)
-            <a href="{{ route('topics.details', $topic) }}" class="border-bottom list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 my-0 bg-white p-0" aria-current="true">
-                <div class="col-sm-2 overflow-hidden"  style="max-height: 19vh;">
+            <a href="{{ route('topics.details', $topic) }}" class=" list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 my-0 bg-white mb-1 p-0" aria-current="true">
+                <div class="col-sm-2 overflow-hidden"  style="max-height: 14vh;">
                     @if ($topic->category === '1' )
                         <img src="/icons/background_futurtech.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
                     @elseif ($topic->category === '2' )
@@ -106,28 +106,39 @@
                         " alt="twbs" width="" height="" class="rounded flex-shrink-0">
                     @endif
                 </div>
-                <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
+                <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start border-bottom">
                     <div>
-                        <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$topic-> topic}} </p>
-                        <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> 
+                        <h5 class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$topic-> topic}} </h5>
+                        <p>{{$topic-> description}}...</p>
+                        
+                        <nav class="mb-0 opacity-100 my-1 text-secondary"> 
                             @if ($topic->category === '1' )
-                                <small class="text-black"> Future Tech</small>
+                                <small class="text-info"> Future Tech</small>
                             @elseif ($topic->category === '2' )
-                                <small class="text-black">History & Ethics</small>
+                                <small class="text-info">History & Ethics</small>
                             @else
-                                <small class="text-black">Workplace Skills</small>
+                                <small class="text-info">Workplace Skills</small>
                             @endif
                         </nav>
-                        <nav class="mb-0 opacity-100 my-1 text-muted">
+                        
+                    </div>
+                    
+                    <div>
+                        <small class="opacity-80 text-nowrap text-info">{{ $topic-> created_at->diffForHumans() }}</small>
+                        <div class="sc-fUqQNk jDAUBC avatar-group--dense">
                             @if ($topic->user->image)
                                 <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
                             @else
                                 <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
                             @endif
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                            <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
+                        </div>
+                        <nav class="mb-0 opacity-100 my-1 text-muted">
+                            
                             <small>, by {{ $topic-> user->name}}</small>
                         </nav>
                     </div>
-                    <small class="opacity-80 text-nowrap text-info">{{ $topic-> created_at->diffForHumans() }}</small>
                 </div>
             </a>
             @endforeach
