@@ -218,6 +218,10 @@ Route::post('/fullcalendareventmaster', [FullCalendarEventMasterController::clas
 
 Route::get('/setting/{user:name}', [AdminController::class, 'index'])->name('setting');
 Route::post('/setting/{user:name}', [AdminController::class, 'admin']);
+Route::post('/setting/{user:name}/saveCourse/{course}', [AdminController::class, 'saveCourse'])->name('setting.saveCourse');
+Route::post('/setting/{user:name}/saveDiscussion/{discussion}', [AdminController::class, 'saveDiscussion'])->name('setting.saveDiscussion');
+Route::post('/setting/{user:name}/saveTopic/{topic}', [AdminController::class, 'saveTopic'])->name('setting.saveTopic');
+Route::post('/setting/{user:name}/saveHackathon/{hackerthon}', [AdminController::class, 'saveHackathon'])->name('setting.saveHackathon');
 Route::get('/setting/{user:name}/grant-admin', [AdminController::class, 'find'])->name('setting.grant-admin');
 
 

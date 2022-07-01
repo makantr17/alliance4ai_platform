@@ -9,11 +9,146 @@
                 @endauth
             </div>
             <div class="col-sm-12 row">
-                
-                <div class="col-sm-3">
+                <div class="col-sm-3 border rounded">
+                    <!-- Start Course ################ -->
+                    <h4 class="h4 fw-bold py-2 text--center">Courses</h4>
+                    @if ($courses -> count())
+                        @foreach($courses as $course)
+                        <div class="border bg-light d-flex row justify-content-between m-1">
+                            <p class="fw-bold pb-1" style="font-size:16px">{{ $course-> name}}</p>
+                            <sm class="card-text pb-1" style="font-size:12px">{{ Str :: limit($course-> description, 45) }}</small>
+                            <small class="text-primary">by {{ $course-> user->name}}</small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-info">{{ $course-> created_at->diffForHumans() }}</small>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('users.course.manage', [$course->user, $course->id]) }}">
+                                        <button class="btn btn-muted btn-sm text-info" type="submit">Details</button>
+                                    </form>
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('setting.saveCourse', [$course->user, $course->id]) }}" method="post">
+                                    @csrf    
+                                    <button class="btn btn-muted btn-sm text-info border" type="submit">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
+                    <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+                        {{ $discussions -> links()}}
+                    </div>
+                </div>
+                <!-- End Course #################### -->
+                <!-- Start Discussion ###############""" -->
+                <div class="col-sm-3 border rounded">
+                    <h4 class="h4 fw-bold py-2 text--center">Discussions</h4>
+                    @if ($discussions -> count())
+                        @foreach($discussions as $discussion)
+                        <div class="border bg-light d-flex row justify-content-between m-1">
+                            <p class="fw-bold pb-1" style="font-size:16px">{{ $discussion-> title}}</p>
+                            <sm class="card-text pb-1" style="font-size:12px">{{ Str :: limit($discussion-> description, 45) }}</small>
+                            <small class="text-primary">by {{ $discussion-> user->name}}</small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-info">{{ $discussion-> created_at->diffForHumans() }}</small>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('users.discussion.manage', [$discussion->user, $discussion->id]) }}">
+                                        <button class="btn btn-muted btn-sm text-info" type="submit">Details</button>
+                                    </form>
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('setting.saveDiscussion', [$discussion->user, $discussion->id]) }}" method="post">
+                                    @csrf    
+                                    <button class="btn btn-muted btn-sm text-info border" type="submit">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
+                    <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+                        {{ $discussions -> links()}}
+                    </div>
+                </div>
+                <!-- End Discussion ###########"" -->
+                <!-- TOPIC ###################"""" -->
+                <div class="col-sm-3 border rounded gray-bg">
+                    <h4 class="h4 fw-bold py-2 text--center">Topics</h4>
+                    @if ($topics -> count())
+                        @foreach($topics as $topic)
+                        <div class="border bg-light d-flex row justify-content-between m-1">
+                            <p class="fw-bold pb-1" style="font-size:16px">{{ $topic-> topic}}</p>
+                            <small class="card-text pb-1" style="font-size:12px">{{ Str :: limit($topic-> description, 45) }}</small>
+                            <small class="text-primary">by {{ $topic-> user->name}}</small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-info">{{ $topic-> created_at->diffForHumans() }}</small>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('users.topics.manage', [$topic-> user->name, $topic->id]) }}">
+                                        <button class="btn btn-muted btn-sm text-info" type="submit">Details</button>
+                                    </form>
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('setting.saveTopic', [$topic-> user->name, $topic->id]) }}" method="post">
+                                    @csrf    
+                                    <button class="btn btn-muted btn-sm text-info border" type="submit">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
+                    <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+                        {{ $topics -> links()}}
+                    </div>
+                </div>
+                <!-- END TOPIC ##################"""" -->
+                <!-- Start Hackerthon ################## -->
+                <div class="col-sm-3 border rounded">
+                    <h4 class="h4 fw-bold py-2 text--center">hackathon</h4>
+                    @if ($hackerthons -> count())
+                        @foreach($hackerthons as $hackerthon)
+                        <div class="border bg-light d-flex row justify-content-between m-1">
+                            <p class="fw-bold pb-1" style="font-size:16px">{{ $hackerthon-> title}}</p>
+                            <small class="card-text pb-1" style="font-size:12px">{{ Str :: limit($hackerthon-> subtitle1, 45) }}</small>
+                            <small class="text-primary">by {{ $hackerthon-> user->name}}</small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-info">{{ $hackerthon-> created_at->diffForHumans() }}</small>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('users.hackerthon.manage', [$hackerthon->user, $hackerthon->id]) }}">
+                                        <button class="btn btn-muted btn-sm text-info" type="submit">Save</button>
+                                    </form>
+                                </div>
+                                <div class="btn-topic">
+                                    <form novalidate action="{{ route('setting.saveHackathon', [$hackerthon->user, $hackerthon->id]) }}" method="post">
+                                    @csrf    
+                                    <button class="btn btn-muted btn-sm text-info border" type="submit">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
+                    <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+                        {{ $hackerthons -> links()}}
+                    </div>
+                </div>
+                <!-- End Setting Board #####################" -->
+                <!-- Start Setting Board ######### -->
+                <div class="col-sm-3 border gray-bg">
                     <h4 class="h4 fw-bold py-2 text--center">Setting Board</h4>
                     <div class="">
-                        <p class="fw-light">Find user by email and grant or remove admin access</p>
                         <form class="" novalidate action="{{ route('setting.grant-admin', auth()->user()->name)}}" method="get">
                             @csrf
                             <div class="input-group mb-3">
@@ -43,9 +178,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-8 row">
+                <!-- End admin Access controle -->
+                <!-- Start Admin Controle ################"" -->
+                <div class="col-sm-5 row bg-gray">
                     <div class="col-sm-12">
-                        <h4 class=" fw-lighter py-2 text--center border-bottom">Information</h4>
+                        <h4 class=" fw-bold py-2 text--center">Information</h4>
                     </div>
                     <div class="col-sm-12">
                         <table class="table table-bordered style-comments">
@@ -76,6 +213,7 @@
                         </table>
                     </div>
                 </div>
+                <!-- End admin Controle -->
                 
             </div>
         </div>
