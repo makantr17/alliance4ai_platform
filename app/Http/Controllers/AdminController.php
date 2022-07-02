@@ -53,8 +53,8 @@ class AdminController extends Controller
     }
 
     public function admin(Request $request, User $user){
-        $request-> isAdmin ? DB::table('users')->where('email', $request->email)->update(['isAdmin'=> 1]) 
-        : DB::table('users')->where('email', $request->email)->update(['isAdmin'=> 0]);
+        $request-> isAdmin ? DB::table('users')->where('email', $request->email)->update(['isAdmin'=> 0]) 
+        : DB::table('users')->where('email', $request->email)->update(['isAdmin'=> 1]);
         return redirect()->route('setting', auth()->user()->name);
     }
 

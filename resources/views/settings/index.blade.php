@@ -37,6 +37,8 @@
                             </div>
                         </div>
                         @endforeach
+                    @else
+                        <small class="col-sm-12 text--center">no courses</small>
                     @endif
                     <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
                         {{ $discussions -> links()}}
@@ -71,6 +73,8 @@
                             </div>
                         </div>
                         @endforeach
+                    @else
+                        <small class="col-sm-12 text--center">no discussion</small>
                     @endif
                     <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
                         {{ $discussions -> links()}}
@@ -105,6 +109,8 @@
                             </div>
                         </div>
                         @endforeach
+                    @else
+                        <small class="col-sm-12 text--center">no topics</small>
                     @endif
                     <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
                         {{ $topics -> links()}}
@@ -127,7 +133,7 @@
                                 </div>
                                 <div class="btn-topic">
                                     <form novalidate action="{{ route('users.hackerthon.manage', [$hackerthon->user, $hackerthon->id]) }}">
-                                        <button class="btn btn-muted btn-sm text-info" type="submit">Save</button>
+                                        <button class="btn btn-muted btn-sm text-info" type="submit">Details</button>
                                     </form>
                                 </div>
                                 <div class="btn-topic">
@@ -139,6 +145,8 @@
                             </div>
                         </div>
                         @endforeach
+                    @else
+                        <small class="col-sm-12 text--center">no hackerthon</small>
                     @endif
                     <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
                         {{ $hackerthons -> links()}}
@@ -165,7 +173,7 @@
                     </div>
                     <!-- User Access -->
                     <div class="">
-                        <h5 class="fw-normal my-2 text-info">Admin Access</h5>
+                        <p class="fw-normal my-2 text-info">Admin Access</p>
                         <div class="">
                             @if ($admin -> count())
                                 @foreach($admin as $admin_user)
@@ -180,7 +188,7 @@
                 </div>
                 <!-- End admin Access controle -->
                 <!-- Start Admin Controle ################"" -->
-                <div class="col-sm-5 row bg-gray">
+                <div class="col-sm-5 row bg-gray border">
                     <div class="col-sm-12">
                         <h4 class=" fw-bold py-2 text--center">Information</h4>
                     </div>
