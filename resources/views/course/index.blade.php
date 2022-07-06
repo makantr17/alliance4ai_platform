@@ -65,7 +65,7 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     <form novalidate action="{{ route('users.course.manage', [$course->user, $course->id]) }}">
-                   <button class="btn btn-muted btn-sm border" type="submit"><i class="fa fa-wrench"></i> Manage</button>
+                        <button class="btn btn-muted btn-sm border" type="submit"><i class="fa fa-wrench"></i> Manage</button>
                     </form>
                 </div>
                 <small class="text-info">{{ $course-> created_at->diffForHumans() }}</small>

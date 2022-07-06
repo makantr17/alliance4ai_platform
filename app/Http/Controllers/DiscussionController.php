@@ -99,10 +99,10 @@ class DiscussionController extends Controller
             'topics'=>$request-> topics,
             'date'=>$request-> date,
         ]);
-        if ($discussion) {
-            auth()->user()->notify(new \App\Notifications\DiscussionCreated($request->title, $discussion->id,
-            $request->start_time, $request->end_time, auth()->user()->name, $request->link));
-        }
+        // if ($discussion) {
+        //     auth()->user()->notify(new \App\Notifications\DiscussionCreated($request->title, $discussion->id,
+        //     $request->start_time, $request->end_time, auth()->user()->name, $request->link));
+        // }
         
         return redirect()->route('users.discussion',  auth()->user()->name);
     }

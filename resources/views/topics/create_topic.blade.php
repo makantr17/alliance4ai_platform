@@ -44,7 +44,7 @@
           
           <div class="col-md-12">
               <label for="description" class="form-label">Description</label>
-              <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="4" value="{{ $user->description}}"></textarea>
+              <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="4" value="{{ old('description')}}"></textarea>
 
               @error('description')
                   <div class="text-danger">
@@ -62,13 +62,13 @@
             <script>
                 function myFunctionLink() {
                 document.getElementById("ressource1").innerHTML = '<div class="col-md-12 py-2"><label for="title" class="form-label">First Ressource title</label>'+
-                '<input type="text" name="content[0][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value=""> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
+                '<input type="text" name="content[0][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ old('content.0.title') }}"> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
                 '<div class="col-md-12 py-2"><label for="link" class="form-label">Link ressources</label>' +
-                        '<input type="text" name="content[0][link]" id="link" placeholder="Your link" class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value=""> @error('link') <div class="text-danger"> {{ $message }} </div>@enderror</div>';
+                        '<input type="text" name="content[0][link]" id="link" placeholder="Your link" class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="{{ old('content.0.link') }}"> @error('link') <div class="text-danger"> {{ $message }} </div>@enderror</div>';
                 }
                 function myFunctionArticle() {
                 document.getElementById("ressource1").innerHTML = '<div class="col-md-12 py-2"><label for="title" class="form-label">First Ressource title</label>'+
-                '<input type="text" name="content[0][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value=""> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
+                '<input type="text" name="content[0][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ old('content.0.title') }}"> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
                 '<div class="col-md-12 py-2"><label for="description" class="form-label">Article ressource</label>' +
                         '<textarea name="content[0][description]" id="" cols="20" rows="2" class="form-control py-2  rounded-lg @error('description') border border-danger @enderror"></textarea> @error('description') <div class="text-danger"> {{ $message }} </div> @enderror</div>';
                 }
@@ -88,13 +88,13 @@
             <script>
                 function myFunctionLink1() {
                 document.getElementById("ressource2").innerHTML = '<div class="col-md-12 py-2"><label for="title" class="form-label">First Ressource title</label>'+
-                '<input type="text" name="content[1][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value=""> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
+                '<input type="text" name="content[1][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ old('content.1.title') }}"> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
                 '<div class="col-md-12 py-2"><label for="link" class="form-label">Link ressources</label>' +
-                        '<input type="text" name="content[1][link]" id="link" placeholder="Your link" class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value=""> @error('link') <div class="text-danger"> {{ $message }} </div>@enderror</div>';
+                        '<input type="text" name="content[1][link]" id="link" placeholder="Your link" class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="{{ old('content.1.link') }}"> @error('link') <div class="text-danger"> {{ $message }} </div>@enderror</div>';
                 }
                 function myFunctionArticle1() {
                 document.getElementById("ressource2").innerHTML = '<div class="col-md-12 py-2"><label for="title" class="form-label">First Ressource title</label>'+
-                '<input type="text" name="content[1][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value=""> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
+                '<input type="text" name="content[1][title]" id="title" placeholder="Your title" class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ old('content.1.title') }}"> @error('title')<div class="text-danger">{{ $message }} </div> @enderror</div>'+
                 '<div class="col-md-12 py-2"><label for="description" class="form-label">Article ressource</label>' +
                         '<textarea name="content[1][description]" id="" cols="20" rows="2" class="form-control py-2  rounded-lg @error('description') border border-danger @enderror"></textarea> @error('description') <div class="text-danger"> {{ $message }} </div> @enderror</div>';
                 }

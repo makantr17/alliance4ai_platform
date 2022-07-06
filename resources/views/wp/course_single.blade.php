@@ -36,7 +36,22 @@
                                
                             </ul>
                         </div> <!-- course terms -->
-                        
+
+                        <!-- Section return back -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
+                            </div>
+                            <form action="{{ route('learning', [$course->id]) }}" method="get" >
+                            @csrf
+                                <button type="submit" class="btn btn-sm my-2 btn-secondary">Go back</button>
+                            </form>
+                        </div>
+
+
+
                         <div class="corses-tab mt-5">
                             <ul class="nav nav-justified" id="myTab" role="tablist">
                                 <li class="nav-item">

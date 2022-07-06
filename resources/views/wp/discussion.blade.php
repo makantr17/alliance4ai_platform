@@ -41,7 +41,7 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                            <button class="btn btn-muted border ml-0" style="font-size: 14px; color:#316ce8" type="submit"><i class="fa fa-clock-o"></i> Period</button>
+                            <button class="btn btn-muted border ml-0" style="font-size: 14px;" type="submit"><i class="fa fa-clock-o"></i> Period</button>
                         </div>
                     </form> 
                     <form class="needs-validation pr-2 m-1" novalidate action="{{ route('discussion') }}" method="get">
@@ -59,12 +59,12 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                            <button class="btn btn-muted ml-0" style="font-size: 14px; color:#31ab0b" type="submit"><i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-muted ml-0 border" style="font-size: 14px;" type="submit"><i class="fa fa-filter"></i> Filter</button>
                         </div>
                     </form>
                     @auth
                     <div class="dropdown mx-2 p-2 px-3">
-                        <p style="font-size: 14px; opacity: 0.9;"> <i class="fa fa-bell-o"></i> Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated')->count()}}</span> </p>
+                        <p style="font-size: 14px;"> <i class="fa fa-bell-o"></i> Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated')->count()}}</span> </p>
                         <div class="dropdown-content">
                             @foreach (auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated') as $notification) 
                             <a href="{{ route('discussion.details', $notification->data['id']) }}" style="font-size: 14px; opacity: 0.9; color:black" class="border-bottom p-1">
@@ -77,7 +77,7 @@
                     @auth
                         <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-0">
                         @csrf
-                            <button type="submit" class="btn btn-sm btn-muted " style="opacity:0.8"><i class="fa fa-comment-o fa-1x"></i> New discussion</button>
+                            <button type="submit" class="btn btn btn-info " style=""> New discussion</button>
                         </form>
                     @endauth    
                     
@@ -88,7 +88,7 @@
 
         <div class="col-lg-12 d-flex gap-2 w-100 justify-content-center pt-0">
             <div class="col-lg-10 ">
-                <h3 class="pt-2 mt-2 mb-2 lh-1 text-info fw-bold"> Discussions </h3>
+                <h3 class="pt-2 mt-2 mb-2 lh-1 text-dark fw-bold"> Discussions </h3>
                 <nav class="mb-0 opacity-100 my-1"><p class="text-gray opacity-50">Join Future Makers hosted discussions</p></nav>
                 <nav class="mb-0 opacity-100 my-1 text-secondary opacity-40">{{$discussion -> count()}} discussions</nav>
             </div>
@@ -104,51 +104,51 @@
                     <a href="{{ route('discussion.details', $discussions) }}" class="border-bottom list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 my-0 bg-white p-0" aria-current="true">
                         <div class="col-sm-2 overflow-hidden"  style="max-height: 19vh;">
                             @if ($discussions->category === '1' )
-                                <img src="/images/icon/plan2.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                                <img src="/images/icon/Plan2.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
                             @elseif ($discussions->category === '2' )
-                                <img src="/images/icon/plan4.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                                <img src="/images/icon/Plan4.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
                             @else
-                                <img src="/images/icon/plan7.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
+                                <img src="/images/icon/Plan7.png" alt="twbs" width="" height="" class="rounded flex-shrink-0">
                             @endif
                         </div>
                         <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
                             <div>
                                 <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$discussions-> title}} </p>
-                                <nav class="mb-0 opacity-100 my-1 text-secondary"> <i class="fa fa-map-marker fa-1x fw-light"></i> <small class="text-info">{{ $discussions-> location}}</small></nav>
+                                <nav class="mb-0 opacity-100 my-1 text-secondary text-info"> <i class="fa fa-map-marker fa-1x fw-light"></i> {{ $discussions-> location}}</nav>
                                 <nav class="mb-0 opacity-100 my-1 text-secondary">  {{ $discussions-> date}}, From</small> {{ $discussions-> start_time}} <small>To</small> {{ $discussions-> end_time}}</nav>
                                 <div class="d-flex align-items-start">
                                     <nav class="mb-0 opacity-100 mr-2 text-muted">
-                                        <nav class="mb-0 opacity-100 my-1 text-muted">
+                                        <nav class="d-flex mb-0 opacity-100 my-1 text-muted">
                                             @if ($discussions->user->image)
-                                                <img src="{{ '/storage/images/'.$discussions->user->id.'/'.$discussions->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                                                <img src="{{ '/storage/images/'.$discussions->user->id.'/'.$discussions->user->image }}" alt="twbs" width="25" height="25" class="rounded-circle flex-shrink-0 border mr-1">
                                             @else
-                                                <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                                                <img src="/images/cxc.jpg" alt="twbs" width="25" height="25" class="rounded-circle flex-shrink-0 border mr-1">
                                             @endif
-                                            <small>, by {{ $discussions-> user->name}}</small>
+                                            <nav>, by {{ $discussions-> user->name}}</nav>
                                         </nav>
                                     </nav>
                                     @if (($discussions -> date) > Carbon\Carbon::now() && $discussions -> start_time > (Carbon\Carbon::now())->toTimeString() )
-                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>upcoming</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info">upcoming</nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
                                         (Carbon\Carbon::now() )->toTimeString() >= $discussions -> start_time && 
                                         $discussions -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
-                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>ongoing</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info">ongoing</nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && 
                                         (Carbon\Carbon::now()) ->toTimeString() > $discussions -> end_time )
-                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>past</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info">past</nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
                                         $discussions -> start_time  > (Carbon\Carbon::now())->toTimeString()) )
-                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>upcoming</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info">upcoming</nav>
                                     @else
-                                        <nav class="mb-0 opacity-100 my-1 text-info"><small>past</small></nav>
+                                        <nav class="mb-0 opacity-100 my-1 text-info">past</nav>
                                     @endif
                                    
                                 </div>
                                 
                             </div>
-                            <small class="opacity-80 text-nowrap">{{ $discussions-> created_at->diffForHumans() }} 
+                            <nav class="opacity-80 text-nowrap">{{ $discussions-> created_at->diffForHumans() }} 
                                 <nav> {{ $discussions->registeration->count() }} registered</nav>
-                            </small>
+                            </nav>
                         </div>
                     </a>
                     @endforeach

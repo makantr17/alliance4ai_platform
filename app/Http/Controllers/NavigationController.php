@@ -134,8 +134,8 @@ class NavigationController extends Controller
     }
     
     public function learning(){
-        $course =  Course::latest()->get();
-        // $course =  Course::latest()->where('isvalidate')->get();
+        // $course =  Course::latest()->get();
+        $course =  Course::latest()->where('isvalidate', '=', true)->get();
         return view('wp.learning', [
             'course'=> $course,
         ]);

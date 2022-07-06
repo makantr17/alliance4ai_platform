@@ -139,6 +139,8 @@ Route::get('/user/{user:name}/score', [ScoreController::class, 'index'])->name('
 
 Route::get('/user/{user:name}/course', [CourseController::class, 'index'])->name('users.course');
 Route::get('/user/{user:name}/course/manage/{course}', [CourseController::class, 'manage'])->name('users.course.manage');
+Route::post('/user/{user:name}/course/manage/{course}/saveCourseUser', [CourseController::class, 'saveCourseUser'])->name('users.course.manage.saveCourseUser');
+
 
 Route::get('/user/{user:name}/createcourse', [CourseController::class, 'create'])->name('users.createcourse');
 Route::post('/user/{user:name}/createcourse', [CourseController::class, 'store']);

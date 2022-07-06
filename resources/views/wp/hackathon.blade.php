@@ -74,7 +74,7 @@
                 <div class="card card-cover h-100 overflow-hidden text-white rounded-5 shadow-sm" 
                 style="background-image: url('/images/icon/back-slim3.png');background-repeat: no-repeat; background-size: 100% 110px; background-position: bottom;">
                     <div class="d-flex flex-column h-100 p-3 pb-2 text-shadow-1">
-                        <h5 class="pt-2 mt-2 mb-0 display-7 lh-1 fw-bold"> {{$hackerthon-> title}} </h5>
+                        <h5 class="pt-2 mt-2 mb-0 display-7 lh-1 fw-bold text-dark">{{ Str :: limit($hackerthon-> title, 20) }} </h5>
                         <p style="font-size: 14px; line-height:22px; font-weight:300" class="py-2">{{ Str :: limit($hackerthon-> description1, 60) }}</p>
 
                         <!-- images -->     
@@ -90,11 +90,11 @@
                             </div>
                         <!-- End images -->
                         @if ($hackerthon->category === 'Machine Learning' )
-                            <img src="/images/icon/plan2.png" alt="twbs"  width="80" height="80" class="rounded-circle m-2">
+                            <img src="/images/icon/Plan2.png" alt="twbs"  width="80" height="80" class="rounded-circle m-2">
                         @elseif ($hackerthon->category === 'Bensfield connect' )
-                            <img src="/images/icon/plan4.png" alt="twbs" width="80" height="80" class="rounded-circle m-2">
+                            <img src="/images/icon/Plan4.png" alt="twbs" width="80" height="80" class="rounded-circle m-2">
                         @else
-                            <img src="/images/icon/plan7.png" alt="twbs" width="80" height="80" class="rounded-circle m-2">
+                            <img src="/images/icon/Plan7.png" alt="twbs" width="80" height="80" class="rounded-circle m-2">
                         @endif
                         <ul class="d-flex list-unstyled mt-auto">
                             <a href="{{ route('hackathons.details',  $hackerthon->id) }}" class="mr-2 btn btn-light btn">view</a>

@@ -33,11 +33,11 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Hackathon</button>
                         </form>
-                        <form action="{{ route('users.update_hackerthon',  $hackerthon[0]-> title) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.update_hackerthon',  $hackerthon-> title) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Edit</button>
                         </form>
-                        <form action="{{ route('users.update_hackerthon',  $hackerthon[0]-> title) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.update_hackerthon',  $hackerthon-> title) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm">Participants</button>
                         </form>

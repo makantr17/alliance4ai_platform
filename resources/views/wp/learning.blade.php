@@ -19,9 +19,38 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="title py-2">
-                <h4 class="pb-2 fw-bold display-7">General Course</h4>
-            </div> -->
+            
+
+            <div class="container-fluid col-xxl-8 px-0 py-2 px-4 mb-1">
+                <div class="rounded">
+                    <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
+                    <div class="mx-0 mb-0">
+                        <div class="d-flex gap-2 w-100 justify-content-between align-items-center">
+                            <div class="col">
+                                <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                                    <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
+                                </div>
+                                <nav class="pt-1 text-muted">Learning Community</nav>
+                            </div>
+                            <div class=" d-flex flex-wrap align-items-center px-0 pt-2">
+                                @auth
+                                    <form action="{{ route('users.createcourse',  auth()->user()->name) }}" method="get" class="m-1">
+                                    @csrf
+                                        <button type="submit" style="font-size: 14px;" class="btn btn-lg btn-info">New Course</button>
+                                    </form>
+                                @endauth
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NAVBAR COLLECTION FOR HEADER END HERE-->
+                </div>
+            </div>
+
+
+
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="courses-top-search">

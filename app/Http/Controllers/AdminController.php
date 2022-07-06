@@ -62,23 +62,23 @@ class AdminController extends Controller
     // Saves
 
     public function saveCourse(Request $request, User $user, Course $course){
-        $course-> isvalidate ? DB::table('courses')->where('id', $course->id)->update(['isvalidate'=> 0]) 
-        : DB::table('courses')->where('id', $course->id)->update(['isvalidate'=> 1]);
+        $request-> checker ? DB::table('courses')->where('id', $course->id)->update(['isvalidate'=> 1]) 
+        : DB::table('courses')->where('id', $course->id)->update(['isvalidate'=> 0]);
         return redirect()->route('setting', auth()->user()->name);
     }
     public function saveTopic(Request $request, User $user, Topic $topic){
-        $topic-> status ? DB::table('topics')->where('id', $topic->id)->update(['status'=> 0]) 
-        : DB::table('topics')->where('id', $topic->id)->update(['status'=> 1]);
+        $request-> checked ? DB::table('topics')->where('id', $topic->id)->update(['status'=> 1]) 
+        : DB::table('topics')->where('id', $topic->id)->update(['status'=> 0]);
         return redirect()->route('setting', auth()->user()->name);
     }
     public function saveHackathon(Request $request, User $user, Hackerthon $hackerthon){
-        $hackerthon-> isvalidate ? DB::table('hackerthons')->where('id', $hackerthon->id)->update(['isvalidate'=> 0]) 
-        : DB::table('hackerthons')->where('id', $hackerthon->id)->update(['isvalidate'=> 1]);
+        $request-> checked ? DB::table('hackerthons')->where('id', $hackerthon->id)->update(['isvalidate'=> 1]) 
+        : DB::table('hackerthons')->where('id', $hackerthon->id)->update(['isvalidate'=> 0]);
         return redirect()->route('setting', auth()->user()->name);
     }
     public function saveDiscussion(Request $request, User $user, Discussion $discussion){
-        $discussion-> status ? DB::table('discussions')->where('id', $topic->id)->update(['status'=> 0]) 
-        : DB::table('discussions')->where('id', $discussion->id)->update(['status'=> 1]);
+        $request-> checked ? DB::table('discussions')->where('id', $topic->id)->update(['status'=> 1]) 
+        : DB::table('discussions')->where('id', $discussion->id)->update(['status'=> 0]);
         return redirect()->route('setting', auth()->user()->name);
     }
 }

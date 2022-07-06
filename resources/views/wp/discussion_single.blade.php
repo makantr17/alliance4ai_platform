@@ -23,11 +23,11 @@
         <div class="d-flex gap-2 w-100 justify-content-between pb-2 border-bottom">
             <div>
                 @if ($discussion->category === '1' )
-                    <img src="/images/icon/plan2.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
+                    <img src="/images/icon/Plan2.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @elseif ($discussion->category === '2' )
-                    <img src="/images/icon/plan4.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
+                    <img src="/images/icon/Plan4.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @else
-                    <img src="/images/icon/plan7.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
+                    <img src="/images/icon/Plan7.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @endif
                     <small class="opacity-100 text-nowrap"><i class="fa fa-calendar fa-1x fw-light"></i> Meeting: {{ $discussion-> date }}</small>   
             </div>

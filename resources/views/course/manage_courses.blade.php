@@ -49,7 +49,7 @@
 
 
 <div class="col-lg-12 row y-1">
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         @if ($course -> count())
             @foreach($course as $courses)
             <div class="mb-4">
@@ -60,7 +60,8 @@
             </div>
             @endforeach
         @endif
-        <div class="d-flex justify-content-between align-items-center">
+
+        <div class="container d-flex justify-content-between align-items-center">
             <div class="sc-fUqQNk jDAUBC avatar-group--dense">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
@@ -71,7 +72,30 @@
                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
             </form>
         </div>
+
+        
+        <div class="container bg-light py-1">
+            <p class="mt-3 mb-2">Activate or Desactivate Course</p>
+            <p class="text-info">At least 3 course activating the course</p>
+            
+            <form class="container d-flex justify-content-between align-items-center" novalidate action="{{ route('users.course.manage.saveCourseUser', [$courses->user, $courses->id]) }}" method="post">
+                @csrf        
+                <div class="form-check form-switch">
+                    @if($courses->isvalidate)
+                        <input name="checker" class="form-check-input" type="checkbox" checked id="flexSwitchCheckChecked" >
+                    @else
+                        <input name="checker" class="form-check-input" type="checkbox"  id="flexSwitchCheckChecked" >
+                    @endif
+                </div>
+               
+                @if ($lessons -> count() >= 2)
+                    <button class="btn btn-muted btn-sm text-info border" type="submit">Save</button>
+                @endif
+            </form>
+        </div>
     </div>
+    
+    
     
 
     <div class="col-lg-8 py-1">

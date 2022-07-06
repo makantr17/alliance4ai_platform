@@ -78,7 +78,7 @@
         @endforeach
 
         @else
-            <p>{{ $groups->user ->name}} does not have any posts</p>
+            <p>no groups have been posted</p>
         @endif
         
       </div>

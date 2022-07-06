@@ -18,7 +18,7 @@ class CreateContentsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('topic_id')->constrained()->onDelete('cascade');
             $table->string('type');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->string('title');
             $table->string('link')->nullable();
             $table->text('description');

@@ -10,7 +10,7 @@
         <div class="my-1 rounded-3">
             <a href="#" class="d-block align-items-center text-dark text-decoration-none">
                 <div class="bg-light text-secondary mb-2 text-center">
-                    <div class="overflow-hidden" style="max-height: 25vh;">
+                    <div class="overflow-hidden" style="max-height: 50vh;">
                         <div class="">
                             @if ($groups-> image )
                                 <img src="{{ '/storage/images/group/'.$groups->name.'/'.$groups->image }}" alt="twbs" width="85%" height="500" loading="lazy" class="img-fluid rounded shadow-lg mb-4 rounded">

@@ -64,7 +64,7 @@
                                 </div>
                                 @if( $hackerthon[0]-> images)
                                     <div class="bg-light rounded  my-2">
-                                        <img src="{{'.images/hackathon/'.$hackerthon[0]->title.'/'.$hackerthon[0]->images}} " width="100%" alt="Courses">
+                                        <img src="{{'/storage/images/hackathon/'.$hackerthon[0]->title.'/'.$hackerthon[0]->images}} " width="100%" alt="Courses">
                                     </div>
                                     
                                 @endif

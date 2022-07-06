@@ -43,7 +43,6 @@ class TopicController extends Controller
         $data =$request->validate([
             'topic'=> 'required',
             'category'=>'required',
-            'description'=>'required',
             'questions.*.question' => 'required',
             'exercises.*.question' => 'required',
             'content.*.title' => 'max:300',
@@ -52,6 +51,8 @@ class TopicController extends Controller
             // 'content.*.image',
             'content.*.type',
         ]);
+
+        dd($data['content']);
 
         $topic= $request->user()->topic()->create([
             'topic'=> $request-> topic,
@@ -99,9 +100,9 @@ class TopicController extends Controller
             ]);
         }
         // send notification
-        // if ($topic) {
-        //     auth()->user()->notify(new \App\Notifications\TopicCreated($topic->topic, $topic->id, auth()->user()));
-        // }
+        if ($topic) {
+            auth()->user()->notify(new \App\Notifications\TopicCreated($topic->topic, $topic->id, auth()->user()));
+        }
         
         return redirect()->route('topics');
     }

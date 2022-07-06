@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-12">
                 <textarea type="text" name="topics" id="topics" placeholder="added topics" cols="15" rows="2"
-                class="form-control py-2 text-info  rounded-lg @error('topics') border border-danger @enderror" value=""></textarea>
+                class="form-control py-2 text-info  rounded-lg @error('topics') border border-danger @enderror" value="{{ old('topics')}}"></textarea>
 
                 @error('topics')
                     <div class="text-danger">
@@ -194,7 +194,7 @@
             <div class="col-md-12">
                 <label for="description" class="form-label">Description</label>
                 <input type="text" name="description" id="description" placeholder="description" 
-                class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" value="">
+                class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" value="{{ old('description')}}">
                 @error('description')
                     <div class="text-danger">
                         {{ $message }}
@@ -213,29 +213,6 @@
         </form>
 
 
-
-
-
-
-        <!-- <input type="text" value="" class="textfield col-8" id="video0_tags" name="video0_tags">
-        <div class="taglist">
-          <label><input type="checkbox" value="2D Animation">2D Animation</label>
-          <label><input type="checkbox" value="3D Animation">3D Animation</label>
-          <label><input type="checkbox" value="Animatronics">Animatronics</label>
-          <label><input type="checkbox" value="Architectural">Architectural</label>
-          <label><input type="checkbox" value="Cartoon">Cartoon</label>
-          <label><input type="checkbox" value="Cell Animation">Cell Animation</label>
-          <label><input type="checkbox" value="Character Animation">Character Animation</label><label><input type="checkbox" value="Cut & Paste">Cut & Paste</label>
-          <label><input type="checkbox" value="Doodle">Doodle</label>
-          <label><input type="checkbox" value="HDR">HDR</label>
-          <label><input type="checkbox" value="High Speed">High Speed</label>
-          <label><input type="checkbox" value="Illustration">Illustration</label>
-          <label><input type="checkbox" value="Live Action">Live Action</label>
-          <label><input type="checkbox" value="Macro">Macro</label>
-          <label><input type="checkbox" value="Motion Design">Motion Design</label>
-          <label><input type="checkbox" value="Motion Graphics">Motion Graphics</label>
-          <label><input type="checkbox" value="Moving Installation">Moving Installation</label>
-        </div> -->
 
     </div>
 </div>

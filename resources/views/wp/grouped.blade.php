@@ -139,12 +139,12 @@
                                                 @csrf
                                                     <button type="submit" class="btn btn-sm text-white " style="background:#F87B06">Open Circle</button>
                                                 </form>
-                                                @if (!$groups->joinedBy(auth()->user()))
+                                                <!-- @if (!$groups->joinedBy(auth()->user()))
                                                     <form action="{{ route('groups_details', [$groups->id]) }}" method="get" >
                                                     @csrf
                                                         <button type="submit" class="btn btn-sm btn-info btn-outline-secondary">Join</button>
                                                     </form>
-                                                @endif
+                                                @endif -->
                                             @endauth
                                             @guest
                                                 <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" >

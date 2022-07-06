@@ -32,18 +32,19 @@ class GroupController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'name'=> 'required',
+            'name'=> 'required|unique:groups',
             'titre'=> 'required',
-            'description'=>'required',
             'location'=>'required',
             'image'=>'required',
         ]);
+       
         if ($request->hasFile('image')) {
             $filename= $request->image->getClientOriginalName();
+
             $request->image->storeAs('images/group/'.$request->name, $filename,'public');
             $circle = $request->user()->group()->create([
                 'name'=> $request-> name,
-                'titre'=> $request-> titre,
+                'titre' => $request->titre ,
                 'description'=>$request-> description,
                 'location'=>$request-> location,
                 'limit'=>$request-> limit,
@@ -51,9 +52,9 @@ class GroupController extends Controller
                 'isavailable'=>false,
             ]);
             // circle notification
-            if ($circle) {
-                auth()->user()->notify(new \App\Notifications\CircleCreated($circle->titre, $circle->id));
-            }
+            // if ($circle) {
+            //     auth()->user()->notify(new \App\Notifications\CircleCreated($circle->titre, $circle->id));
+            // }
 
             return redirect()->route('users.group',  auth()->user()->name);
          }

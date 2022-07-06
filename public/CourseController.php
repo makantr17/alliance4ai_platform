@@ -34,13 +34,6 @@ class CourseController extends Controller
         ]);
     }
 
-    public function saveCourseUser(Request $request, User $user, Course $course){
-        $request-> checker ? DB::table('courses')->where('id', $course->id)->update(['isvalidate'=> 1]) 
-        : DB::table('courses')->where('id', $course->id)->update(['isvalidate'=> 0]);
-        return redirect()->route('users.course.manage', [$course->user, $course->id]);
-        
-    }
-
     public function destroy(Post $post){
         $this->authorize('delete', $post);
         $post ->delete();
@@ -74,7 +67,7 @@ class CourseController extends Controller
             'images'=> $filename,
             'isvalidate'=>false,
         ]);
-        return redirect()->route('users.course',  auth()->user()->name);
+        return redirect()->route('dashboard');
     }
 
 

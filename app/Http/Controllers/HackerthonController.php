@@ -50,7 +50,7 @@ class HackerthonController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'title'=> 'required',
+            'title'=> 'required|unique:hackerthons',
             'category'=> 'required',
             'subtitle1'=> 'required',
             'description1'=> 'required',
@@ -86,9 +86,9 @@ class HackerthonController extends Controller
             'isvalidate'=>false,
         ]);
 
-        if ($hackerthon) {
-            auth()->user()->notify(new \App\Notifications\HackathonCreated($hackerthon->title, $hackerthon->id));
-        }
+        // if ($hackerthon) {
+        //     auth()->user()->notify(new \App\Notifications\HackathonCreated($hackerthon->title, $hackerthon->id));
+        // }
 
         return redirect()->route('hackathons');
     }

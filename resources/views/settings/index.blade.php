@@ -20,16 +20,18 @@
                             <small class="text-primary">by {{ $course-> user->name}}</small>
                             <div class="d-flex justify-content-between align-items-center">
                                 <small class="text-info">{{ $course-> created_at->diffForHumans() }}</small>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
-                                </div>
+                                
                                 <div class="btn-topic">
                                     <form novalidate action="{{ route('users.course.manage', [$course->user, $course->id]) }}">
                                         <button class="btn btn-muted btn-sm text-info" type="submit">Details</button>
                                     </form>
                                 </div>
+
                                 <div class="btn-topic">
                                     <form novalidate action="{{ route('setting.saveCourse', [$course->user, $course->id]) }}" method="post">
+                                    <div class="form-check form-switch">
+                                        <input name="checker" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                    </div>
                                     @csrf    
                                     <button class="btn btn-muted btn-sm text-info border" type="submit">Save</button>
                                     </form>
@@ -178,9 +180,9 @@
                             @if ($admin -> count())
                                 @foreach($admin as $admin_user)
                                     <nav><strong>access_admin: </strong>{{$admin_user->access_role[0]-> is_admin ? 'true' : 'false' }}</nav>
-                                    <nav><strong>access_admin: </strong>{{$admin_user->access_role[0]-> grant_user_topic ? 'true' : 'false'}}</nav>
-                                    <nav><strong>access_admin: </strong>{{$admin_user->access_role[0]-> grant_user_discussion ? 'true' : 'false'}}</nav>
-                                    <nav><strong>access_admin: </strong>{{$admin_user->access_role[0]-> grant_user_circles ? 'true' : 'false'}}</nav>
+                                    <nav><strong>grant_user_topic: </strong>{{$admin_user->access_role[0]-> grant_user_topic ? 'true' : 'false'}}</nav>
+                                    <nav><strong>grant_user_discussion: </strong>{{$admin_user->access_role[0]-> grant_user_discussion ? 'true' : 'false'}}</nav>
+                                    <nav><strong>grant_user_circles: </strong>{{$admin_user->access_role[0]-> grant_user_circles ? 'true' : 'false'}}</nav>
                                 @endforeach
                             @endif
                         </div>
