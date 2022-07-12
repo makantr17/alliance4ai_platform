@@ -81,6 +81,17 @@
                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
             </form>
         </div>
+
+        <div class="p-3 gray-bg my-2 rounded">
+            <p class="text-secondary pb-2">Delete Discussion</p>
+            @auth
+                <form action="{{ route('users.discussion.delete', [$discussion->user, $discussion->id]) }}" method="post" class="mr-1">
+                @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            @endauth
+        </div>
     </div>
     <div class="col-lg-8 mx-2 bg-light py-2">
         <div class="d-flex justify-content-between align-items-center px-0 py-2">

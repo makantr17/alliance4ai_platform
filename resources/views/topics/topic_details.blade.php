@@ -39,12 +39,11 @@
                         </div>
                     @endif
                     
-                    <div class="p-3 d-flex gap-2 w-100 justify-content-between border">
-                        <div>
-                            <h4 class="mb-0 py-2 text-black">{{ $topic-> topic}}</h4>
-                            <small class="opacity-50 display-7 pt-2">By {{ $topic-> user->name }}, </small>
-                            <!-- <nav>{{ $topic-> description}}</nav> -->
-                            <small class="opacity-50 text-info">{{ $topic-> created_at->diffForHumans() }}</small>
+                    <div class="p-3  gap-2 w-100 border">
+                        <h4 class="mb-0 py-2 text-black">{{ $topic-> topic}}</h4>
+                        <div class="d-flex gap-2 w-100 align-items-center pt-2">
+                            <nav class="opacity-100 display-7" style="font-size:14px">By {{ $topic-> user->name }}, </nav>
+                            <nav class="opacity-100 text-info" style="font-size:14px">{{ $topic-> created_at->diffForHumans() }}</nav>
                         </div>
                     </div>
                 </a>
@@ -60,7 +59,7 @@
 
             <div class="container d-flex flex-row-reverse">
                 <a href="{{ route('topics')}}">
-                    <button class="btn btn-primary border "> back</button>
+                    <button class="btn btn-sm btn-primary border "> back</button>
                 </a>
             </div>
             <!-- END Topic here  #################################################-->
@@ -77,9 +76,8 @@
                     <a href="{{ route('topics.prompts', $prompts) }}" style="background:#F2F2F2" class="list-group-item list-group-item-action border d-flex bg-light gap-3 py-2 m-2" aria-current="true">
                         <div class="d-flex gap-2 w-100 justify-content-between">
                             <div>
-                                <p class="text-dark" >{{ $prompts-> question}} ?</p>
+                                <p class="text-dark fw-bold text-wrap" style="font-size:14px" >{{ $prompts-> question}} ?</p>
                                 <small class="opacity-50 text-nowrap">{{ $prompts-> created_at->diffForHumans() }}</small>
-                                
                             </div>
                         </div>
                     </a>
@@ -94,7 +92,7 @@
 
                 <div class="py-4"></div>
                 <!-- START FILE here  #################################################-->
-                <h6 class="px-2 p-1 fw-bold text-dark"><i class="p-1 fa fa-file" style="font-size:25px; color:#05B37E" aria-hidden="true"></i> Ressources</h6>
+                <h6 class="px-2 p-1 fw-bold text-dark"><i class="p-1 fa fa-file" style="font-size:25px; color:#05B37E" aria-hidden="true"></i> Resources</h6>
                 @if ($topics[0]->content-> count())
                     @foreach($topics[0]->content as $content)
                         @if ($content->type)
@@ -116,20 +114,24 @@
                             </div>
                         </a>
                         @else
-                            <a href="#" style="background:#F2F2F2" class="list-group-item list-group-item-action border d-flex bg-light gap-3 py-2 m-2" aria-current="true">
-                                <div class="d-flex gap-2 w-100 justify-content-between">
+                            <nav href="#" style="background:#F2F2F2" class="list-group-item list-group-item-action border d-flex bg-light gap-3 py-2 m-2" aria-current="true">
+                                <div class=" gap-2 w-100">
                                     <div>
-                                        <p class="text-info " >{{ $content->title}}</p>
-                                        <p class="opacity-50 text-nowrap">{{ $content->link}}</p>
-                                        <p class="opacity-50 text-nowrap">{{ $content->description }}</p>
+                                        @if ($content->link !== "undefined" && $content->link !== '')
+                                            <a href="{{ $content->link}}" target="_blank">{{ $content->title}}</a>
+                                        @elseif($content->description !== "undefined" && $content->description !== '')
+                                            <h6 class="text-wrap py-2 text-info" style="font-size:14px; ">{{ $content->title}}</h6>
+                                            <p class="opacity-50 text-wrap" style="font-size:14px;">{{ $content->description }}</p>
+                                        @endif
+                                        
                                     </div>
                                 </div>
-                            </a>
+    	                    </nav>
                         @endif
                     @endforeach
                 @else
                 <div class="px-2 py-2 text-muted my-1 bg-light ">
-                    <nav>No Ressources</nav>
+                    <nav>No Resources</nav>
                 </div>
                 @endif
 

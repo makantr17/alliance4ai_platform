@@ -113,7 +113,7 @@
                         </div>
                         <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
                             <div>
-                                <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$discussions-> title}} </p>
+                                <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{ Str :: limit($discussions-> title, 45) }} </p>
                                 <nav class="mb-0 opacity-100 my-1 text-secondary text-info"> <i class="fa fa-map-marker fa-1x fw-light"></i> {{ $discussions-> location}}</nav>
                                 <nav class="mb-0 opacity-100 my-1 text-secondary">  {{ $discussions-> date}}, From</small> {{ $discussions-> start_time}} <small>To</small> {{ $discussions-> end_time}}</nav>
                                 <div class="d-flex align-items-start">
@@ -127,8 +127,12 @@
                                             <nav>, by {{ $discussions-> user->name}}</nav>
                                         </nav>
                                     </nav>
-                                    @if (($discussions -> date) > Carbon\Carbon::now() && $discussions -> start_time > (Carbon\Carbon::now())->toTimeString() )
+                                    @if (($discussions -> date) > Carbon\Carbon::now())
                                         <nav class="mb-0 opacity-100 my-1 text-info">upcoming</nav>
+                                    @elseif (Carbon\Carbon::now() > ($discussions -> date))
+                                        <nav class="mb-0 opacity-100 my-1 text-info">past</nav>
+                                    @elseif (($discussions -> date) === Carbon\Carbon::now() && $discussions -> end_time > (Carbon\Carbon::now())->toTimeString() )
+                                        <nav class="mb-0 opacity-100 my-1 text-info">past</nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
                                         (Carbon\Carbon::now() )->toTimeString() >= $discussions -> start_time && 
                                         $discussions -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))

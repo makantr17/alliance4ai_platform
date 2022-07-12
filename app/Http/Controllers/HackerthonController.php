@@ -47,6 +47,11 @@ class HackerthonController extends Controller
         ]);
     }
 
+    public function destroy(User $user, Hackerthon $hackerthon){
+        $hackerthon ->delete();
+        return redirect()->route('users.hackerthon',  auth()->user()->name);
+    }
+
 
     public function store(Request $request){
         $this->validate($request, [

@@ -30,7 +30,7 @@
                 </span> </div>
             </div>
         </div>
-        <div class=" d-flex flex-wrap align-items-center px-0 py-3 ">
+        <div class="d-flex flex-wrap align-items-center px-0 py-3 ">
             @auth
                 @if (!$hackerthons->isCompeting(auth()->user()))
                     <form nonvalidate action="{{ route('hackathons.details',  $hackerthons->id) }}" method="post" class="mr-1">
@@ -39,9 +39,24 @@
                     </form>
                 @endif
             @endauth
+            @auth
+                @if ($hackerthons->isCompeting(auth()->user()))
+                    <a href="" class=" m-0 text-secondary"> joined</a>
+                    <!-- Inplement unjoin button -->
+                    <form class="mx-1"novalidate  action="{{ route('hackathons.members.unjoin', [$hackerthons->id]) }}" method="post">
+                    @csrf
+                        @method('DELETE')
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button type="submit" class="btn btn-muted text-danger border btn-sm my-0"> <i class="fa fa-sign-out"></i> Unjoin</button>
+                            </div>
+                        </div>
+                    </form>
+                @endif
+            @endauth
             <div class="">
                 <a href="{{ route('hackathons.details',  $hackerthons->id) }}">
-                    <button class="btn btn-primary border ">Back</button>
+                    <button class="btn btn-primary btn-md  border ">Back</button>
                 </a>
             </div>
         </div>

@@ -81,6 +81,7 @@ class TopicController extends Controller
             $content = '';
             $type = '';
             $filetype='';
+            
             foreach ($contento as $key => $value) {
                 if ($value !== 'undefined' && $key === 'title') {
                     $title = $value;
@@ -108,29 +109,121 @@ class TopicController extends Controller
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+    public function store(Request $request){
+
+        $data =$request->validate([
+            'topic'=> 'required',
+            'category'=>'required',
+            'description'=>'required',
+            'questions.*.question' => 'required',
+            'exercises.*.question' => 'required',
+            'content.*.title' => 'max:300',
+            'content.*.link' => 'max:300',
+            'content.*.description' => 'max:300',
+            // 'content.*.image',
+            'content.*.type',
+        ]);
+
+        $topic= $request->user()->topic()->create([
+            'topic'=> $request-> topic,
+            'category'=>$request-> category,
+            'description'=>$request-> description,
+            'status'=> false,
+        ]);
+
+        // save the prompts
+        foreach ($data['questions'] as $j => $choice_content) {
+            $request->user()->prompts()->create([
+                'topic_id'=> $topic-> id,
+                'question' => implode(", ", $choice_content),
+            ]);
+        }
+        // save the exercises
+        foreach ($data['exercises'] as $tel => $exercise) {
+            $request->user()->exercise()->create([
+                'topic_id'=> $topic-> id,
+                'question' => implode(", ", $exercise),
+            ]);
+        }
+        // save the contents
+        foreach ($data['content'] as $cont => $contento) {
+            $title = '';
+            $content = '';
+            $type = '';
+            $filetype='';
+            foreach ($contento as $key => $value) {
+                if ($value !== 'undefined' && $key === 'title') {
+                    $title = $value;
+                }
+                if ($value !== 'undefined') {
+                    $type = $key;
+                    $content = $value;
+                }
+            }
+            $request->user()->content()->create([
+                'topic_id'=> $topic-> id,
+                'type'=> '',
+                // 'file'=> $content !== 'undefined' && $type === 'image' ?  $content : '',
+                'link'=> $content !== 'undefined' && $type === 'link' ?  $content : '',
+                'title'=> $title !== 'undefined' ?  $value : '',
+                'description'=> $content !== 'undefined' && $type === 'description' ?  $content : '',
+            ]);
+        }
+        // send notification
+        // if ($topic) {
+        //     auth()->user()->notify(new \App\Notifications\TopicCreated($topic->topic, $topic->id, auth()->user()));
+        // }
+        
+        return redirect()->route('topics');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function update(Topic $topic){
         return view('topics.update_topic', [
             'topic'=> $topic
         ]);
     }
 
-    public function updatestore(Request $request, lessons $lesson){
-        $this->validate($request, [
-            'title'=> 'required',
-            'content'=>'required',
-            'estimate_time'=>'required'
-        ]);
 
-        DB::table('lessons')->where('id', $lesson->id)->where('user_id', $lesson->user_id)->where('course_id', $lesson->course_id)
-            ->update([
-            'title'=> $request-> title,
-            'content'=>$request-> content,
-            'status'=>false,
-            'link'=> $request-> link,
-            'estimate_time'=>$request-> estimate_time,
+    // public function updatestore(Request $request, lessons $lesson){
+    //     $this->validate($request, [
+    //         'title'=> 'required',
+    //         'content'=>'required',
+    //         'estimate_time'=>'required'
+    //     ]);
+
+    //     DB::table('lessons')->where('id', $lesson->id)->where('user_id', $lesson->user_id)->where('course_id', $lesson->course_id)
+    //         ->update([
+    //         'title'=> $request-> title,
+    //         'content'=>$request-> content,
+    //         'status'=>false,
+    //         'link'=> $request-> link,
+    //         'estimate_time'=>$request-> estimate_time,
             
-        ]);
+    //     ]);
 
-        return redirect()->route('dashboard');
-    }
+    //     return redirect()->route('dashboard');
+    // }
 }

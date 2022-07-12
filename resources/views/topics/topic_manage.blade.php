@@ -47,7 +47,7 @@
 
 <div class="container-fluid">
 
-    <div class="container-fluid mt-20">
+    <div class="container-fluid mt-20 mb-30">
         <div class="row">
             <!-- START Listed Topics here -->
             <div class="col-lg-12 shadow-sm">
@@ -70,24 +70,23 @@
                             <h4 class="mb-2">{{ $topic-> topic}}</h4>
                             <nav>{{ $topic-> description}}</nav>
                             <small class="opacity-50 text-nowrap">{{ $topic-> created_at->diffForHumans() }}</small>
-                            
                             <div class="d-flex flex-wrap align-items-center px-0 pt-0">
                                 @auth
                                 
-                                    <form action="{{ route('users.addcontent',  $topic) }}" method="get" class="mr-2">
+                                    <form action="{{ route('users.addcontent',  $topic) }}" method="get" class="m-1">
                                     @csrf
-                                        <button type="submit"class="btn btn-dark btn-sm btn-info"><i class="fa fa-image"></i> Add content</button>
+                                        <button type="submit"class="btn btn-dark btn-sm btn-info"> Add content</button>
                                     </form>
-                                    <form action="{{ route('users.addexercise',  $topic) }}" method="get" class="mr-1 m-2">
+                                    <form action="{{ route('users.addexercise',  $topic) }}" method="get" class="m-1">
                                     @csrf
                                         <button type="submit"class="btn btn-dark btn-sm btn-info"><i class="fa fa-question"></i> Add Exercise</button>
                                     </form>
-                                    <form action="{{ route('users.addprompt',  $topic) }}" method="get" class="mr-1 m-2">
+                                    <form action="{{ route('users.addprompt',  $topic) }}" method="get" class="m-1">
                                     @csrf
                                         <button type="submit"class="btn btn-dark btn-sm btn-info"><i class="fa fa-question"></i> Add prompt</button>
                                     </form>
                                     <!-- START DELETE TOPICS -->
-                                    <form action="{{ route('users.updatetopics',  $topic-> topic) }}" method="get" class="mr-1">
+                                    <form action="{{ route('users.updatetopics',  $topic-> topic) }}" method="get" class="m-1">
                                     @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-dark btn-sm btn-info"><i class="fa fa-edit"></i> Update</button>
@@ -95,6 +94,15 @@
                                     <!-- END DELETE TOPICS -->
                                 @endauth
                             </div>
+                        </div>
+                        <div class="p-1 my-2 rounded">
+                            @auth
+                                <form action="{{ route('users.topics.delete', [$topic->user, $topic->id]) }}" method="post" class="mr-1">
+                                @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            @endauth
                         </div>
                     </div>
                 </a>
@@ -114,13 +122,18 @@
             <h5 class="p-2 fw-bold text-info my-3 border-bottom">List of Contents</h5>
             @if ($topics[0]->content-> count())
                 @foreach($topics[0]->content as $content)
-                <a href="" class="list-group-item list-group-item-action border d-flex gap-3 py-2 my-2 bg-white shadow-sm" aria-current="true">
-                    <div class="d-flex gap-2 w-100 justify-content-between">
+                <a href="" class="list-group-item list-group-item-action border gap-3 py-2 my-2 bg-white shadow-sm" aria-current="true">
+                    <div class="gap-2 w-100 ">
                         <div>
-                            <h6 class="fw-bold">{{ $content-> title}} /<small>Type -{{ $content-> type}}</small></h6>
+                            
+                            <h6 class="fw-bold">{{ $content-> title}} /<small></small></h6>
+                            <p>{{ $content-> link}}</p>
                             <small class="opacity-50 text-nowrap">{{ $content-> created_at->diffForHumans() }}</small>
                         </div>
                     </div>
+
+                            
+
                     <div class=" px-0 pt-0">
                         @auth
                             <form action="" method="post" class="mr-1">

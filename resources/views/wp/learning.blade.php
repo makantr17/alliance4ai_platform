@@ -105,9 +105,13 @@
                                                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Open</button>
                                             </form>
                                             <div class="sc-fUqQNk jDAUBC avatar-group--dense">
-                                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                                                @if ($courses->user->image)
+                                                    <img src="{{ '/storage/images/'.$courses->user->id.'/'.$courses->user->image }}" alt="twbs" width="25" height="25" class="rounded-circle flex-shrink-0 border mr-1">
+                                                @else
+                                                    <img src="/images/cxc.jpg" alt="twbs" width="25" height="25" class="rounded-circle flex-shrink-0 border mr-1">
+                                                @endif
                                                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
-                                                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
+                                                <!-- <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j"> -->
                                             </div>
                                         </div>
                                         
@@ -118,30 +122,13 @@
                         @else
                             <p>No Course Available or posted</p>
                         @endif
+                        <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+                            {{ $course -> links()}}
+                        </div>
                     </div> <!-- row -->
                 </div>
             </div> <!-- tab content -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <nav class="courses-pagination mt-50">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a href="#" aria-label="Previous">
-                                    <i class="fa fa-angle-left"></i>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="active" href="#">1</a></li>
-                            <li class="page-item"><a href="#">2</a></li>
-                            <li class="page-item"><a href="#">3</a></li>
-                            <li class="page-item">
-                                <a href="#" aria-label="Next">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>  <!-- courses pagination -->
-                </div>
-            </div>  <!-- row -->
+            
         </div> <!-- container -->
     </section>
 @endsection

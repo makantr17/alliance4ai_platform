@@ -67,7 +67,16 @@
                 @endauth
                 @auth
                     @if ($groups->joinedBy(auth()->user()))
-                        <a href="" class="p-1 m-0 text-secondary"> <i class="fa fa-bookmark-o"></i> joined</a>
+                        <form class="mx-1"novalidate  action="{{ route('groups.members.unjoin', [$groups->id]) }}" method="post">
+                        @csrf
+                            @method('DELETE')
+                            <div class="col-lg-12">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <button type="submit" class="btn btn-muted border text-danger btn-sm my-0">  Unjoin</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="" class="pt-1 m-0 text-secondary">joined</a>
                     @endif
                 @endauth
                 </div>
@@ -101,7 +110,7 @@
     <div class="row justify-content-center col-md-12 bg-light">
         <div class="row bg-white py-2 justify-content-center col-md-10">
 
-            <div class="col-sm-8">
+            <div class="col-sm-12 col-lg-8">
                 <div class="my-1 bg-body rounded border">
                 <!-- Highlight Futur Discussion -->
                 <h5 class="pt-3 pb-2 m-3 fw-bold text-dark border-bottom">Future Discussion Tagged</h5>
@@ -116,11 +125,11 @@
                             <a href="{{ route('discussion.details', [$discussion->id]) }}" class="list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 border-bottom" aria-current="true">
                                 <div class="">    
                                     @if ($discussion->category === '1' )
-                                        <img src="/images/icon/plan2.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
+                                        <img src="/images/icon/Plan2.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
                                     @elseif ($discussion->category === '2' )
-                                        <img src="/images/icon/plan4.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
+                                        <img src="/images/icon/Plan4.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
                                     @else
-                                        <img src="/images/icon/plan7.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
+                                        <img src="/images/icon/Plan7.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
                                     @endif
                                 </div>
                                 <div class="col-sm-10 d-flex gap-2 w-100 justify-content-between align-items-start">
@@ -203,11 +212,11 @@
                                 <a href="{{ route('discussion.details', [$discussion->id]) }}" class="list-group-item-action d-flex flex-wrap justify-content-between gap-3 py-3 border-bottom" aria-current="true">
                                     <div class="">    
                                         @if ($discussion->category === '1' )
-                                            <img src="/images/icon/plan2.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
+                                            <img src="/images/icon/Plan2.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
                                         @elseif ($discussion->category === '2' )
-                                            <img src="/images/icon/plan4.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
+                                            <img src="/images/icon/Plan4.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
                                         @else
-                                            <img src="/images/icon/plan7.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
+                                            <img src="/images/icon/Plan7.png" alt="twbs" width="80" height="" class="rounded flex-shrink-0">
                                         @endif
                                     </div>
                                     <div class="col-sm-10 d-flex gap-2 w-100 justify-content-between align-items-start">
@@ -239,6 +248,13 @@
 
             <div class="col-md-4 bg-light border">
                 <div class="my-3 p-1 rounded">
+                    <div class="d-flex justify-content-right pb-3">
+                        <form action="" method="get" class="">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm text-info border my-1"><i class="fa fa-user-o"></i> Invite Future Makers</button>
+                        </form>
+                    </div>
+                
                 <h6 class=" pb-4 mb-0">Future Makers</h6>
                 @if ($group_members -> count())
                     @foreach($group_members as $group_member)

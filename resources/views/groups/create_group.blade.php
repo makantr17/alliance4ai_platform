@@ -12,8 +12,8 @@
             
             @csrf
             <div class="col-md-6">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" id="name" placeholder="Your name" 
+                <label for="name" class="form-label">Circle Name</label>
+                <input type="text" name="name" id="name" placeholder="circle name" 
                 class="form-control py-2  rounded-lg @error('name') border border-danger @enderror" value="{{ old('name')}}">
                 
                 @error('name')
@@ -24,8 +24,8 @@
             </div>
 
             <div class="col-md-6">
-                <label for="titre" class="form-label">Titre</label>
-                <input type="text" name="titre" id="titre" placeholder="Your titre" 
+                <label for="titre" class="form-label">Circle Title</label>
+                <input type="text" name="titre" id="titre" placeholder="circle title" 
                 class="form-control py-2  rounded-lg @error('titre') border border-danger @enderror" value="{{ old('titre')}}">
                 
                 @error('titre')
@@ -37,7 +37,7 @@
 
             <div class="col-md-6">
                 <label for="location" class="form-label">Location</label>
-                <input type="text" name="location" id="location" placeholder="Your location" 
+                <input type="text" name="location" id="location" placeholder="circle location" 
                 class="form-control py-2  rounded-lg @error('location') border border-danger @enderror" value="{{ old('location')}}">
                 
                 @error('location')

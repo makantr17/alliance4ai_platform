@@ -118,10 +118,10 @@
                         </div>
                     </div> 
 
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 mx-5">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 mx-2">
                     @if ($group -> count())
                         @foreach($group as $groups)
-                        <div class="col-sm-3">
+                        <div class="col-sm-8 col-lg-3">
                             <div class="card shadow-sm bg-light" >
                                 @if ($groups-> image )
                                     <img src="{{ '/storage/images/group/'.$groups->name.'/'.$groups->image }}" alt="twbs" width="100%" height="225" style="max-height: 25vh;" >
@@ -168,6 +168,9 @@
                     <!-- end col -->
                     
 
+                </div>
+                <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+                    {{ $group -> links()}}
                 </div>
             </div>
         </div>

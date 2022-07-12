@@ -22,7 +22,7 @@
           <div class="col-md-8">
               <div class="h-100 p-3 bg-light">
                 <h3 class="fw-light">Description </h3>
-                  <p> <small>{{ $discussions-> description}} This course intend to to initiate you from basic nowledge of algorithms data scienceThis course intend to to initiate you from basic nowledge of algorithms data science</small> </p>
+                  <p> <small>{{ $discussions-> description}} </small> </p>
               </div>
           </div>
       </div>

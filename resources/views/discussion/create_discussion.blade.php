@@ -26,7 +26,7 @@
                 @enderror
             </div>
 
-            <div class="topicList container-fluid d-flex border p-2 bg-white fw-light text-secondary">
+            <div class="topicList container-fluid d-flex flex-wrap border p-2 bg-white fw-light text-secondary">
                 @if ($listoftopics -> count())
                     @foreach($listoftopics as $topics)
                         <label class="p-1 m-1 border bg-light rounded"><input type="checkbox" value="{{$topics->id}}"> {{$topics->topic}}</label><br>

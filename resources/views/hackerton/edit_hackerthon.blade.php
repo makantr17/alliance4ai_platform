@@ -36,9 +36,9 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Edit hackathon</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Courses</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Hackathons</button>
                         </form>
                     @endauth
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Policies\CoursePolicy;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\lessons;
@@ -41,10 +42,9 @@ class CourseController extends Controller
         
     }
 
-    public function destroy(Post $post){
-        $this->authorize('delete', $post);
-        $post ->delete();
-        return back();
+    public function destroy(User $user, Course $course){
+        $course ->delete();
+        return redirect()->route('users.course',  auth()->user()->name);
     }
 
 

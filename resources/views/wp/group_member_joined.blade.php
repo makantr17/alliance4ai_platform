@@ -39,35 +39,44 @@
                     <a href="{{ route('groups.members', [$groups ->id]) }}">
                         <button class="btn btn-muted text-info btn-sm">Back</button>
                     </a>
-                
-                @auth
-                    @if ($group_members -> count())
-                        @if (!$group_members -> contains('user_id', auth()->user()->id ))
-                            <form class="mx-1" novalidate action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
-                                @csrf
-                                <div class="">
+                    @auth
+                        @if ($groups->joinedBy(auth()->user()))
+                            <form class="mx-1"novalidate  action="{{ route('groups.members.unjoin', [$groups->id]) }}" method="post">
+                            @csrf
+                                @method('DELETE')
+                                <div class="col-lg-12">
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <button type="submit" class="btn btn-primary my-3">Join Circle</button>
+                                        <button type="submit" class="btn btn-muted border text-danger btn-sm my-0">  Unjoin</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <a href="" class="pt-1 m-0 text-secondary">joined</a>
+                        @endif
+                    @endauth
+                    @auth
+                        @if ($group_members -> count())
+                            @if (!$group_members -> contains('user_id', auth()->user()->id ))
+                                <form class="mx-1" novalidate action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
+                                    @csrf
+                                    <div class="">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <button type="submit" class="btn btn-primary my-3">Join Circle</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endif
+                        @else
+                            <form class="mx-1"novalidate  action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
+                                @csrf
+                                <div class="col-lg-12">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button type="submit" class="btn btn-primary btn-sm my-0">Join Circle</button>
                                     </div>
                                 </div>
                             </form>
                         @endif
-                    @else
-                        <form class="mx-1"novalidate  action="{{ route('groups_details', [$group[0] ->id] ) }}" method="post">
-                            @csrf
-                            <div class="col-lg-12">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <button type="submit" class="btn btn-primary btn-sm my-0">Join Circle</button>
-                                </div>
-                            </div>
-                        </form>
-                    @endif
-                @endauth
-                @auth
-                    @if ($groups->joinedBy(auth()->user()))
-                        <a href="" class="p-1 m-0 text-secondary"> <i class="fa fa-bookmark-o"></i> joined</a>
-                    @endif
-                @endauth
+                    @endauth
+                    
                 </div>
             </div>
         </div>

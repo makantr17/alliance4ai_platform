@@ -29,6 +29,10 @@ class GroupController extends Controller
             'user' => $user,
         ]);
     }
+    public function destroy(User $user, Group $group){
+        $group ->delete();
+        return redirect()->route('users.group',  auth()->user()->name);
+    }
 
     public function store(Request $request){
         $this->validate($request, [

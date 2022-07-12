@@ -65,8 +65,8 @@
                 @endif
             </div>
             <div class="card-body">
-              <h5 class="fw-bold pb-2" style="font-size:16px">{{ $topic-> topic}}</h5>
-              <p class="card-text pb-1" style="font-size:14px">{{ Str :: limit($topic-> description, 45) }}</p>
+              <h5 class="fw-bold pb-2" style="font-size:16px">{{ Str :: limit($topic-> topic, 20) }}</h5>
+              <p class="card-text pb-1" style="font-size:14px">{{ Str :: limit($topic-> description, 20) }}</p>
               
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-topic">

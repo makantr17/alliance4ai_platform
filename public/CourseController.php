@@ -34,12 +34,6 @@ class CourseController extends Controller
         ]);
     }
 
-    public function destroy(Post $post){
-        $this->authorize('delete', $post);
-        $post ->delete();
-        return back();
-    }
-
 
     public function create(User $user){
         return view('course.create_user',[

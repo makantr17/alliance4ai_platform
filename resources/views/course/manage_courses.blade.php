@@ -67,7 +67,7 @@
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
             </div>
-            <form action="{{ route('learning.course', [$courses->id]) }}" method="get" >
+            <form action="{{ route('learning.course', [$course[0]->id]) }}" method="get" >
             @csrf
                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
             </form>
@@ -93,6 +93,17 @@
                 @endif
             </form>
         </div>
+
+        <div class="p-3 gray-bg my-2 rounded">
+            <p class="text-secondary pb-2">Delete course</p>
+            @auth
+                <form action="{{ route('users.course.delete', [$course[0] ->user, $course[0]->id]) }}" method="post" class="mr-1">
+                @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            @endauth
+        </div>
     </div>
     
     
@@ -101,19 +112,26 @@
     <div class="col-lg-8 py-1">
         @if ($lessons -> count())
             @foreach($lessons as $lesson)
-                <a href="{{ route('users.lesson.details', [$lesson->user, $lesson->id]) }}" class="list-group-item-action d-flex my-1 flex-wrap justify-content-between align-items-center gap-3 py-1 my-0 bg-light rounded" aria-current="true">
+                <a href="{{ route('users.lesson.details', [$lesson->user, $lesson->id]) }}" class="list-group-item-action d-flex my-1 flex-wrap justify-content-between align-items-center gap-3 py-1 bg-light rounded border" aria-current="true">
                     <div class="col-sm-2 overflow-hidden" >
                         <img src="/images/icon/plan2.png" alt="twbs" width="60px" height="60px" class="rounded flex-shrink-0">
                     </div>
                     <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
-                        <div>
-                            <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{ $lesson-> title}} </p>
+                        <div class="">
+                            <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"  > {{ $lesson-> title}} </p>
                             <nav class="mb-0 opacity-100 my-1 text-secondary"> 
-                                <small class="text-info">{{ Str :: limit($lesson-> description, 105) }}</small>
+                                <p class="text-info" style="font-size: 14px">{{ Str :: limit($lesson-> description, 105) }}</p>
                             </nav>
-                            <small class="opacity-80 text-nowrap">{{ $lesson-> created_at->diffForHumans() }}</small>
+                            <p class="opacity-80 text-nowrap" style="font-size: 14px">{{ $lesson-> created_at->diffForHumans() }}</p>
                         </div>
                     </div>
+                    <!-- Delete Lessons -->
+                    <form class="container d-flex justify-content-between align-items-center" novalidate action="{{ route('users.lessons.delete', [$lesson->user, $lesson->id]) }}" method="post">
+                        @csrf      
+                        @method('DELETE')
+                        <nav></nav>
+                        <button class="btn btn-muted btn-sm text-danger border" type="submit">Delete</button>
+                    </form>
                 </a>
             @endforeach
         @else

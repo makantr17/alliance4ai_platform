@@ -25,6 +25,11 @@ class DiscussionController extends Controller
         ]);
     }
 
+    public function destroy(User $user, Discussion $discussion){
+        $discussion ->delete();
+        return redirect()->route('users.discussion',  auth()->user()->name);
+    }
+
     public function add_cover(Discussion $discussion){
         return view('discussion.add_cover', [
             'discussions' => $discussion

@@ -25,27 +25,28 @@
             <div class="">
                 <div class="card-body">
                     <h4 class="small font-weight-bold text-light">Shared Learning<span
-                            class="float-right">20%</span></h4>
+                            class="float-right">{{ $learning -> count() > 0 ? ($learning -> count() * 100)/ $count_learning : 0}}%</span></h4>
                     <div class="progress mb-2">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{($learning -> count() * 100)/ $count_learning }}%"
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $learning -> count() > 0 ? ($learning -> count() * 100)/ $count_learning : 0}}%"
                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <h4 class="small font-weight-bold text-light">Topics shared <span
-                            class="float-right">{{($topics -> count() * 100)/ $count_topic }}%</span></h4>
+                            class="float-right">{{ $topics -> count() > 0 ? ($topics -> count() * 100)/ $count_topic : 0}}%</span></h4>
                     <div class="progress mb-2">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{($topics -> count() * 100)/ $count_topic }}%"
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $topics -> count() > 0 ? ($topics -> count() * 100)/ $count_topic : 0}}%"
                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <h4 class="small font-weight-bold text-light">Question answered <span
-                            class="float-right">60%</span></h4>
+                    <h4 class="small font-weight-bold text-light">Circle Joined<span
+                            class="float-right">{{ $joinedCircle -> count() > 0 ? ($joinedCircle -> count() * 100)/ $count_group : 0}}%</span></h4>
                     <div class="progress mb-2">
-                        <div class="progress-bar" role="progressbar" style="width: 60%"
+                        <div class="progress-bar" role="progressbar" style="width: {{ $joinedCircle -> count() > 0 ? ($joinedCircle -> count() * 100)/ $count_group : 0}}%"
                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <h4 class="small font-weight-bold text-light">Hosted Discussion <span
-                            class="float-right">{{($discussion -> count() * 100)/ $count_discussion }}%</span></h4>
+                    <h4 class="small font-weight-bold text-light">Hosted Discussion 
+                         <span class="float-right">{{ $discussion -> count() > 0 ? ($discussion -> count() * 100)/ $count_discussion : 0}}%</span>
+                    </h4>
                     <div class="progress mb-2">
-                        <div class="progress-bar bg-dark" role="progressbar" style="width: {{($discussion -> count() * 100)/ $count_discussion }}%"
+                        <div class="progress-bar bg-dark" role="progressbar" style="width: {{ $discussion -> count() > 0 ? ($discussion -> count() * 100)/ $count_discussion : 0}}%"
                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     

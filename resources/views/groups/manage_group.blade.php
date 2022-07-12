@@ -31,15 +31,19 @@
                     @auth
                         <form action="{{ route('users.creategroups',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Circle</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> New Circle</button>
                         </form>
                         <form action="{{ route('group.addmember',  $group[0]->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add member</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Invite FM</button>
                         </form>
                         <form action="" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Collaborators</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Activities</button>
+                        </form>
+                        <form action="" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Members</button>
                         </form>
                     @endauth
                 </div>
@@ -79,10 +83,20 @@
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
             </div>
-            <form action="" method="get" >
+            <form action="{{ route('groups.members', [$groups ->id]) }}" method="get" >
             @csrf
                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
             </form>
+        </div>
+        <div class="p-3 gray-bg my-2 rounded">
+            <p class="text-secondary pb-2">Delete Circle</p>
+            @auth
+                <form action="{{ route('users.group.delete', [$group[0]->user, $group[0]->id]) }}" method="post" class="mr-1">
+                @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            @endauth
         </div>
     </div>
     

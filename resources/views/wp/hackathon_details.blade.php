@@ -39,6 +39,21 @@
                     </form>
                 @endif
             @endauth
+            @auth
+                @if ($hackerthons->isCompeting(auth()->user()))
+                    <a href="" class=" m-0 text-secondary"> joined</a>
+                    <!-- Inplement unjoin button -->
+                    <form class="mx-1"novalidate  action="{{ route('hackathons.members.unjoin', [$hackerthons->id]) }}" method="post">
+                    @csrf
+                        @method('DELETE')
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button type="submit" class="btn btn-muted text-danger border btn-sm my-0"> <i class="fa fa-sign-out"></i> Unjoin</button>
+                            </div>
+                        </div>
+                    </form>
+                @endif
+            @endauth
             <div class="">
                 <a href="{{ route('hackathons')}}">
                     <button class="btn btn-primary border ">Back</button>

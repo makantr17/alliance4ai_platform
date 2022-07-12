@@ -78,6 +78,7 @@ Route::get('/learning/course/lesson/{lesson}', [NavigationController::class, 'le
 
 Route::get('/discussion/topic/{discussion}', [NavigationController::class, 'discussion_details'])->name('discussion.topic');
 
+
 Route::get('/discussion/topic/messages/{topic}', [NavigationController::class, 'topic_discussion'])->name('discussion.topic.messages');
 Route::post('/discussion/topic/messages/{topic}', [NavigationController::class, 'comment_topic']);
 
@@ -100,6 +101,8 @@ Route::get('/groups', [NavigationController::class, 'groups'])->name('groups');
 Route::get('/groups_details/{group}', [NavigationController::class, 'circle_details'])->name('groups_details');
 Route::get('/groups/members/{group}', [NavigationController::class, 'group_member'])->name('groups.members');
 Route::get('/groups/members/joined/{group}', [NavigationController::class, 'joined'])->name('groups.members.joined');
+
+Route::delete('/groups/members/unjoin/{group}', [NavigationController::class, 'unjoin'])->name('groups.members.unjoin');
 Route::post('/groups_details/{group}', [NavigationController::class, 'join_member']);
 
 Route::get('/groups/members/topics/{topic_circle}', [NavigationController::class, 'group_topic_message'])->name('groups.members.topics');
@@ -108,6 +111,8 @@ Route::post('/groups/members/topics/{topic_circle}', [NavigationController::clas
 Route::get('/hackathons', [NavigationController::class, 'hackathons'])->name('hackathons');
 Route::get('/hackathons/details/{hackerthon}', [NavigationController::class, 'details'])->name('hackathons.details');
 Route::post('/hackathons/details/{hackerthon}', [CompetitorController::class, 'adduser']);
+Route::delete('/hackathons/members/unjoin/{hackerthon}', [NavigationController::class, 'unjoinhackathon'])->name('hackathons.members.unjoin');
+
 Route::get('/hackathons/participants/{hackerthon}', [NavigationController::class, 'hackathon_participants'])->name('hackathons.participants');
 
 
@@ -138,6 +143,8 @@ Route::get('/user/{user:name}/score', [ScoreController::class, 'index'])->name('
 
 
 Route::get('/user/{user:name}/course', [CourseController::class, 'index'])->name('users.course');
+Route::delete('/user/{user:name}/course/delete/{course}', [CourseController::class, 'destroy'])->name('users.course.delete');
+
 Route::get('/user/{user:name}/course/manage/{course}', [CourseController::class, 'manage'])->name('users.course.manage');
 Route::post('/user/{user:name}/course/manage/{course}/saveCourseUser', [CourseController::class, 'saveCourseUser'])->name('users.course.manage.saveCourseUser');
 
@@ -150,10 +157,14 @@ Route::post('/user/{user:name}/createlessons/{course}', [LessonsController::clas
 
 Route::get('/user/{user:name}/lesson/details/{lesson}', [LessonsController::class, 'details'])->name('users.lesson.details');
 
+Route::delete('/user/{user:name}/lessons/delete/{lesson}', [LessonsController::class, 'destroy'])->name('users.lessons.delete');
+
 Route::get('/user/{lesson:title}/updatelessons', [LessonsController::class, 'update'])->name('users.updatelessons');
 Route::post('/user/{lesson:title}/updatelessons', [LessonsController::class, 'updatestore']);
 
 Route::get('/user/{user:name}/group', [GroupController::class, 'index'])->name('users.group');
+Route::delete('/user/{user:name}/group/delete/{group}', [GroupController::class, 'destroy'])->name('users.group.delete');
+
 Route::get('/user/{user:name}/group/manage/{group}', [GroupController::class, 'manage'])->name('users.group.manage');
 
 Route::get('/user/{user:name}/creategroups', [GroupController::class, 'create'])->name('users.creategroups');
@@ -169,6 +180,8 @@ Route::get('/user/{user:name}/addjob', [UserJobsController::class, 'addjob'])->n
 Route::post('/user/{user:name}/addjob', [UserJobsController::class, 'storejob']);
 
 Route::get('/user/{user:name}/hackerthon', [HackerthonController::class, 'index'])->name('users.hackerthon');
+Route::delete('/user/{user:name}/hackerthon/delete/{hackerthon}', [HackerthonController::class, 'destroy'])->name('users.hackerthon.delete');
+
 Route::get('/user/{user:name}/hackerthon/manage/{hackerthon}', [HackerthonController::class, 'manage'])->name('users.hackerthon.manage');
 Route::get('/user/{user:name}/hackerthon/manage/competitors/{hackerthon}', [HackerthonController::class, 'competitors'])->name('users.hackerthon.manage.competitors');
 Route::get('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'create'])->name('users.create_hackerthon');
@@ -178,12 +191,16 @@ Route::get('/user/{hackerthon:title}/update_hackerthon', [HackerthonController::
 Route::post('/user/{hackerthon:title}/update_hackerthon', [HackerthonController::class, 'updatestore']);
 
 Route::get('/user/{user:name}/discussion', [DiscussionController::class, 'index'])->name('users.discussion');
+Route::delete('/user/{user:name}/discussion/delete/{discussion}', [DiscussionController::class, 'destroy'])->name('users.discussion.delete');
+
 Route::get('/user/{user:name}/discussion/manage/{discussion}', [DiscussionController::class, 'manage'])->name('users.discussion.manage');
 Route::get('/user/{discussion}/discussion/add_cover', [DiscussionController::class, 'add_cover'])->name('users.discussion.add_cover');
 Route::post('/user/{discussion}/discussion/add_cover', [DiscussionController::class, 'upload']);
 
 
 Route::get('/user/{user:name}/topics', [TopicController::class, 'adminTopics'])->name('users.topics');
+Route::delete('/user/{user:name}/topics/delete/{topic}', [TopicController::class, 'destroy'])->name('users.topics.delete');
+
 Route::get('/user/{user:name}/topics/manage/{topic}', [TopicController::class, 'manage'])->name('users.topics.manage');
 
 

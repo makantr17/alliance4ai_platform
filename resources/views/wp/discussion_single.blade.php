@@ -15,11 +15,74 @@
         </div>
         <div class="container d-flex flex-row-reverse">
             <a href="{{ route('discussion')}}">
-                <button class="btn btn-muted  btn-sm text-info"> <i class="fa fa-arrow-left pr-1" aria-hidden="true"></i> Back</button>
+                <button class="btn btn-primary  btn-sm ml-2"> <i class="fa fa-arrow-left pr-1" aria-hidden="true"></i> Back</button>
             </a>
+            <!-- start here -->
+            @if (($discussion -> date) > Carbon\Carbon::now())
+                <nav class="mb-0 opacity-75 my-1 text-info">upcoming</nav>
+                @auth
+                    @if (!$discussion->participatedBy(auth()->user()))
+                        <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                        @csrf
+                            <button type="submit" class="btn btn-primary btn-sm">register</button>
+                        </form>
+                    @endif
+                @endauth
+            @elseif (Carbon\Carbon::now() > ($discussion -> date))
+                <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
+            @elseif (($discussion -> date) > Carbon\Carbon::now() && $discussion -> start_time > (Carbon\Carbon::now())->toTimeString() )
+                <nav class="mb-0 opacity-75 my-1 text-black"><small>upcoming</small></nav>
+                @auth
+                    @if (!$discussion->participatedBy(auth()->user()))
+                        <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                        @csrf
+                            <button type="submit" class="btn btn-primary btn-sm">register</button>
+                        </form>
+                    @endif
+                @endauth
+            @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
+                $discussion -> start_time  > (Carbon\Carbon::now())->toTimeString()) )
+                <nav class="opacity-75 my-1 text-black"><small>upcoming</small></nav>
+                @auth
+                    @if (!$discussion->participatedBy(auth()->user()))
+                        <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                        @csrf
+                            <button type="submit" class="btn btn-secondary">register</button>
+                        </form>
+                    @else
+                        <form action="" method="get" class="">
+                        @csrf
+                            <button type="submit"class="btn btn-success">Join</button>
+                        </form>
+                    @endif
+                @endauth
+            @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
+                (Carbon\Carbon::now() )->toTimeString() >= $discussion -> start_time && 
+                $discussion -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
+                <!-- If ongoing or live -->
+                @auth
+                    @if (!$discussion->participatedBy(auth()->user()))
+                        <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
+                        @csrf
+                            <button type="submit" class="btn btn-secondary btn-sm">register live</button>
+                        </form>
+                    @else
+                        <a class="btn btn-success btn-sm" href="{{ $discussion->link}}" target="_blank">Join live</a>
+                        
+                    @endif
+                @endauth
+            @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && 
+                (Carbon\Carbon::now()) ->toTimeString() > $discussion -> end_time )
+                <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
+            
+            @else
+                <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
+            @endif
         </div>
-                <h5 class="mb-1 pt-4 m-0">{{$discussion-> title}} </h5>
-                <small class="text-muted m-0 p-0">By- {{ $discussion-> user->name }}</small>
+
+
+        <h5 class="mb-1 pt-4 m-0">{{$discussion-> title}} </h5>
+        <small class="text-muted m-0 p-0">By- {{ $discussion-> user->name }}</small>
         <div class="d-flex gap-2 w-100 justify-content-between pb-2 border-bottom">
             <div>
                 @if ($discussion->category === '1' )
@@ -29,7 +92,7 @@
                 @else
                     <img src="/images/icon/Plan7.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                 @endif
-                    <small class="opacity-100 text-nowrap"><i class="fa fa-calendar fa-1x fw-light"></i> Meeting: {{ $discussion-> date }}</small>   
+                    <small style="font-size:14px" class="opacity-100 text-nowrap"><i class="fa fa-calendar fa-1x fw-light"></i> Meeting: {{ $discussion-> date }}</small>   
             </div>
             <div class="d-flex justify-content-between align-items-center px-0 pt-0">
                 <div class="text-center align-items-center">
@@ -39,59 +102,8 @@
                             <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
                             <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j"></div>
                         </div>
-                        @if (($discussion -> date) > Carbon\Carbon::now() && $discussion -> start_time > (Carbon\Carbon::now())->toTimeString() )
-                            <nav class="mb-0 opacity-75 my-1 text-black"><small>upcoming</small></nav>
-                            @auth
-                                @if (!$discussion->participatedBy(auth()->user()))
-                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
-                                    @csrf
-                                        <button type="submit" class="btn btn-primary btn-sm">register</button>
-                                    </form>
-                                @endif
-                            @endauth
-                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
-                            $discussion -> start_time  > (Carbon\Carbon::now())->toTimeString()) )
-                            <nav class="opacity-75 my-1 text-black"><small>upcoming</small></nav>
-                            @auth
-                                @if (!$discussion->participatedBy(auth()->user()))
-                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
-                                    @csrf
-                                        <button type="submit" class="btn btn-secondary">register</button>
-                                    </form>
-                                @else
-                                    <form action="" method="get" class="">
-                                    @csrf
-                                        <button type="submit"class="btn btn-success">Join</button>
-                                    </form>
-                                @endif
-                            @endauth
-                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && (
-                            (Carbon\Carbon::now() )->toTimeString() >= $discussion -> start_time && 
-                            $discussion -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
-                            <!-- If ongoing or live -->
-                            @auth
-                                @if (!$discussion->participatedBy(auth()->user()))
-                                    <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
-                                    @csrf
-                                        <button type="submit" class="btn btn-secondary btn-sm">register live</button>
-                                    </form>
-                                @else
-                                    <form action="" method="get" class="">
-                                    @csrf
-                                        <button type="submit"class="btn btn-success btn-sm">Join live</button>
-                                    </form>
-                                @endif
-                            @endauth
-                        @elseif (($discussion -> date) === (Carbon\Carbon::now())->toDateString() && 
-                            (Carbon\Carbon::now()) ->toTimeString() > $discussion -> end_time )
-                            <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
                         
-                        @else
-                            <nav class="mb-0 opacity-75 my-1 text-black"><small>past-meeting</small></nav>
-                        @endif
-                        
-                    
-                </div>
+                    </div>
             </div>
         </div>
 

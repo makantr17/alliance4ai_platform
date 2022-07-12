@@ -37,13 +37,21 @@ class TopicController extends Controller
         ]);
     }
 
+    public function destroy(User $user, Topic $topic){
+        $topic ->delete();
+        return redirect()->route('users.topics',  auth()->user()->name);
+    }
+
+
+    
+
+
 
     public function store(Request $request){
 
         $data =$request->validate([
             'topic'=> 'required',
             'category'=>'required',
-            'description'=>'required',
             'questions.*.question' => 'required',
             'exercises.*.question' => 'required',
             'content.*.title' => 'max:300',
@@ -53,6 +61,9 @@ class TopicController extends Controller
             'content.*.type',
         ]);
 
+        
+
+        // dd($data['content'] );
         $topic= $request->user()->topic()->create([
             'topic'=> $request-> topic,
             'category'=>$request-> category,
@@ -67,6 +78,7 @@ class TopicController extends Controller
                 'question' => implode(", ", $choice_content),
             ]);
         }
+        
         // save the exercises
         foreach ($data['exercises'] as $tel => $exercise) {
             $request->user()->exercise()->create([
@@ -80,11 +92,15 @@ class TopicController extends Controller
             $content = '';
             $type = '';
             $filetype='';
+
+            
+            
             foreach ($contento as $key => $value) {
+                // dd([$key,  $value]);
                 if ($value !== 'undefined' && $key === 'title') {
                     $title = $value;
                 }
-                if ($value !== 'undefined') {
+                if ($value !== 'undefined' && $key !== 'title') {
                     $type = $key;
                     $content = $value;
                 }
@@ -94,7 +110,7 @@ class TopicController extends Controller
                 'type'=> '',
                 // 'file'=> $content !== 'undefined' && $type === 'image' ?  $content : '',
                 'link'=> $content !== 'undefined' && $type === 'link' ?  $content : '',
-                'title'=> $title !== 'undefined' ?  $value : '',
+                'title'=> $title !== 'undefined' ?  $title : '',
                 'description'=> $content !== 'undefined' && $type === 'description' ?  $content : '',
             ]);
         }
@@ -105,6 +121,24 @@ class TopicController extends Controller
         
         return redirect()->route('topics');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function update(Topic $topic){

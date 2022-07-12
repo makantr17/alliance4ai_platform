@@ -20,6 +20,7 @@ use App\Models\Hackerthon;
 use App\Models\Registeration;
 use App\Models\Topic_circle;
 use App\Models\group_message;
+use App\Models\Competitor;
 
 
 class NavigationController extends Controller
@@ -32,10 +33,10 @@ class NavigationController extends Controller
     }
 
     public function topics(){
-        $topics =  Topic::latest()->paginate(15);
+        $topics =  Topic::latest()->paginate(16);
         $topic = Topic::when(request('category'), function($query){
             return $query->where('category', request('category'));
-        })->paginate(15);
+        })->latest()->paginate(16);
         return view('topics.index', [
             'topics'=> $topic,
         ]);
@@ -111,11 +112,11 @@ class NavigationController extends Controller
 
     public function groups(){
         if(request('search') != ''){
-            $groups = Group::where('name', 'LIKE', '%'.request('search').'%')->with(['group_member'])->latest()->get();;
+            $groups = Group::where('name', 'LIKE', '%'.request('search').'%')->with(['group_member'])->latest()->paginate(16);
         }else{
             $groups = Group::when(request('location'), function($query){
                 return $query->where('location', request('location'));
-            })->with(['group_member'])->latest()->get();
+            })->with(['group_member'])->latest()->paginate(16);
         }
         $location =  Group::distinct()->get(['location']);
         return view('wp.grouped', [
@@ -135,7 +136,7 @@ class NavigationController extends Controller
     
     public function learning(){
         // $course =  Course::latest()->get();
-        $course =  Course::latest()->where('isvalidate', '=', true)->get();
+        $course =  Course::latest()->where('isvalidate', '=', true)->paginate(3); 
         return view('wp.learning', [
             'course'=> $course,
         ]);
@@ -143,6 +144,11 @@ class NavigationController extends Controller
 
     public function hackathons(){
         $hackerthon =  Hackerthon::latest()->get();
+        if(request('search') != ''){
+            $hackerthon = Hackerthon::where('title', 'LIKE', '%'.request('search').'%')->latest()->paginate(16);
+        }else{
+            $hackerthon =  Hackerthon::latest()->paginate(16);
+        };
         return view('wp.hackathon', [
             'hackerthons'=> $hackerthon,
         ]);
@@ -190,6 +196,27 @@ class NavigationController extends Controller
             'group' => $groups,
             'group_members'=> $group_member,
         ]);
+    }
+    public function unjoin(Group $group){
+        if ($group->joinedBy(auth()->user())) {
+            $group_member = Group_member::latest()->where('group_id', '=', $group->id)->where('user_id', '=', auth()->user()->id)->get();
+            if ($group_member -> count()) {
+                $group_member[0]->delete();
+                return back();
+            }
+        }
+        return back();
+    }
+
+    public function unjoinhackathon(Hackerthon $hackerthon){
+        if ($hackerthon->isCompeting(auth()->user())) {
+            $competitor = Competitor::latest()->where('hackerthon_id', '=', $hackerthon-> id)->where('user_id', '=', auth()->user()->id)->get();
+            if ($competitor -> count()) {
+                $competitor[0]->delete();
+                return back(); 
+            }
+        }
+        return back();
     }
 
 

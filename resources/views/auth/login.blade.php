@@ -46,7 +46,7 @@
           
             <small class="text-muted"></small>
         </form>
-        <a href="{{ route('register')}}">Forgot password click here</a>
+        <a href="{{ route('password.request')}}">Forgot password click here</a>
         <hr class="my-4">
         <h2 class="fs-5 fw-bold mb-3">Create new account</h2>
         <a class="col-md-12" href="{{ route('register')}}">

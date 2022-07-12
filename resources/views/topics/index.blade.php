@@ -108,10 +108,10 @@
                 </div>
                 <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start border-bottom">
                     <div>
-                        <h5 class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"> {{$topic-> topic}} </h5>
-                        <p>{{$topic-> description}}...</p>
+                        <h5 class="pt-1 mt-1 mb-0 lh-1 text-black fw-bold"> {{Str :: limit($topic-> topic, 50)}} </h5>
+                        <p class="p-0">{{ Str :: limit($topic-> description, 50) }}...</p>
                         
-                        <nav class="mb-0 opacity-100 my-1 text-secondary"> 
+                        <nav class="mb-0 opacity-100 my-0 text-secondary"> 
                             @if ($topic->category === '1' )
                                 <small class="text-info"> Future Tech</small>
                             @elseif ($topic->category === '2' )

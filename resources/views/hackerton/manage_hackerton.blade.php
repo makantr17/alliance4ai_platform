@@ -77,6 +77,16 @@
                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
             </form>
         </div>
+        <div class="p-3 gray-bg my-2 rounded">
+            <p class="text-secondary pb-2">Delete Hackathon</p>
+            @auth
+                <form action="{{ route('users.hackerthon.delete', [$hackerthon->user, $hackerthon->id]) }}" method="post" class="mr-1">
+                @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            @endauth
+        </div>
     </div>
     
 
@@ -92,7 +102,7 @@
                               </div>
                               @if( $hackerthon-> images)
                                   <div class="bg-light rounded  my-2">
-                                      <img src="{{'.images/hackathon/'.$hackerthon->title.'/'.$hackerthon->images}} " width="100%" alt="Courses">
+                                      <img src="{{'.images/hackathon/'.$hackerthon->title.'/'.$hackerthon->images}} " width="100%" alt="hackathon">
                                   </div>
                                   
                               @endif

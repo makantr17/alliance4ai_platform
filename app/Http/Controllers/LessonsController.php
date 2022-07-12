@@ -28,6 +28,11 @@ class LessonsController extends Controller
         ]);
     }
 
+    public function destroy(User $user, lessons $lesson){
+        $lesson ->delete();
+        return redirect()->route('users.course',  auth()->user()->name);
+    }
+
     public function manage(User $user, Course $course){
         $lessons = lessons::latest()->where('course_id', '=', $course->id)->where('user_id', '=', $user->id)->get();
         $courses = $user->course()->where('id', '=', $course->id)->get();
@@ -75,7 +80,7 @@ class LessonsController extends Controller
             'status'=>false,
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('users.course',  auth()->user()->name);
     }
 
     public function updatestore(Request $request, lessons $lesson){

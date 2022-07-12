@@ -46,24 +46,27 @@
                     </div>
                 </div>
             @endauth
-            <form class="needs-validation pr-2 my-1" novalidate action="{{ route('topics') }}" method="get">
-                @csrf  
-                <div class="d-flex align-items-center">
-                    <select name="category" id="category" style="font-size: 14px; opacity: 0.7;"
-                        class="form-control rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
-                        <option value="">Select all</option>
-                        <option value="1">Futur Tech</option>
-                        <option value="2">History & Ethics</option>
-                        <option value="3">Workplace Skills</option>
-                    </select>
-                    @error('category')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                    <button class="btn btn-info btn-md ml-0" style="font-size: 14px;" type="submit">Filter</button>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="courses-top-search">
+                        <div class="courses-search float-right">
+                            <form nonvalidate action="{{ route('hackathons') }}" method="get">
+                                @csrf
+                                <input type="text" name="search" placeholder="Search" 
+                                class="form-control py-2  rounded-lg @error('search') border border-danger @enderror" value="{{ old('search')}}">
+
+                                @error('search')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div> <!-- courses search -->
+                    </div> <!-- courses top search -->
                 </div>
-            </form>
+            </div> 
         </div>
     </div>
 
@@ -75,18 +78,23 @@
                 style="background-image: url('/images/icon/back-slim3.png');background-repeat: no-repeat; background-size: 100% 110px; background-position: bottom;">
                     <div class="d-flex flex-column h-100 p-3 pb-2 text-shadow-1">
                         <h5 class="pt-2 mt-2 mb-0 display-7 lh-1 fw-bold text-dark">{{ Str :: limit($hackerthon-> title, 20) }} </h5>
-                        <p style="font-size: 14px; line-height:22px; font-weight:300" class="py-2">{{ Str :: limit($hackerthon-> description1, 60) }}</p>
-
+                        <p style="font-size: 14px; line-height:22px; font-weight:300" class="pb-0">{{ Str :: limit($hackerthon-> description1, 60) }}</p>
+                        
                         <!-- images -->     
                             <div class="sc-fUqQNk jDAUBC avatar-group--dense">
                                 <nav class="mb-0 opacity-100 my-1 text-muted">
                                     @if ($hackerthon->user->image)
-                                        <img src="{{ '/storage/images/'.$hackerthon->user->id.'/'.$hackerthon->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                                        <img src="{{ '/storage/images/'.$hackerthon->user->id.'/'.$hackerthon->user->image }}" alt="twbs" width="20" height="20" class="border rounded-circle flex-shrink-0">
                                     @else
-                                        <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                                        <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="border rounded-circle flex-shrink-0">
                                     @endif
                                     <small>, by {{ $hackerthon-> user->name}}</small>
                                 </nav>
+                                @auth
+                                    @if ($hackerthon->isCompeting(auth()->user()))
+                                        <nav href="" style="font-size:12px" class=" m-0 text-info"> Joined</nav>
+                                    @endif
+                                @endauth
                             </div>
                         <!-- End images -->
                         @if ($hackerthon->category === 'Machine Learning' )
@@ -110,8 +118,10 @@
     @endif
 
     </div>
-  </div>
-
+</div>
+<div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
+    {{ $hackerthons -> links()}}
+</div>
 
 
 </div>
