@@ -269,7 +269,7 @@
 
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Register</button>
-                                <button type="submit" class="btn btn-danger">Cancel</button>
+                                <a href="{{ route('users.hackerthon',  auth()->user()->name) }}" class="btn btn-danger">Cancel</a>
                             </div>
                             
                         </form>

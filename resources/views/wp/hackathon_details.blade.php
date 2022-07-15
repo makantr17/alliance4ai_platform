@@ -33,7 +33,7 @@
         <div class=" d-flex flex-wrap align-items-center px-0 py-3 ">
             @auth
                 @if (!$hackerthons->isCompeting(auth()->user()))
-                    <form nonvalidate action="{{ route('hackathons.details',  $hackerthons->id) }}" method="post" class="mr-1">
+                    <form nonvalidate action="{{ route('hackathons.details',  $hackerthons->id) }}" method="post" class="mx-1">
                     @csrf
                         <button type="submit" class="btn btn-muted text-info btn-sm">Join Hackathon</button>
                     </form>
@@ -54,7 +54,7 @@
                     </form>
                 @endif
             @endauth
-            <div class="">
+            <div class="mx-1">
                 <a href="{{ route('hackathons')}}">
                     <button class="btn btn-primary border ">Back</button>
                 </a>

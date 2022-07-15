@@ -13,18 +13,18 @@
                 <img src="/images/-min.jpg" alt="twbs" width="100%"  class="rounded flex-shrink-0 shadow-sm p-1">
             @endif
         </div>
-        <div class="container d-flex flex-row-reverse">
+        <div class="container d-flex flex-row-reverse align-items-center">
             <a href="{{ route('discussion')}}">
                 <button class="btn btn-primary  btn-sm ml-2"> <i class="fa fa-arrow-left pr-1" aria-hidden="true"></i> Back</button>
             </a>
             <!-- start here -->
             @if (($discussion -> date) > Carbon\Carbon::now())
-                <nav class="mb-0 opacity-75 my-1 text-info">upcoming</nav>
+                <nav class="mb-0 opacity-75 mx-1 my-1 text-info">upcoming</nav>
                 @auth
                     @if (!$discussion->participatedBy(auth()->user()))
                         <form  action="{{route('discussion.details', $discussion) }}" method="POST" class="">
                         @csrf
-                            <button type="submit" class="btn btn-primary btn-sm">register</button>
+                            <button type="submit" class="btn btn-muted border text-info fw-bold btn-sm">register</button>
                         </form>
                     @endif
                 @endauth

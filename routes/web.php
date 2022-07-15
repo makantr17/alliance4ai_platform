@@ -187,8 +187,8 @@ Route::get('/user/{user:name}/hackerthon/manage/competitors/{hackerthon}', [Hack
 Route::get('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'create'])->name('users.create_hackerthon');
 Route::post('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'store']);
 
-Route::get('/user/{hackerthon:title}/update_hackerthon', [HackerthonController::class, 'update'])->name('users.update_hackerthon');
-Route::post('/user/{hackerthon:title}/update_hackerthon', [HackerthonController::class, 'updatestore']);
+Route::get('/user/{hackerthon:id}/update_hackerthon', [HackerthonController::class, 'update'])->name('users.update_hackerthon');
+Route::post('/user/{user:name}/update/hackerthon/{hackerthon}', [HackerthonController::class, 'updatestore'])->name('users.update.hackerthon');
 
 Route::get('/user/{user:name}/discussion', [DiscussionController::class, 'index'])->name('users.discussion');
 Route::delete('/user/{user:name}/discussion/delete/{discussion}', [DiscussionController::class, 'destroy'])->name('users.discussion.delete');
@@ -207,6 +207,10 @@ Route::get('/user/{user:name}/topics/manage/{topic}', [TopicController::class, '
 Route::get('/user/{user:name}/creatediscussion', [DiscussionController::class, 'create'])->name('users.creatediscussion');
 Route::post('/user/{user:name}/creatediscussion', [DiscussionController::class, 'store']);
 
+Route::get('/user/{user:name}/updatediscussion/{discussion}', [DiscussionController::class, 'update'])->name('users.updatediscussion');
+Route::post('/user/{user:name}/savediscussion/{discussion}', [DiscussionController::class, 'storeupdates'])->name('users.savediscussion');
+
+
 Route::get('/topiccircle/{group:id}/createcirclediscussion', [TopicCircleController::class, 'indexcircle'])->name('topiccircle.createcirclediscussion');
 Route::post('/topiccircle/{group:id}/createcirclediscussion', [TopicCircleController::class, 'storecircle']);
 
@@ -217,13 +221,17 @@ Route::get('/user/{topic:topic}/updatetopics', [TopicController::class, 'update'
 Route::post('/user/{topic:topic}/updatetopics', [TopicController::class, 'updatestore']);
 
 Route::get('/user/{topic}/addcontent', [ContentController::class, 'index'])->name('users.addcontent');
-Route::post('/user/{topic}/addcontent', [ContentController::class, 'upload']);
+Route::post('/user/{topic}/addcontent', [ContentController::class, 'register']);
+Route::delete('/user/{user:name}/deletecontents/{content}', [ContentController::class, 'delete'])->name('users.deletecontents');
+
 Route::get('/user/{topic}/addprompt', [PromptsController::class, 'index'])->name('users.addprompt');
 Route::post('/user/{topic}/addprompt', [PromptsController::class, 'upload']);
+Route::delete('/user/{user:name}/deleteprompts/{prompts}', [PromptsController::class, 'delete'])->name('users.deleteprompts');
 
-Route::get('/user/{topic}/addexercise', [ExerciseController::class, 'createExercise'])->name('users.addexercise');
+Route::get('/user/{user:name}/{topic}/addexercise', [ExerciseController::class, 'createExercise'])->name('users.addexercise');
 Route::get('/user/{topic}/takeexercise', [ExerciseController::class, 'take'])->name('users.takeexercise');
-Route::post('/user/{topic}/addexercise', [ExerciseController::class, 'upload']);
+Route::post('/user/{user:name}/{topic}/addexercise', [ExerciseController::class, 'register']);
+Route::delete('/user/{user:name}/deleteexercise/{exercise}', [ExerciseController::class, 'delete'])->name('users.deleteexercise');
 
 Route::get('/user/calendardiscussion', [CalenderController::class, 'index'])->name('users.calendardiscussion');
 Route::get('/user/calendardiscussion/{user:name}', [CalenderController::class, 'mycalendar'])->name('users.calendardiscussion.mycalendar');

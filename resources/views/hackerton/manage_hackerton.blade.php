@@ -33,17 +33,21 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Hackathon</button>
                         </form>
-                        <form action="{{ route('users.update_hackerthon',  $hackerthon-> title) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon.manage', [$hackerthon->user, $hackerthon->id]) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"> Details</button>
+                        </form>
+                        <form action="{{ route('users.update_hackerthon',  $hackerthon-> id) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Edit</button>
                         </form>
-                        <form action="{{ route('users.update_hackerthon',  $hackerthon-> title) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon.manage.competitors', [auth()->user()->name, $hackerthon]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm">Participants</button>
                         </form>
                         <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Hackathons</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left pr-1"></i> Back</button>
                         </form>
                     @endauth
                 </div>

@@ -75,8 +75,8 @@
 
         
         <div class="container bg-light py-1">
-            <p class="mt-3 mb-2">Activate or Desactivate Course</p>
-            <p class="text-info">At least 3 course activating the course</p>
+            <p class="mt-3 mb-2">Activate or Desactivate this Course</p>
+            <p class="text-info">At least 2 lessons added will give you access to active the course</p>
             
             <form class="container d-flex justify-content-between align-items-center" novalidate action="{{ route('users.course.manage.saveCourseUser', [$courses->user, $courses->id]) }}" method="post">
                 @csrf        

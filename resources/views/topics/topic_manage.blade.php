@@ -77,7 +77,7 @@
                                     @csrf
                                         <button type="submit"class="btn btn-dark btn-sm btn-info"> Add content</button>
                                     </form>
-                                    <form action="{{ route('users.addexercise',  $topic) }}" method="get" class="m-1">
+                                    <form action="{{ route('users.addexercise', [auth()->user()->name, $topic]) }}" method="get" class="m-1">
                                     @csrf
                                         <button type="submit"class="btn btn-dark btn-sm btn-info"><i class="fa fa-question"></i> Add Exercise</button>
                                     </form>
@@ -110,7 +110,7 @@
             @else
             <div class="col-lg-12 text-center"> 
                 <div class="d-flex justify-content-center align-items-center">
-                    <img src="/images/icon-alliance/chat1.png" class="border-3" alt="twbs" width="" height="200" class="flex-shrink-0 ">
+                    <img src="/images/icon-alliance/chat1.png" class="border-3" alt="twbs" width="" height="50" class="flex-shrink-0 ">
                 </div>
                 No topic posted
             </div>
@@ -131,15 +131,16 @@
                             <small class="opacity-50 text-nowrap">{{ $content-> created_at->diffForHumans() }}</small>
                         </div>
                     </div>
-
-                            
-
-                    <div class=" px-0 pt-0">
+                    <div class="d-flex flex-wrap align-items-center px-0 pt-1">
                         @auth
-                            <form action="" method="post" class="mr-1">
+                            <form action="{{ route('users.deletecontents', [auth()->user(), $content]) }}" method="post" class="mr-1">
                             @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash text-danger text-light"></i> Delete</button>
+                            </form>
+                            <form action="" method="get" class="mr-1">
+                            @csrf
+                                <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-edit text-danger text-light"></i> Edit</button>
                             </form>
                         @endauth
                     </div>
@@ -148,7 +149,7 @@
             @else
             <div class="col-lg-12 text-center"> 
                 <div class="d-flex justify-content-center align-items-center">
-                    <img src="/images/icon-alliance/chat1.png" class="border-3" alt="twbs" width="" height="200" class="flex-shrink-0 ">
+                    <img src="/images/icon-alliance/chat1.png" class="border-3" alt="twbs" width="" height="50" class="flex-shrink-0 ">
                 </div>
                 No content added
             </div>
@@ -165,12 +166,16 @@
                             <small class="opacity-50 text-nowrap">{{ $prompts-> created_at->diffForHumans() }}</small>
                             
                         </div>
-                        <div class="d-flex flex-wrap align-items-center px-0 pt-0">
+                        <div class="d-flex flex-wrap align-items-center px-0 pt-1">
                             @auth
-                                <form action="" method="post" class="mr-1">
+                                <form action="{{ route('users.deleteprompts', [auth()->user(), $prompts]) }}" method="post" class="mr-1">
                                 @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash text-danger text-light"></i> Delete</button>
+                                </form>
+                                <form action="" method="get" class="mr-1">
+                                @csrf
+                                    <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-edit text-danger text-light"></i> Edit</button>
                                 </form>
                             @endauth
                         </div>
@@ -187,7 +192,7 @@
 
         <!-- START Notifications here -->
         <div class="col-md-6">
-            <h5 class="p-2 fw-bold text-info my-3 border-bottom">Questions</h5>
+            <h5 class="p-2 fw-bold text-info my-3 border-bottom">List of Exercises</h5>
              <!-- --------------------- START NEW TABLE --------------------->
             @if($topics[0]->exercise->isEmpty())
                 <div class="px-4 py-5 my-3 sm:px-6"></div>
@@ -204,13 +209,14 @@
                                 <small class="opacity-50 text-nowrap">{{ $question-> created_at->diffForHumans() }}</small>
                                 <div class="d-flex flex-wrap align-items-center px-0 pt-1">
                                     @auth
-                                        <form action="{{route('deleteQuestion',$question->id)}}" method="post" class="mr-1">
+                                        <form action="{{ route('users.deleteexercise', [auth()->user(), $question]) }}" method="post" class="mr-1">
                                         @csrf
+                                            @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
                                         <form action="{{ route('createQuestion', $topic->id )}}" class="mr-1">
                                             @csrf
-                                            <button class="btn btn-info btn-sm">Create</button>
+                                            <button class="btn btn-info btn-sm">Edit</button>
                                         </form>
                                     @endauth
                                 </div>

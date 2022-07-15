@@ -4,47 +4,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Topic;
+use App\Models\User;
 use App\Models\Exercise;
 
 class ExerciseController extends Controller
 {
-    public function createExercise(Topic $topic)
+    public function createExercise(User $user, Topic $topic)
     {
-        $topic = $topic;
         return view('question.create_exercise', [
             'topic' => $topic,
+            'user'
         ]);
     }
 
-    public function upload(Request $request, Topic $topic){
+    public function register(Request $request, User $user, Topic $topic){
         $this->validate($request, [
             'question'=> 'required',
         ]);
-
-        $filename = "";
-        if ($request->hasFile('image')) {
-           $filename= $request->image->getClientOriginalName();
-           $request->image->storeAs('images/exercise/'.$topic->id, $filename,'public');
-        }
+        // $filename = "";
+        // if ($request->hasFile('image')) {
+        //    $filename= $request->image->getClientOriginalName();
+        //    $request->image->storeAs('images/exercise/'.$topic->id, $filename,'public');
+        // }
         $request->user()->exercise()->create([
             'topic_id'=> $topic-> id,
             'question'=> $request->question,
-            'file'=> $filename,
-            'link'=> $request->link,
-            'title'=> $request->title,
-            'description'=> $request->description,
-            'start'=> $request->start,
-            'end'=> $request->end,
-            'is_active'=> $request->is_active,
+            // 'file'=> $filename,
+            // 'link'=> $request->link,
+            // 'title'=> $request->title,
+            // 'description'=> $request->description,
+            // 'start'=> $request->start,
+            // 'end'=> $request->end,
+            // 'is_active'=> $request->is_active,
         ]);
 
-        return redirect()->route('users.topics.manage', [auth()->user(), $topic]  );
+        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
     }
 
-    function deleteExercise($id)
-    {
-        $exercise = Exercise::findOrFail($id);
-        $exercise->delete();
+    public function delete(Request $request, User $user, Exercise $exercise){
+        // $exercises = Exercise::findOrFail($exercise->id);
+        $exercises = $user->exercise->where('id', '=', $exercise->id);
+        if ($exercise) {
+            $exercise->delete();
+        }
         return back();
     }
 }

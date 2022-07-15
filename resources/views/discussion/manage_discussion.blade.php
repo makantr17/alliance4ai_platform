@@ -34,13 +34,13 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Host discussion</button>
                         </form>
-                        <form action="{{ route('users.discussion',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.updatediscussion',  [auth()->user()->name, $discussion] ) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-edit"></i> Edit</button>
                         </form>
                         <form action="{{ route('users.discussion',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Discussions</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left pr-1"></i> Back</button>
                         </form>
                     @endauth
                 </div>
@@ -65,8 +65,7 @@
                             <img src="/images/icon/plan7.png" alt="twbs" width="50" height="" class="rounded flex-shrink-0">
                         @endif
                     </div>
-                    <h4 class="display-7 py-1 fw-bold ">{{ $discussion-> name}}</h4>
-                    <p style="font-size: 14px"><strong class=""> {{ $discussion-> titre}}</strong></p>
+                    <h6 class="display-7 py-1 fw-bold ">{{ $discussion-> title}}</h6>
                     <p style="font-size: 14px"><strong class="text-primary">Description </strong> {{ $discussion-> description}}</p>
                     <p><small>hosted by</small> <small class="text-info">{{ $discussion-> user->name}}</small></p>
                     <small class="opacity-50 text-nowrap">{{ $discussion-> created_at->diffForHumans() }}</small>

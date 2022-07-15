@@ -33,17 +33,21 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Hackathon</button>
                         </form>
-                        <form action="{{ route('users.update_hackerthon',  $hackerthon[0]-> title) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon.manage', [$hackerthon[0]->user, $hackerthon[0]->id]) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"> Details</button>
+                        </form>
+                        <form action="{{ route('users.update_hackerthon',  $hackerthon[0]-> id) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Edit</button>
                         </form>
-                        <form action="{{ route('users.update_hackerthon',  $hackerthon[0]-> title) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon.manage.competitors', [auth()->user()->name, $hackerthon[0]]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm">Participants</button>
                         </form>
                         <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Hackathons</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left pr-1"></i> Back</button>
                         </form>
                     @endauth
                 </div>
@@ -94,7 +98,7 @@
                                 <div class="list-group pt-3">
                                     @if ($hackerthon[0]->competitors -> count())
                                         @foreach($hackerthon[0]->competitors as $competitor)
-                                        <a href="#" class=" list-group-item-action d-flex gap-3 px-1 py-3 border-bottom" aria-current="true">
+                                        <a href="{{ route('users.score', $competitor->user->name) }}" class=" list-group-item-action d-flex gap-3 px-1 py-3 border-bottom" aria-current="true">
                                             
                                             @if ($competitor->user->image )
                                                 <img src="{{ '/storage/images/'.$competitor->user_id.'/'.$competitor->user->image }}" alt="twbs" width="70" height="70" class="rounded-circle border border flex-shrink-0">
@@ -121,6 +125,8 @@
                                               the hackerthon;
                                         </div>
                                     @endif
+
+
                                 </div>
 
 

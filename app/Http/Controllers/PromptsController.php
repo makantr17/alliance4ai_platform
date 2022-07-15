@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Topic;
+use App\Models\Prompts;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +28,15 @@ class PromptsController extends Controller
             'topic_id'=> $topic-> id,
             'question'=> $request->question,
         ]);
-        return redirect()->back();
+        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
+    }
+
+    public function delete(Request $request, User $user, Prompts $prompts){
+        $prompt = $user->prompts->where('id', '=', $prompts->id);
+        if ($prompt) {
+            $prompts->delete();
+        }
+        return back();
     }
 
 

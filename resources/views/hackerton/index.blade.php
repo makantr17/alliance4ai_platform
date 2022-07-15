@@ -34,13 +34,9 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Hackathon</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add lesson</button>
-                        </form>
                         <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"> {{$hackerthons -> count()}} Hackathon</button>
+                            <button type="submit"class="btn btn-muted btn-sm"> {{$hackerthons -> count()}} Hackathons</button>
                         </form>
                     @endauth
                 </div>

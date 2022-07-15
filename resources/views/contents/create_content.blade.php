@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -7,49 +8,36 @@
     <x-menu />
 @endauth
 
-
 <div class="container-fluid col-xxl-8 px-0 py-2">
-    <div class="bg-light p-3 rounded ">
-        <!-- HEADER SLIDE START HERE -->s
-        <div class="bg-dark text-secondary px-4  mb-2 text-center">
+    <div class="p-3 rounded ">
+        <!-- HEADER SLIDE START HERE -->
+        <!-- HEADER SLIDE START HERE -->
+        <div class="px-4  mb-2 text-center">
             <div class="py-1">
-                <h1 class="display-6 fw-bold text-white">Discussion</h1>
+                <h1 class="display-6 fw-bold text-dark">My Topics</h1>
             </div>
-            <div class="overflow-hidden" style="max-height: 15vh;">
-                <div class="container px-3">
-                    <img src="/icons/abstract_background.jpg" class="img-fluid rounded-3 shadow-lg mb-4" alt="Example image" width="90%" height="500" loading="lazy">
-                </div>
-            </div>
+            
         </div>
 
         <!-- NAVBAR COLLECTION FOR HEADER START HERE -->
-        <div class="d-flex gap-2 w-100 justify-content-between">
+        <div class="d-flex gap-2 w-100 justify-content-between border-bottom py-1">
             <div class="col">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
-                    <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">15</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div>
+                    <!-- <div class="px-0 pt-1"> <div href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-thumbs-up"></i>&nbsp; <span class="align-middle">2</span> </div> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">15</span> </span> </div> -->
                 </div>
             </div>
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit"class="btn btn-light">Add discussion</button>
-                        </form>
-
                         <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-light">New topic</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
                         </form>
-
-                        <form action="" method="post" class="mr-1">
+                        <form action="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}" method="get" class="mr-1">
                         @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-light">Collaborators</button>
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Back</button>
                         </form>
                     @endauth
-                    </span>
                 </div>
             </div>
         </div>
@@ -57,122 +45,94 @@
     </div>
 </div>
 
-
-
-
-<div class="row">
-    <!-- END LIST OF DISCUSSION -->
-    <!-- Participated POSTED MESSAGE  -->
-    <div class="col-md-8">
-
-        <div class="container-fluid bg-light  py-5 ">
-            <div class="row justify-content-center align-items-center">
-                <div class="profile-edit col-sm-8">
-                    <div class=" justify-content-centent">
-                        <h6 class="display-4 lh-lg fw-light">Add new topic</h6>
-                        <img src="/icons/abstract_background.jpg" class="rounded-circle shadow-lg mb-4" alt="Example image" width="150" height="150" loading="lazy">
-                    </div>
-                    <div class="flex justify-center">
-                        @auth
-                            <div class="container">
-                                <form class="row g-3 needs-validation d-flex flex-row align-items-center justify-content-center" enctype="multipart/form-data"
-                                    novalidate action="{{ route('users.addcontent',  $topic ) }}" method="post">
-                                    @csrf
-                                    <div class="col-md-12">
-                                        <label for="title" class="form-label">Title</label>
-                                        <input type="text" name="title" id="title" placeholder="Your title" 
-                                        class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="">
-                                        
-                                        @error('title')
-                                            <div class="text-danger">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label for="description" class="form-label">Description</label>
-                                        <input type="text" name="description" id="description" placeholder="Your description" 
-                                        class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" value="">
-                                        
-                                        @error('description')
-                                            <div class="text-danger">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label for="link" class="form-label">Link</label>
-                                        <input type="text" name="link" id="link" placeholder="Your link" 
-                                        class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="">
-                                        
-                                        @error('link')
-                                            <div class="text-danger">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    
-                                    <div class="col-sm-12 mb-3">
-                                        <label for="file" class="form-label">Edit your image</label>
-                                        <input class="form-control" name="image" type="file" id="image" value="">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <button type="submit" class="btn btn-primary">Upload</button>
-                                    </div>
-                                    
-                                </form>
-                            </div>
-                            
-                        @endauth
-                    </div>
+<div class="col-lg-12 row y-1">
+    <div class="col-lg-3 mx-2 bg-light py-2">
+        @if ($topic)
+            <div class="mb-4">
+                <div class="container-fluid">
+                    <h4 class="display-7 py-1 fw-bold ">{{ $topic-> topic}}</h4>
+                    <p style="font-size: 14px"><strong class="text-primary">Description </strong><br> {{ $topic-> description}}</p>
+                    <p><small>hosted by</small> <small class="text-info">{{ $topic-> user->name}}</small></p>
                 </div>
-                
             </div>
+        @endif
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="sc-fUqQNk jDAUBC avatar-group--dense">
+                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="" src="/images/-min-29.jpg" title="Abhishek Kumar" alt="r">
+                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
+                <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
+            </div>
+            <form action="" method="get" >
+            @csrf
+                <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
+            </form>
         </div>
-
-
-
-
-
-
-
-
-
-
-
     </div>
-    <!-- END POSTED MESSAGE -->
+    
 
-    <!-- START LIST NOTIFICATION START HERE -->
-    <div class="col-md-3">
-        <h6 class="border-bottom pb-2 mb-0">Recent Notifications</h6>
-        <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Timeline</h6>
-                <small class="text-muted">start_at -end_at</small>
+    <div class="col-lg-8 py-1">
+            <div class="row g-5 py-3 mx-2 justify-content-center">
+                
+                <div class="col-md-12 col-lg-12">
+                    <form class="row g-3 needs-validation d-flex flex-row align-items-center justify-content-center"
+                        novalidate action="{{ route('users.addcontent',  $topic ) }}" method="post" enctype="multipart/form-data">
+                        
+                        @csrf
+                        <div class="col-12">
+                            <h5 class="py-3 fw-bold text-info">New Content</h5>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" name="title" id="title" placeholder="Your title" 
+                            class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="">
+                            
+                            @error('title')
+                                <div class="text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">Write down the description add the description mark at the end.</label>
+                            <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="5" value=""></textarea>
+
+                            @error('description')
+                                <div class="text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="link" class="form-label">Link</label>
+                            <input type="text" name="link" id="link" placeholder="Your link" 
+                            class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="">
+                            
+                            @error('link')
+                                <div class="text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        
+                        <!-- <div class="col-sm-12 mb-3">
+                            <label for="file" class="form-label">Edit your image</label>
+                            <input class="form-control" name="image" type="file" id="image" value="">
+                        </div> -->
+                        <hr class="my-4">
+
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                            <a href="{{ route('users.topics',  auth()->user()->name) }}" class="btn btn-danger">Cancel</a>
+                        </div>
+
+                    </form>
                 </div>
-                <span class="text-muted">1week</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Remplir les info</h6>
-                <small class="text-muted">Corectement remplir les info</small>
-                </div>
-                <span class="text-muted">100</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                <h6 class="my-0">Athentification</h6>
-                <small class="text-muted">Informations correctes</small>
-                </div>
-                <span class="text-muted">100</span>
-            </li>
-        </ul>
+            </div>
+
+        </div>
     </div>
-    <!-- END LIST NOTIFICATION START HERE -->
-</div>
 
 @endsection

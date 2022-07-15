@@ -98,6 +98,42 @@ class HackerthonController extends Controller
         return redirect()->route('hackathons');
     }
 
+
+    public function updatestore(Request $request, User $user, Hackerthon $hackerthon){
+        $this->validate($request, [
+            'title'=> 'unique:hackerthons',
+            'category',
+            'subtitle1',
+            'description1',
+            'instructions',
+            'start_date',
+            'deadline',
+        ]);
+
+        DB::table('hackerthons')->where('id', $hackerthon->id)->where('user_id',  auth()->user()->id)
+            ->update([
+            'title'=> $request-> title !== null && $request-> title !== '' ?  $request-> title : $hackerthon-> title,
+            'category'=> $request-> category !== null && $request-> category !== '' ?  $request-> category : $hackerthon-> category,
+            'subtitle1'=>$request-> subtitle1 !== null && $request-> subtitle1 !== '' ?  $request-> subtitle1 : $hackerthon-> subtitle1,
+            'subtitle2'=>$request-> subtitle2 !== null && $request-> subtitle2 !== '' ?  $request-> subtitle2 : $hackerthon-> subtitle2,
+            'description1'=>$request-> description1 !== null && $request-> description1 !== '' ?  $request-> description1 : $hackerthon-> description1,
+            'description2'=>$request-> description2 !== null && $request-> description2 !== '' ?  $request-> description2 : $hackerthon-> description2,
+            'isvalidate'=>false,
+            'instructions'=>$request-> instructions !== null && $request-> instructions !== '' ?  $request-> instructions : $hackerthon-> instructions,
+            'evaluation'=>$request-> evaluation !== null && $request-> evaluation !== '' ?  $request-> evaluation : $hackerthon-> evaluation,
+            'limit_group'=>$request-> limit_group !== null && $request-> limit_group !== '' ?  $request-> limit_group : $hackerthon-> limit_group,
+            'start_date'=>$request-> start_date !== null && $request-> start_date !== '' ?  $request-> start_date : $hackerthon-> start_date,
+            'deadline'=>$request-> deadline !== null && $request-> deadline !== '' ?  $request-> deadline : $hackerthon-> deadline,
+            'link1'=>$request-> link1 !== null && $request-> link1 !== '' ?  $request-> link1 : $hackerthon-> link1,
+            'link2'=>$request-> link2 !== null && $request-> link2 !== '' ?  $request-> link2 : $hackerthon-> link2,
+            'first_prize'=>$request-> first_prize !== null && $request-> first_prize !== '' ?  $request-> first_prize : $hackerthon-> first_prize,
+            'second_prize'=>$request-> second_prize !== null && $request-> second_prize !== '' ?  $request-> second_prize : $hackerthon-> second_prize,
+            'third_prize'=>$request-> third_prize !== null && $request-> third_prize !== '' ?  $request-> third_prize : $hackerthon-> third_prize,
+        ]);
+
+        return redirect()->route('users.hackerthon',  auth()->user()->name);
+    }
+
     public function update(Hackerthon $hackerthon){
         return view('hackerton.edit_hackerthon', [
             'hackerthon'=> $hackerthon

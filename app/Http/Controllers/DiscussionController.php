@@ -74,6 +74,20 @@ class DiscussionController extends Controller
     }
 
 
+    public function update(User $user, Discussion $discussion){
+        $users =  User::latest()->get();
+        $groups =  Group::latest()->get();
+        $topics =  Topic::latest()->get();
+        return view('discussion.edit_discussion',[
+            'discussion'=> $discussion,
+            'user' => $user,
+            'listofusers' => $users,
+            'listofgroups' => $groups,
+            'listoftopics' => $topics,
+        ]);
+    }
+
+
 
     public function store(Request $request){
         $this->validate($request, [
@@ -109,6 +123,37 @@ class DiscussionController extends Controller
         //     $request->start_time, $request->end_time, auth()->user()->name, $request->link));
         // }
         
+        return redirect()->route('users.discussion',  auth()->user()->name);
+    }
+
+
+    public function storeupdates(Request $request, User $user, Discussion $discussion){
+        $this->validate($request, [
+            'title'=> 'max:255',
+            'category'=> 'max:255',
+            'description'=>'max:200',
+            'date'=>'date|after:yesterday',
+            'end_time'=>'after:start_time',
+            'peoples',
+        ]);
+
+        DB::table('discussions')->where('id', $discussion->id)->where('user_id',  auth()->user()->id)
+            ->update([
+            'title'=> $request-> title !== null && $request-> title !== '' ?  $request-> title : $discussion-> title,
+            'category'=> $request-> category !== null && $request-> category !== '' ?  $request-> category : $discussion-> category,
+            'description'=>$request-> description !== null && $request-> description !== '' ?  $request-> description : $discussion-> description,
+            'status'=>false,
+            'location'=>$request-> location !== null && $request-> location !== '' ?  $request-> location : $discussion-> location,
+            'admin_1'=>$request-> admin_1 !== null && $request-> admin_1 !== '' ?  $request-> admin_1 : $discussion-> admin_1,
+            'start_time'=>$request-> start_time !== null && $request-> start_time !== '' ?  $request-> start_time : $discussion-> start_time,
+            'end_time'=>$request-> end_time !== null && $request-> end_time !== '' ?  $request-> end_time : $discussion-> end_time,
+            'link'=>$request-> link !== null && $request-> link !== '' ?  $request-> link : $discussion-> link,
+            'peoples'=>$request-> peoples !== null && $request-> peoples !== '' ?  $request-> peoples : $discussion-> peoples,
+            'groups'=>$request-> groups !== null && $request-> groups !== '' ?  $request-> groups : $discussion-> groups,
+            'topics'=>$request-> topics !== null && $request-> topics !== '' ?  $request-> topics : $discussion-> topics,
+            'date'=>$request-> date !== null && $request-> date !== '' ?  $request-> date : $discussion-> date,
+        ]);
+
         return redirect()->route('users.discussion',  auth()->user()->name);
     }
 }
