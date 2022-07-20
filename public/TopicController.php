@@ -52,8 +52,6 @@ class TopicController extends Controller
             'content.*.type',
         ]);
 
-        dd($data['content']);
-
         $topic= $request->user()->topic()->create([
             'topic'=> $request-> topic,
             'category'=>$request-> category,

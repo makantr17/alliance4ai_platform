@@ -78,4 +78,29 @@ class CourseController extends Controller
     }
 
 
+    public function update(User $user, Course $course){
+        return view('course.update_course', [
+            'course'=> $course
+        ]);
+    }
+
+    public function updatestore(Request $request, User $user, Course $course){
+        
+        $this->validate($request, [
+            'name'=> 'max:255',
+            'category',
+            'description',
+        ]);
+        DB::table('courses')->where('id', $course->id)->where('user_id',  auth()->user()->id)
+            ->update([
+            'name'=> $request-> name !== null && $request-> name !== '' ?  $request-> name : $course-> name,
+            'category'=> $request-> category !== null && $request-> category !== '' ?  $request-> category : $course-> category,
+            'description'=>$request-> description !== null && $request-> description !== '' ?  $request-> description : $course-> description,
+            'isvalidate'=>false,
+        ]);
+
+        return redirect()->route('users.course.manage', [auth()->user()->name, $course->id]);
+    }
+
+
 }

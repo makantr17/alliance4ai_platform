@@ -11,12 +11,9 @@
         @auth
             <form class="row g-3 needs-validation d-flex flex-row align-items-center justify-content-center"
                 novalidate action="{{ route('users.createlessons', [$course->user, $course->id]) }}" method="post">
-                
                 @csrf
-                
+
                 <p class="text-info pb-2"><i class="fa fa-edit"></i> Section 1</p>
-
-
                 <div class="col-md-12">
                     <label for="title" class="form-label">title</label>
                     <input type="text" name="title" id="title" placeholder="Your title" 
@@ -192,10 +189,6 @@
                         </div>
                     @enderror
                 </div>
-
-                
-
-                
 
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Register</button>

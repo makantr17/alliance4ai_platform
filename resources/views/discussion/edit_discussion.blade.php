@@ -213,7 +213,7 @@
 
           <div class="d-flex">
             <button class="w-100 btn btn-primary btn-lg mr-1" type="submit">Register</button>
-            <button class="w-100 btn btn-danger btn-lg" type="submit">Cancel</button>
+            <a href="{{ route('users.discussion.manage', [$discussion->user, $discussion->id]) }}" class="w-100 btn btn-danger btn-lg mr-1">Cancel</a>
           </div>
           
         </form>

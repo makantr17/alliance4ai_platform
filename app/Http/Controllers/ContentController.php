@@ -50,6 +50,25 @@ class ContentController extends Controller
         return back();
     }
 
+    public function update(User $user, Content $content){
+        return view('contents.update_contents', [
+            'content'=> $content
+        ]);
+    }
 
+    public function updatestore(Request $request, User $user,  Content $content){
+        $this->validate($request, [
+            'title',
+            'description',
+        ]);
+
+        DB::table('contents')->where('id', $content->id)->where('user_id',  auth()->user()->id)
+            ->update([
+            'title'=> $request-> title !== null && $request-> title !== '' ?  $request-> title : $content-> title,
+            'description'=> $request-> description !== null && $request-> description !== '' ?  $request-> description : $content-> description,
+            'link'=> $request-> link !== null && $request-> link !== '' ?  $request-> link : $content-> link,
+        ]);
+        return redirect()->route('users.topics.manage', [auth()->user()->name, $content->topic_id]);
+    }
     
 }

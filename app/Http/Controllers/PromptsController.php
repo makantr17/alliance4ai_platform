@@ -22,8 +22,6 @@ class PromptsController extends Controller
         $this->validate($request, [
             'question'=> 'required',
         ]);
-
-       
         $request->user()->prompts()->create([
             'topic_id'=> $topic-> id,
             'question'=> $request->question,
@@ -37,6 +35,24 @@ class PromptsController extends Controller
             $prompts->delete();
         }
         return back();
+    }
+
+    public function update(User $user, Prompts $prompts){
+        return view('prompts.update_prompts', [
+            'prompt'=> $prompts
+        ]);
+    }
+
+    public function updatestore(Request $request, User $user,  Prompts $prompts){
+        $this->validate($request, [
+            'question'=> 'max:255',
+        ]);
+
+        DB::table('prompts')->where('id', $prompts->id)->where('user_id',  auth()->user()->id)
+            ->update([
+            'question'=> $request-> question !== null && $request-> question !== '' ?  $request-> question : $question-> question,
+        ]);
+        return redirect()->route('users.topics.manage', [auth()->user()->name, $prompts->topic_id]);
     }
 
 

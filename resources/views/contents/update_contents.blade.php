@@ -33,7 +33,7 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
                         </form>
-                        <form action="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.topics.manage', [auth()->user()->name, $content->topic->id]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Back</button>
                         </form>
@@ -47,12 +47,12 @@
 
 <div class="col-lg-12 row y-1">
     <div class="col-lg-3 mx-2 bg-light py-2">
-        @if ($topic)
+        @if ($content->topic)
             <div class="mb-4">
                 <div class="container-fluid">
-                    <h4 class="display-7 py-1 fw-bold ">{{ $topic-> topic}}</h4>
-                    <p style="font-size: 14px"><strong class="text-primary">Description </strong><br> {{ $topic-> description}}</p>
-                    <p><small>hosted by</small> <small class="text-info">{{ $topic-> user->name}}</small></p>
+                    <h4 class="display-7 py-1 fw-bold ">{{ $content->topic-> topic}}</h4>
+                    <p style="font-size: 14px"><strong class="text-primary">Description </strong><br> {{ $content->topic-> description}}</p>
+                    <p><small>hosted by</small> <small class="text-info">{{ $content-> user->name}}</small></p>
                 </div>
             </div>
         @endif
@@ -76,58 +76,54 @@
                     
                     <div class="col-md-12 col-lg-12">
                         <form class="row g-3 needs-validation d-flex flex-row align-items-center justify-content-center"
-                            novalidate action="{{ route('users.updatetopics',  $topic-> topic) }}" method="post" enctype="multipart/form-data">
+                            novalidate action="{{ route('users.updatecontents', [auth()->user(), $content]) }}" method="post" enctype="multipart/form-data">
                             
                             @csrf
                             <div class="col-12">
-                                <h5 class="py-4 fw-bold text-info">Update Topics</h5>
+                                <h5 class="py-4 fw-bold text-info">Update Contents</h5>
                             </div>
-
+                            
                             <div class="col-md-12">
-                                <label for="topic" class="form-label">Topics</label>
-                                <input type="text" name="topic" id="topic" placeholder="topic" 
-                                class="form-control py-2  rounded-lg @error('topic') border border-danger @enderror" value="{{ $topic->topic }}">
-
-                                @error('topic')
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" name="title" id="title" placeholder="Your title" 
+                                class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ $content->title }}">
+                                
+                                @error('title')
                                     <div class="text-danger">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            <div class="col-md-12">
-                                <label for="category" class="form-label">Category - </label>
-                                    <label class="text-info" for="">{{ $topic->category }}</label>
-                                    <select name="category" id="category"
-                                        class="form-control py-2  rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
-                                        <option value="">Choose Category</option>
-                                        <option value="1">Futur Tech</option>
-                                        <option value="2">History & Ethics</option>
-                                        <option value="3">Workplace Skills</option>
-                                    </select>
-                                @error('category')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
+                            <div class="col-md-12 my-4">
+                                <label for="description" class="form-label">Write down the description add the description mark at the end.</label>
+                                <br><label class="text-info" for="">{{ $content->description }}</label>
+                                <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="5" value="{{ $content->description }}"></textarea>
 
-                            
-                            <div class="col-md-12 pt-3">
-                                <label for="description" class="form-label">Describe the topic</label>
-                                <p class="text-info">{{$topic-> description}}</p>
-                                <textarea class="form-control py-1  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="5" value=""></textarea>
                                 @error('description')
                                     <div class="text-danger">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
+
+                            <div class="col-md-12">
+                                <label for="link" class="form-label">Link</label>
+                                <input type="text" name="link" id="link" placeholder="Your link" 
+                                class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="{{ $content->link }}">
+                                
+                                @error('link')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             <hr class="my-4">
 
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}" class="btn btn-danger">Cancel</a>
+                                <a href="{{ route('users.topics.manage', [auth()->user()->name, $content->topic->id]) }}" class="btn btn-danger">Cancel</a>
                             </div>
 
                         </form>

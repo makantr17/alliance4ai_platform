@@ -138,7 +138,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash text-danger text-light"></i> Delete</button>
                             </form>
-                            <form action="" method="get" class="mr-1">
+                            <form action="{{ route('users.updatecontents',  [auth()->user(), $content]) }}" method="get" class="mr-1">
                             @csrf
                                 <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-edit text-danger text-light"></i> Edit</button>
                             </form>
@@ -173,7 +173,7 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash text-danger text-light"></i> Delete</button>
                                 </form>
-                                <form action="" method="get" class="mr-1">
+                                <form action="{{ route('users.updateprompts',  [auth()->user(), $prompts]) }}" method="get" class="mr-1">
                                 @csrf
                                     <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-edit text-danger text-light"></i> Edit</button>
                                 </form>
@@ -214,7 +214,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
-                                        <form action="{{ route('createQuestion', $topic->id )}}" class="mr-1">
+                                        <form action="{{ route('users.updateexercise',  [auth()->user(), $question]) }}" class="mr-1">
                                             @csrf
                                             <button class="btn btn-info btn-sm">Edit</button>
                                         </form>

@@ -35,6 +35,10 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add lesson</button>
                         </form>
+                        <form action="{{ route('users.updatecourses',  [auth()->user()->name, $course[0]->id] ) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-edit"></i> Update</button>
+                        </form>
                         <form action="{{ route('users.course',  auth()->user()->name) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Courses</button>
@@ -126,12 +130,21 @@
                         </div>
                     </div>
                     <!-- Delete Lessons -->
-                    <form class="container d-flex justify-content-between align-items-center" novalidate action="{{ route('users.lessons.delete', [$lesson->user, $lesson->id]) }}" method="post">
-                        @csrf      
-                        @method('DELETE')
+                    <div class="container d-flex justify-content-between align-tems-center">
                         <nav></nav>
-                        <button class="btn btn-muted btn-sm text-danger border" type="submit">Delete</button>
-                    </form>
+                        <div class="d-flex">
+                            <form  novalidate action="{{ route('users.updatelessons', $lesson) }}" method="get">
+                                @csrf
+                                <button class="btn btn-primary btn-sm mr-1" type="submit">edit</button>
+                            </form>
+                            <form  novalidate action="{{ route('users.lessons.delete', [$lesson->user, $lesson->id]) }}" method="post">
+                                @csrf      
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm " type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    
                 </a>
             @endforeach
         @else

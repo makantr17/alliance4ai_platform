@@ -124,46 +124,28 @@ class TopicController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function update(Topic $topic){
         return view('topics.update_topic', [
             'topic'=> $topic
         ]);
     }
 
-    public function updatestore(Request $request, lessons $lesson){
+
+    public function updatestore(Request $request, Topic $topic){
         $this->validate($request, [
-            'title'=> 'required',
-            'content'=>'required',
-            'estimate_time'=>'required'
+            'topic'=> 'max:255',
+            'category'=> 'max:255',
+            'description'=>'max:300',
         ]);
 
-        DB::table('lessons')->where('id', $lesson->id)->where('user_id', $lesson->user_id)->where('course_id', $lesson->course_id)
+        DB::table('topics')->where('id', $topic->id)->where('user_id',  auth()->user()->id)
             ->update([
-            'title'=> $request-> title,
-            'content'=>$request-> content,
+            'topic'=> $request-> topic !== null && $request-> topic !== '' ?  $request-> topic : $topic-> topic,
+            'category'=> $request-> category !== null && $request-> category !== '' ?  $request-> category : $topic-> category,
+            'description'=>$request-> description !== null && $request-> description !== '' ?  $request-> description : $topic-> description,
             'status'=>false,
-            'link'=> $request-> link,
-            'estimate_time'=>$request-> estimate_time,
-            
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
     }
 }

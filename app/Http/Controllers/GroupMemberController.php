@@ -15,7 +15,7 @@ class GroupMemberController extends Controller
         return view('groups.add_member', [
             'user'=> $user,
             'allusers'=> $users,
-            'group'=> $group
+            'groups'=> $group
         ]);
     }
 
