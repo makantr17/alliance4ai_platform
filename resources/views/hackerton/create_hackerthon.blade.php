@@ -16,13 +16,13 @@
                                 <h5 class="py-4 fw-bold text-info">Description</h5>
                             </div>
                             <div class="col-md-6">
-                                <label for="category" class="form-label">Category Theme</label>
+                                <label for="category" class="form-label"><strong class="text-danger">* </strong> Category Theme</label>
                                     <select name="category" id="category"
                                         class="form-control py-2  rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
                                         <option value="">Choose Category</option>
-                                        <option value="0">Future Tech</option>
-                                        <option value="1">Workplace Skills</option>
-                                        <option value="2">Ethics & History</option>
+                                        <option value="1" {{ old('category') == "1" ? 'selected' : '' }}>Futur Tech</option>
+                                        <option value="2" {{ old('category') == "2" ? 'selected' : '' }}>History & Ethics</option>
+                                        <option value="3" {{ old('category') == "3" ? 'selected' : '' }}>Workplace Skills</option>
                                     </select>
 
                                 @error('category')
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="title" class="form-label">Hackathon Title</label>
+                                <label for="title" class="form-label"><strong class="text-danger">* </strong> Hackathon Title</label>
                                 <input type="text" name="title" id="title" placeholder="Your title" 
                                 class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ old('title')}}">
                                 
@@ -44,7 +44,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-12">
-                                <label for="subtitle1" class="form-label">Subtitle 1</label>
+                                <label for="subtitle1" class="form-label"><strong class="text-danger">* </strong> Subtitle 1</label>
                                 <input type="text" name="subtitle1" id="subtitle1" placeholder="subtitle 1" 
                                 class="form-control py-2  rounded-lg @error('subtitle1') border border-danger @enderror" value="{{ old('subtitle1')}}">
                                 
@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label for="description1" class="form-label">Description1</label>
+                                <label for="description1" class="form-label"><strong class="text-danger">* </strong> Description1</label>
                                 <textarea class="form-control py-2  rounded-lg @error('description1') border border-danger @enderror" name="description1" id="description1" cols="30" rows="5" value="{{ old('description1')}}"></textarea>
 
                                 @error('description1')
@@ -113,7 +113,7 @@
                                 <h5 class="py-4 fw-bold text-info">Submission Details</h5>
                             </div>
                             <div class="col-md-12">
-                                <label for="instructions" class="form-label">Submission details</label>
+                                <label for="instructions" class="form-label"><strong class="text-danger">* </strong> Submission details</label>
                                 <textarea class="form-control py-2  rounded-lg @error('instructions') border border-danger @enderror" name="instructions" id="instructions" cols="30" rows="4" value="{{ $user->instructions}}"></textarea>
 
                                 @error('instructions')
@@ -214,7 +214,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="start_date" class="form-label">Start Date</label>
+                                <label for="start_date" class="form-label"><strong class="text-danger">* </strong>Start Date</label>
                                 <input type="date" name="start_date" id="start_date" placeholder="start date" 
                                 class="form-control py-2  rounded-lg @error('start_date') border border-danger @enderror" value="">
 
@@ -226,7 +226,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="deadline" class="form-label">Deadline for submission</label>
+                                <label for="deadline" class="form-label"><strong class="text-danger">* </strong> Deadline for submission</label>
                                 <input type="date" name="deadline" id="deadline" placeholder="start date" 
                                 class="form-control py-2  rounded-lg @error('deadline') border border-danger @enderror" value="">
 

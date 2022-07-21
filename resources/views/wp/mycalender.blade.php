@@ -2,13 +2,8 @@
 
 @section('content')
    <!--====== PRELOADER PART START ======-->
-    
-   
         <div class="container-fluid">
-            
             <div>
-               
-
                 <div class="d-flex gap-2 w-100 justify-content-between my-2">
                     <div class="col">
                         <div class=" d-flex flex-wrap align-items-center px-0 pt-0">

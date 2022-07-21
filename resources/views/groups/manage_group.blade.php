@@ -41,9 +41,9 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Activities</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
+                        <form action="{{ route('users.updategroup',  [$group[0]->user, $group[0]]) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Members</button>
+                            <button type="submit"class="btn btn-muted btn-sm"> Update</button>
                         </form>
                     @endauth
                 </div>

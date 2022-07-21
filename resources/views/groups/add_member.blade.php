@@ -41,9 +41,9 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Activities</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
+                        <form action="{{ route('users.updategroup',  [$groups->user, $groups]) }}" method="get" class="mr-1">
                         @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Members</button>
+                            <button type="submit"class="btn btn-muted btn-sm"> Update</button>
                         </form>
                     @endauth
                 </div>
@@ -99,71 +99,47 @@
     </div>
     
     <div class="col-lg-8 py-1 row d-flex ">
-      <div class="col-lg-5 py-1 bg-light overflow-y">
-        <h4 class="py-2 text-info border-bottom">Members</h4>
-          @if ($user -> count())
-              @foreach($user as $users)
-                  <nav class="border p-2 mb-1 rounded">{{ $users-> email}}</nav>
-              @endforeach
-          @endif
-      </div>
+        <div class="col-lg-5 py-1 bg-light overflow-y">
+            <h4 class="py-2 text-info border-bottom">Members</h4>
+            @if ($user -> count())
+                @foreach($user as $users)
+                    <nav class="border p-2 mb-1 rounded">{{ $users-> email}}</nav>
+                @endforeach
+            @endif
+        </div>
       
-      <div class="col-md-6 col-lg-7">
+        <div class="col-lg-7 col-lg-7 border">
+            <form class="needs-validation" novalidate action="{{ route('group.addmember',  $groups->name) }}" method="post">
+                    
+                @csrf
+                <div class="col-lg-12 my-3">
+                    <label for="peoples" class="form-label">Invite Peoples</label>
+                    <textarea type="text" name="peoples" id="peoples" placeholder="peoples" cols="30" rows="10"
+                    class="form-control py-2 text-info  rounded-lg @error('peoples') border border-danger @enderror" value="{{ old('peoples')}}"></textarea>
 
-      <p class="text-info py-2">Search users by email</p>
-      <form class="" novalidate action="{{ route('setting.grant-admin', auth()->user()->name)}}" method="get">
-          @csrf
-          <div class="input-group mb-3">
-              <input type="email" name="email" class="form-control" placeholder="search by email" aria-label="Recipient's username" aria-describedby="button-addon2">
-              <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
-          </div>
-          <!-- if invalid login status -->
-          @if (session('status'))
-              <div class="bg-red-500 p-2 rounded-lg mb-6 fw-lighter">
-                  {{ session('status') }}
-              </div>
-          @endif
-      </form>
-        <form class="needs-validation" novalidate action="{{ route('group.addmember',  $groups->name) }}" method="post">
-          <div class="row g-3">
-            @csrf
-            <div class="col-md-12">
-                <label for="description" class="form-label">Invitation will be sent by {{ auth()->user()->name }}</label>
-                <input type="text" name="description" id="description" placeholder="description" hidden readely 
-                class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" value="{{ auth()->user()->name }}">
-
-                @error('description')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="col-md-12">
-                <label for="user_id" class="form-label">Select user by mail</label>
-                    <select name="user_id" id="user_id"
-                        class="form-control py-2  rounded-lg @error('user_id') border border-danger @enderror" value="{{ old('user_id')}}">
-                        <option value="">Choose email</option>
-                        @if ($allusers -> count())
-                            @foreach($allusers as $induser)
-                                <option value="{{ $induser-> id}}">{{ $induser-> email}}</option>
-                            @endforeach
-                        @else
-                            <option value="none">does not have any posts</option>
-                        @endif
-                    </select>
-
-                @error('user_id')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-          </div>
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Sauvegarde</button>
-        </form>
-      </div>
+                    @error('peoples')
+                        <div class="text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="listofpeople  container-fluid d-flex flex-wrap border p-2 bg-white fw-light text-secondary" >
+                    @if ($allusers -> count())
+                        @foreach($allusers as $userof)
+                            <label class="border d-flex mr-1 justify-content-arround bg-light rounded p-1 align-items-center"><input type="checkbox" value="{{$userof->email}}"> {{$userof->email}}</label><br>
+                        @endforeach
+                    @else
+                        <option value="">no user</option>
+                    @endif 
+                </div>
+                
+                <hr class="my-4">
+                <div class="d-flex">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Send Invitation</button>
+                    <a href="{{ route('users.group.manage', [$groups->user, $groups->id]) }}" class="w-100 btn btn-danger btn-lg mr-1">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
     

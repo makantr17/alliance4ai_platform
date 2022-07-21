@@ -276,11 +276,9 @@
         function updateTopic() {     
             var topics = [];
             $('.topicList :checked').each(function(i) {
-                    
                 topics.push((i!=0?"\r\n":"")+ $(this).val());
             });
             $('#topics').val(topics).attr('rows',topics.length) ;
-            
         }
         $(function() {
             $('.topicList input').click(updateTopic);

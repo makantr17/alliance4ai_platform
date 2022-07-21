@@ -3,19 +3,19 @@
 @section('content')
    <!--====== PRELOADER PART START ======-->
 
-   <header class="masthead2">
-        <div class="container px-1 px-lg-1 h-100">
-            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                <div class="col-lg-6 align-self-end">
-                    <h1 class="text-black font-weight-bold">Topics</h1>
-                    <hr class="divider" />
-                </div>
-                <div class="col-lg-6 align-self-baseline">
-                    <!-- <p class="text-white-75 mb-5">Start Alliance4ai can help you build better experience with the Future Maker!</p> -->
-                </div>
+<header class="masthead2">
+    <div class="container px-1 px-lg-1 h-100">
+        <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-6 align-self-end">
+                <h1 class="text-black font-weight-bold">Topics</h1>
+                <hr class="divider" />
+            </div>
+            <div class="col-lg-6 align-self-baseline">
+                <!-- <p class="text-white-75 mb-5">Start Alliance4ai can help you build better experience with the Future Maker!</p> -->
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
 <div class="container-fluid col-xxl-8 px-0 py-2 px-4 mb-3">
     <div class="rounded">
@@ -108,8 +108,16 @@
                 </div>
                 <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start border-bottom">
                     <div>
-                        <h5 class="pt-1 mt-1 mb-0 lh-1 text-black fw-bold"> {{Str :: limit($topic-> topic, 50)}} </h5>
-                        <p class="p-0">{{ Str :: limit($topic-> description, 50) }}...</p>
+                        <h5 class="py-2 mt-1 mb-0 lh-1 text-black fw-bold"> {{Str :: limit($topic-> topic, 50)}} </h5>
+                        <!-- <p class="p-0">{{ Str :: limit($topic-> description, 50) }}...</p> -->
+                        <nav class="mb-0 opacity-100 my-1 text-muted">
+                            @if ($topic->user->image)
+                                <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                            @else
+                                <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
+                            @endif
+                            <small>, by {{ $topic-> user->name}}</small>
+                        </nav>
                         
                         <nav class="mb-0 opacity-100 my-0 text-secondary"> 
                             @if ($topic->category === '1' )
@@ -126,18 +134,11 @@
                     <div>
                         <small class="opacity-80 text-nowrap text-info">{{ $topic-> created_at->diffForHumans() }}</small>
                         <div class="sc-fUqQNk jDAUBC avatar-group--dense">
-                            @if ($topic->user->image)
-                                <img src="{{ '/storage/images/'.$topic->user->id.'/'.$topic->user->image }}" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
-                            @else
-                                <img src="/images/cxc.jpg" alt="twbs" width="20" height="20" class="rounded-circle flex-shrink-0">
-                            @endif
+                            
                             <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" title="Jason Sykes" alt="s">
                             <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" title="Ajith Pushparaj" alt="j">
                         </div>
-                        <nav class="mb-0 opacity-100 my-1 text-muted">
-                            
-                            <small>, by {{ $topic-> user->name}}</small>
-                        </nav>
+                       
                     </div>
                 </div>
             </a>

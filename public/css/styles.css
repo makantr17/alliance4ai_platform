@@ -11424,8 +11424,8 @@ header.masthead h1, header.masthead .h1, header.masthead1 h1, header.masthead1 .
 }
 @media (min-width: 992px) {
   header.masthead, header.masthead1, header.masthead2 {
-    height: 30vh;
-    min-height: 25rem;
+    height: 20vh;
+    min-height: 15rem;
     padding-top: 1.5rem;
     padding-bottom: 0;
   }

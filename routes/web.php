@@ -102,6 +102,8 @@ Route::get('/groups/members/joined/{group}', [NavigationController::class, 'join
 Route::delete('/groups/members/unjoin/{group}', [NavigationController::class, 'unjoin'])->name('groups.members.unjoin');
 Route::post('/groups_details/{group}', [NavigationController::class, 'join_member']);
 
+
+
 Route::get('/groups/members/topics/{topic_circle}', [NavigationController::class, 'group_topic_message'])->name('groups.members.topics');
 Route::post('/groups/members/topics/{topic_circle}', [NavigationController::class, 'circle_topic_message']);
 
@@ -164,6 +166,8 @@ Route::get('/user/{user:name}/group', [GroupController::class, 'index'])->name('
 Route::delete('/user/{user:name}/group/delete/{group}', [GroupController::class, 'destroy'])->name('users.group.delete');
 
 Route::get('/user/{user:name}/group/manage/{group}', [GroupController::class, 'manage'])->name('users.group.manage');
+Route::get('/user/{user:name}/updategroup/{group}', [GroupController::class, 'update'])->name('users.updategroup');
+Route::post('/user/{user:name}/updategroup/{group}', [GroupController::class, 'updatestore']);
 
 Route::get('/user/{user:name}/creategroups', [GroupController::class, 'create'])->name('users.creategroups');
 Route::post('/user/{user:name}/creategroups', [GroupController::class, 'store']);

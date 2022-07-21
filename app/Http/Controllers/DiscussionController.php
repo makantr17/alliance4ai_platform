@@ -94,12 +94,14 @@ class DiscussionController extends Controller
             'title'=> 'required|unique:discussions|max:255',
             'category'=> 'required|max:255',
             'description'=>'max:200',
+            'link'=>'required',
             'location'=>'required',
             'admin_1'=>'required',
             'date'=>'required|date|after:yesterday',
             'start_time'=>'required',
             'end_time'=>'required|after:start_time',
             'peoples',
+            'topics',
             
         ]);
 
@@ -110,6 +112,8 @@ class DiscussionController extends Controller
             'status'=>false,
             'location'=>$request-> location,
             'admin_1'=>$request-> admin_1,
+            'admin_2'=>$request-> admin_2,
+            'admin_3'=>$request-> admin_3,
             'start_time'=>$request-> start_time,
             'end_time'=>$request-> end_time,
             'link'=>$request-> link,

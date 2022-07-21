@@ -37,7 +37,6 @@ class GroupController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'name'=> 'required|unique:groups',
-            'titre'=> 'required',
             'location'=>'required',
             'image'=>'required',
         ]);
@@ -48,10 +47,8 @@ class GroupController extends Controller
             $request->image->storeAs('images/group/'.$request->name, $filename,'public');
             $circle = $request->user()->group()->create([
                 'name'=> $request-> name,
-                'titre' => $request->titre ,
                 'description'=>$request-> description,
                 'location'=>$request-> location,
-                'limit'=>$request-> limit,
                 'image'=>$filename,
                 'isavailable'=>false,
             ]);
@@ -73,5 +70,30 @@ class GroupController extends Controller
             'user'=> $user,
             'group'=> $groups,
         ]);
+    }
+
+
+    public function update(User $user, Group $group){
+        return view('groups.edit_group', [
+            'groups'=> $group
+        ]);
+    }
+
+
+    public function updatestore(Request $request, User $user, Group $group){
+        $this->validate($request, [
+            'description'=>'max:300',
+        ]);
+
+        DB::table('groups')->where('id', $group->id)->where('user_id',  auth()->user()->id)
+            ->update([
+            // 'name'=> $request-> name !== null && $request-> name !== '' ?  $request-> name : $group-> name,
+            // 'titre'=> $request-> titre !== null && $request-> titre !== '' ?  $request-> titre : $group-> titre,
+            // 'limit'=> $request-> limit !== null && $request-> limit !== '' ?  $request-> limit : $group-> limit,
+            'location'=> $request-> location !== null && $request-> location !== '' ?  $request-> location : $group-> location,
+            'description'=>$request-> description !== null && $request-> description !== '' ?  $request-> description : $group-> description,
+        ]);
+
+        return redirect()->route('users.group.manage', [auth()->user(), $group->id]);
     }
 }

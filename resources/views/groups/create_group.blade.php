@@ -24,22 +24,9 @@
             </div>
 
             <div class="col-md-6">
-                <label for="titre" class="form-label">Circle Title</label>
-                <input type="text" name="titre" id="titre" placeholder="circle title" 
-                class="form-control py-2  rounded-lg @error('titre') border border-danger @enderror" value="{{ old('titre')}}">
-                
-                @error('titre')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="col-md-6">
                 <label for="location" class="form-label">Location</label>
                 <input type="text" name="location" id="location" placeholder="circle location" 
                 class="form-control py-2  rounded-lg @error('location') border border-danger @enderror" value="{{ old('location')}}">
-                
                 @error('location')
                     <div class="text-danger">
                         {{ $message }}
@@ -47,17 +34,7 @@
                 @enderror
             </div>
 
-            <div class="col-md-6">
-                <label for="limit" class="form-label">Maximum Collaborator</label>
-                <input type="number" name="limit" id="limit" placeholder="limit" 
-                class="form-control py-2  rounded-lg @error('limit') border border-danger @enderror" value="{{ old('limit')}}">
-
-                @error('limit')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
+            
             <div class="col-md-12">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="5" value="{{ old('description')}}"></textarea>

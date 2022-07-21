@@ -16,10 +16,8 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('titre');
             $table->text('description')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('limit')->nullable();
             $table->string('image')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('finished_at')->nullable();

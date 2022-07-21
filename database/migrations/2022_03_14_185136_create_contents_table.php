@@ -17,11 +17,11 @@ class CreateContentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('topic_id')->constrained()->onDelete('cascade');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('file')->nullable();
             $table->string('title');
-            $table->string('link')->nullable();
-            $table->text('description');
+            $table->string('link');
+            $table->text('description')->nullable();
             $table->string('author')->nullable();
             $table->text('link_auth')->nullable();
             $table->string('subtitle_1')->nullable();

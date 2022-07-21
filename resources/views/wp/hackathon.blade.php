@@ -3,11 +3,11 @@
 @section('content')
 
 
-<div class="px-4 py-5 my-0 text-center" style=" background-image: url('/images/icon/back-col8.png');">
-    <img class="d-block mx-auto mb-4 rounded-circle" src="/images/icon/back-slim3.png" alt="" width="72" height="72">
+<div class="px-4 py-5 my-0 text-center" style="background-image: url('/images/icon/back-col8.png');" height="100">
+    <!-- <img class="d-block mx-auto mb-4 rounded-circle" src="/images/icon/back-slim3.png" alt="" width="72" height="72"> -->
     <h1 class="display-5 fw-bold text-white">Hackathons</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Participate to the hackerthons hosted by Future Maker.</p>
+      <p class="lead mb-2">Participate to the hackerthons hosted by Future Maker.</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         @auth
             <form action="{{ route('users.create_hackerthon',  auth()->user()->name) }}" method="get" class="">

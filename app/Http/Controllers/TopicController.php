@@ -54,23 +54,15 @@ class TopicController extends Controller
             'category'=>'required',
             'questions.*.question' => 'required',
             'exercises.*.question' => 'required',
-            'content.*.title' => 'max:300',
-            'content.*.link' => 'max:300',
-            'content.*.description' => 'max:300',
-            // 'content.*.image',
-            'content.*.type',
+            'content.*.title' => 'required|max:300',
+            'content.*.link' => 'required|max:300',
         ]);
-
-        
-
-        // dd($data['content'] );
         $topic= $request->user()->topic()->create([
             'topic'=> $request-> topic,
             'category'=>$request-> category,
             'description'=>$request-> description,
             'status'=> false,
         ]);
-
         // save the prompts
         foreach ($data['questions'] as $j => $choice_content) {
             $request->user()->prompts()->create([
@@ -78,7 +70,6 @@ class TopicController extends Controller
                 'question' => implode(", ", $choice_content),
             ]);
         }
-        
         // save the exercises
         foreach ($data['exercises'] as $tel => $exercise) {
             $request->user()->exercise()->create([
@@ -89,30 +80,21 @@ class TopicController extends Controller
         // save the contents
         foreach ($data['content'] as $cont => $contento) {
             $title = '';
-            $content = '';
-            $type = '';
-            $filetype='';
-
-            
-            
+            $link = '';
             foreach ($contento as $key => $value) {
-                // dd([$key,  $value]);
                 if ($value !== 'undefined' && $key === 'title') {
                     $title = $value;
                 }
-                if ($value !== 'undefined' && $key !== 'title') {
-                    $type = $key;
-                    $content = $value;
+                if ($value !== 'undefined' && $key === 'link') {
+                    $link = $value;
                 }
             }
             $request->user()->content()->create([
                 'topic_id'=> $topic-> id,
-                'type'=> '',
-                // 'file'=> $content !== 'undefined' && $type === 'image' ?  $content : '',
-                'link'=> $content !== 'undefined' && $type === 'link' ?  $content : '',
+                'link'=> $link !== 'undefined' ?  $link : '',
                 'title'=> $title !== 'undefined' ?  $title : '',
-                'description'=> $content !== 'undefined' && $type === 'description' ?  $content : '',
             ]);
+            
         }
         // send notification
         // if ($topic) {

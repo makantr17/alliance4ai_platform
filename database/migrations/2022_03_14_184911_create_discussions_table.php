@@ -16,12 +16,14 @@ class CreateDiscussionsTable extends Migration
         Schema::create('discussions', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('category');
             $table->string('topics')->nullable();
             $table->string('location');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('admin_1');
+            $table->string('admin_1')->nullable();
+            $table->string('admin_2')->nullable();
+            $table->string('admin_3')->nullable();
             $table->time('start_time');
             $table->time('end_time');
             $table->string('link')->nullable();

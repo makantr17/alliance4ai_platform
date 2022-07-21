@@ -14,14 +14,14 @@
           <div class="row g-3">
             @csrf
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="category" class="form-label">Category Theme</label>
                     <select name="category" id="category"
                         class="form-control py-2  rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
                         <option value="">Choose Category</option>
-                        <option value="0">Future Tech</option>
-                        <option value="1">Workplace Skills</option>
-                        <option value="2">Ethics & History</option>
+                        <option value="1" {{ old('category') == "1" ? 'selected' : '' }}>Futur Tech</option>
+                        <option value="2" {{ old('category') == "2" ? 'selected' : '' }}>History & Ethics</option>
+                        <option value="3" {{ old('category') == "3" ? 'selected' : '' }}>Workplace Skills</option>
                     </select>
 
                 @error('category')
@@ -31,7 +31,7 @@
                 @enderror
             </div>
             <div class="col-md-12">
-                <label for="name" class="form-label">name</label>
+                <label for="name" class="form-label">Course Name</label>
                 <input type="text" name="name" id="name" placeholder="Your name" 
                 class="form-control py-2  rounded-lg @error('name') border border-danger @enderror" value="{{ old('name')}}">
                 
@@ -43,7 +43,7 @@
             </div>
             
             <div class="col-md-12">
-              <label for="description" class="form-label">Description</label>
+              <label for="description" class="form-label">Course Description</label>
               <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="4" value="{{ $user->description}}"></textarea>
 
               @error('description')
