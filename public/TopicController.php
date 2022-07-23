@@ -101,6 +101,7 @@ class TopicController extends Controller
                     $type = $key;
                     $content = $value;
                 }
+                
             }
             $request->user()->content()->create([
                 'topic_id'=> $topic-> id,

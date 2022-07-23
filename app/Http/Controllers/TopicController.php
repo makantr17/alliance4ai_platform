@@ -49,6 +49,7 @@ class TopicController extends Controller
 
     public function store(Request $request){
 
+        
         $data =$request->validate([
             'topic'=> 'required',
             'category'=>'required',
@@ -56,7 +57,10 @@ class TopicController extends Controller
             'exercises.*.question' => 'required',
             'content.*.title' => 'required|max:300',
             'content.*.link' => 'required|max:300',
+            'content.*.image' => 'required|mimes:jpeg,png,jpg,gif',
         ]);
+        
+
         $topic= $request->user()->topic()->create([
             'topic'=> $request-> topic,
             'category'=>$request-> category,
@@ -81,6 +85,8 @@ class TopicController extends Controller
         foreach ($data['content'] as $cont => $contento) {
             $title = '';
             $link = '';
+            $filename = '';
+            $i = 1;
             foreach ($contento as $key => $value) {
                 if ($value !== 'undefined' && $key === 'title') {
                     $title = $value;
@@ -88,11 +94,19 @@ class TopicController extends Controller
                 if ($value !== 'undefined' && $key === 'link') {
                     $link = $value;
                 }
+                if ($value !== 'undefined' && $key === 'image') {
+                    if ($request->hasFile('content.'.$i.'.image')) {
+                        $filename = $value->getClientOriginalName();
+                        $value->storeAs('images/content/'.$title, $filename,'public');
+                    }
+                    $i += 1;
+                }
             }
             $request->user()->content()->create([
                 'topic_id'=> $topic-> id,
                 'link'=> $link !== 'undefined' ?  $link : '',
                 'title'=> $title !== 'undefined' ?  $title : '',
+                'file'=> $filename !== 'undefined' ?  $filename : '',
             ]);
             
         }

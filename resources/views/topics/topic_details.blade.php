@@ -66,18 +66,20 @@
             <!-- START CONTENT Topics here  #################################################-->
             <div class="my-2">
                 
-
-                <div class="py-4"></div>
+                <div class="py-3"></div>
                 <!-- START VIDEO here  #################################################-->
-                <h6 class="px-2 p-1 fw-bold text-dark"><i class="p-1 fa fa-question-circle" style="font-size:25px; color:#05B37E" aria-hidden="true"></i> Prompts Questions</h6>
+                <h5 class=" py-3 fw-bold text-dark"> Discussion Prompt Questions</h5>
                 <!-- START Prompts here #######################" -->
                 @if ($topics[0]->prompts-> count())
                     @foreach($topics[0]->prompts as $prompts)
                     <a href="{{ route('topics.prompts', $prompts) }}" style="background:#F2F2F2" class="list-group-item list-group-item-action border d-flex bg-light gap-3 py-2 m-2" aria-current="true">
                         <div class="d-flex gap-2 w-100 justify-content-between">
-                            <div>
-                                <p class="text-dark fw-bold text-wrap" style="font-size:14px" >{{ $prompts-> question}} ?</p>
-                                <small class="opacity-50 text-nowrap">{{ $prompts-> created_at->diffForHumans() }}</small>
+                            <div class="d-flex gap-2 w-100 justify-content-arround">
+                                <nav><i class="p-1 fa fa-question-circle-o" style="font-size:30px;" aria-hidden="true"></i></nav>
+                                <div>
+                                    <p class="text-dark fw-bold text-wrap" style="font-size:14px" >{{ $prompts-> question}} ?</p>
+                                    <small class="opacity-50 text-nowrap">{{ $prompts-> created_at->diffForHumans() }}</small>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -90,9 +92,41 @@
                 <br>
 
 
-                <div class="py-4"></div>
+
+
+                <h5 class="py-2 fw-bold text-dark">Resources</h5>
+                <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-1">
+                @if ($topics[0]->content-> count())
+                    @foreach($topics[0]->content as $content)
+                        <div class="col-md-4 p-2" style="height:300px">
+                            <div class="card card-cover h-100 overflow-hidden text-white rounded-5 text-center" 
+                            style=
+                            "background-image: url('{{$content->file !== 'undefined' ?  '/storage/images/content/'.$content->title.'/'.$content->file : '/images/icon/back-slim3.png'}}');background-repeat: no-repeat; background-size: 100% 230px; background-position: top;">
+                                <div class="d-flex flex-column h-100 p-3 pb-2 text-shadow-1">
+                                    <ul class="d-flex col-lg-12 align-items-center justify-content-center list-unstyled mt-auto">
+                                        <a href="{{ $content-> link}}" target="_blank" class="mr-2 btn btn-light btn"> <i class="fa fa-play-circle fa-3x"></i></a>
+                                    </ul>
+                                </div>
+                                <h5 class="p-2 mt-2 mb-0 display-7 lh-1 fw-bold text-dark">{{ Str :: limit($content-> title, 20) }} </h5>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <!-- <div class="py-4"></div> -->
                 <!-- START FILE here  #################################################-->
-                <h6 class="px-2 p-1 fw-bold text-dark"><i class="p-1 fa fa-file" style="font-size:25px; color:#05B37E" aria-hidden="true"></i> Resources</h6>
+                <!-- <h6 class="px-2 p-1 fw-bold text-dark"><i class="p-1 fa fa-file" style="font-size:25px; color:#05B37E" aria-hidden="true"></i> Resources</h6>
                 @if ($topics[0]->content-> count())
                     @foreach($topics[0]->content as $content)
                         @if ($content->type)
@@ -133,13 +167,13 @@
                 <div class="px-2 py-2 text-muted my-1 bg-light ">
                     <nav>No Resources</nav>
                 </div>
-                @endif
+                @endif -->
 
 
 
                 <div class="py-4"></div>
                 <!-- START Exercise here  #################################################-->
-                <h6 class="px-2 p-1 fw-bold text-dark"><i class="fa fa-wpforms p-1" style="font-size:25px; color:#05B37E" aria-hidden="true"></i> Exercises</h6>
+                <h5 class="p-2 fw-bold text-dark">Exercises</h5>
                 @if($topics[0]->exercise->isEmpty())
                     <div class="px-2 py-2 text-muted my-1 bg-light ">
                         <nav>No exercice</nav>
@@ -147,10 +181,16 @@
                 @else
                     @foreach($topics[0]->exercise as $exercise)
                         @auth
-                            @if (!$exercise->submitted(auth()->user()))
-                                <a href="{{ route('topics.takequiz', $exercise) }}" class="list-group-item list-group-item-action border d-flex gap-3 py-2 m-2 bg-light" aria-current="true">
+                            @if ($exercise)
+                                <a href="{{ route('topics.takequiz', $exercise) }}" class="list-group-item list-group-item-action border d-flex gap-3 py-2 my-2 bg-light" aria-current="true">
                                     <div class="d-flex gap-2 w-100 justify-content-between align-items-center">
-                                        <div><nav> {{ $exercise->question}}</nav></div>
+                                        <div class="d-flex gap-2 w-100 justify-content-arround">
+                                            <nav><i class="p-1 fa fa-wpforms" style="font-size:30px;" aria-hidden="true"></i></nav>
+                                            <div>
+                                                <p class="text-dark fw-bold text-wrap" style="font-size:14px" >{{ $exercise->question}}</p>
+                                                <small class="opacity-50 text-nowrap">{{ $prompts-> created_at->diffForHumans() }}</small>
+                                            </div>
+                                        </div>
                                         <button class="btn btn-info btn-sm">Take</button>
                                     </div>
                                 </a>
@@ -167,6 +207,7 @@
                 @endif
                
             </div>
+            <div class="py-4"></div>
         </div>
         <!-- END CONTENT Topics here  #################################################-->
         <!-- START Notifications here -->

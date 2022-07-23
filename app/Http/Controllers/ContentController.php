@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\DB;
 class ContentController extends Controller
 {
     public function index(Topic $topic){
-        // $topic = $topic->discussion()->get();
+        $content = $topic->content()->get();
+        if ($content->count() > 2) {
+            return back();
+        }
         return view('contents.create_content', [
             'topic'=> $topic,
         ]);
@@ -20,23 +23,22 @@ class ContentController extends Controller
 
     public function register(Request $request, Topic $topic){
         $this->validate($request, [
-            // 'image'=> 'required',
+            'image'=> 'required|mimes:jpeg,png,jpg,gif',
             'title'=> 'required',
-            'description'=> 'required',
+            'link'=> 'required',
         ]);
-
-        // if ($request->hasFile('image')) {
-        //    $filename= $request->image->getClientOriginalName();
-        //    $request->image->storeAs('images/content/'.$topic->id, $filename,'public');
-        // }
-           $request->user()->content()->create([
-                'topic_id'=> $topic-> id,
-                'type'=> '',
-                // 'file'=> $filename,
-                'link'=> $request->link,
-                'title'=> $request->title,
-                'description'=> $request->description,
-            ]);
+        $filename='';
+        if ($request->hasFile('image')) {
+           $filename= $request->image->getClientOriginalName();
+           $request->image->storeAs('images/content/'.$request->title, $filename,'public');
+        }
+        $request->user()->content()->create([
+            'topic_id'=> $topic-> id,
+            'type'=> '',
+            'file'=> $filename,
+            'link'=> $request->link,
+            'title'=> $request->title,
+        ]);
         
         return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
     }
@@ -45,7 +47,13 @@ class ContentController extends Controller
         // $exercises = Exercise::findOrFail($exercise->id);
         $contents = $user->content->where('id', '=', $content->id);
         if ($contents) {
-            $content->delete();
+            $file_path = '/storage/images/content/'.$content->title.'/'.$content->file;
+            $directory = '/storage/images/content/'.$content->title;
+            if(file_exists(public_path($file_path))){
+                Storage::disk('public')->delete('/storage/images/content/'.$content->title.'/'.$content->file);
+                $content->delete();
+            }
+            
         }
         return back();
     }

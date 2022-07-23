@@ -73,10 +73,17 @@
                             <div class="d-flex flex-wrap align-items-center px-0 pt-0">
                                 @auth
                                 
-                                    <form action="{{ route('users.addcontent',  $topic) }}" method="get" class="m-1">
-                                    @csrf
-                                        <button type="submit"class="btn btn-dark btn-sm btn-info"> Add content</button>
-                                    </form>
+                                    @if($topics[0]->content-> count() > 2)
+                                        <form action="#" method="get" class="m-1">
+                                        @csrf
+                                            <button type="submit"class="btn btn-dark btn-sm btn-info text-muted" disabled="disabled"><i class="fa fa-ban"></i> Add content</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('users.addcontent',  $topic) }}" method="get" class="m-1">
+                                        @csrf
+                                            <button type="submit"class="btn btn-dark btn-sm btn-info"> Add content</button>
+                                        </form>
+                                    @endif
                                     <form action="{{ route('users.addexercise', [auth()->user()->name, $topic]) }}" method="get" class="m-1">
                                     @csrf
                                         <button type="submit"class="btn btn-dark btn-sm btn-info"><i class="fa fa-question"></i> Add Exercise</button>
@@ -90,6 +97,10 @@
                                     @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-dark btn-sm btn-info"><i class="fa fa-edit"></i> Update</button>
+                                    </form>
+                                    <form action="{{ route('topics.details', [$topic ->id]) }}" method="get" >
+                                    @csrf
+                                        <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
                                     </form>
                                     <!-- END DELETE TOPICS -->
                                 @endauth

@@ -83,7 +83,7 @@
                         </div>
                         
                         <div class="col-md-12">
-                            <label for="title" class="form-label">Title</label>
+                            <label for="title" class="form-label">The ressource title</label>
                             <input type="text" name="title" id="title" placeholder="Your title" 
                             class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="">
                             
@@ -95,18 +95,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <label for="description" class="form-label">Write down the description add the description mark at the end.</label>
-                            <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="5" value=""></textarea>
-
-                            @error('description')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-12">
-                            <label for="link" class="form-label">Link</label>
+                            <label for="link" class="form-label">Link o the ressource</label>
                             <input type="text" name="link" id="link" placeholder="Your link" 
                             class="form-control py-2  rounded-lg @error('link') border border-danger @enderror" value="">
                             
@@ -117,15 +106,31 @@
                             @enderror
                         </div>
                         
-                        <!-- <div class="col-sm-12 mb-3">
-                            <label for="file" class="form-label">Edit your image</label>
-                            <input class="form-control" name="image" type="file" id="image" value="">
-                        </div> -->
-                        <hr class="my-4">
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Upload Cover</label>
+                            <input class="form-control @error('image') border border-danger @enderror" name="image" type="file" id="image" value="{{ old('image')}}" onchange="loadFile(event)">
 
+                            @error('image')
+                                <div class="text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="col-md-12 py-1 bg-light">
+                            <img id="output" class="my-3 img-circle" style="rounded" width="150" height="" alt="#" src="#" />
+                        </div>
+
+                        <script>
+                            var loadFile = function(event){
+                                var output= document.getElementById('output');
+                                output.src = URL.createObjectURL(event.target.files[0]);
+                            }
+                        </script>
+
+                        <hr class="my-4">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary">Register</button>
-                            <a href="{{ route('users.topics',  auth()->user()->name) }}" class="btn btn-danger">Cancel</a>
+                            <a href="{{ route('users.topics.manage', [auth()->user()->name, $topic]) }}" class="btn btn-danger">Cancel</a>
                         </div>
 
                     </form>

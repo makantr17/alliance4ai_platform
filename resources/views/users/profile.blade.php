@@ -35,7 +35,7 @@
             <h1 class="fw-bold pb-2">{{ $user->name}}</h1>
             <p class="opacity-70 text-black pb-1" style="font-size:14px">Email via - {{ $user->email}}</p>
             <p class="opacity-70 text-black pb-1" style="font-size:14px">Live in {{ $user->city}}, in {{ $user->country}}</p>
-            <p class="opacity-70 text-black pb-1" style="font-size:14px"><i class="fa fa-map" style="color:black"></i>  {{ $user->address}}</p>
+            <p class="opacity-70 text-black pb-1" style="font-size:14px"><i class="fa fa-map-marker" style="color:black"></i>  {{ $user->address}}</p>
             
             <div class="d-flex col-sm-12 gap-2 w-100 justify-content-between ">
                 <small></small>
@@ -52,14 +52,14 @@
             @csrf
                 <button type="submit"class="btn btn-muted btn-sm border-bottom">{{ $user->name}} </button>
             </form>
-            <form action="" method="get" class="mr-1">
+            <!-- <form action="" method="get" class="mr-1">
             @csrf
                 <button type="submit"class="btn btn-muted btn-sm "><i class="fa fa-eye" style="color:black"></i> My roles</button>
             </form>
             <form action="" method="get" class="mr-1">
             @csrf
                 <button type="submit"class="btn btn-muted btn-sm "><i class="fa fa-trophy" style="color:black"></i> Awards</button>
-            </form>
+            </form> -->
             
             <div class="container d-flex flex-row-reverse">
                 <form  action="{{ route('user.update-profile', auth()->user()->name) }}">
