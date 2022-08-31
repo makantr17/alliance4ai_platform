@@ -159,7 +159,7 @@
                 <div class="col-sm-3 border gray-bg">
                     <h4 class="h4 fw-bold py-2 text--center">Setting Board</h4>
                     <div class="">
-                        <form class="" novalidate action="{{ route('setting.grant-admin', auth()->user()->name)}}" method="get">
+                        <form class="" novalidate action="{{ route('setting.grant-admin', auth()->user())}}" method="get">
                             @csrf
                             <div class="input-group mb-3">
                                 <input type="email" name="email" class="form-control" placeholder="search by email" aria-label="Recipient's username" aria-describedby="button-addon2">

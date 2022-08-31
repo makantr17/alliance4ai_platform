@@ -9,6 +9,7 @@ use App\Models\Topic;
 use App\Models\Group;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class DiscussionController extends Controller
 {
@@ -27,7 +28,7 @@ class DiscussionController extends Controller
 
     public function destroy(User $user, Discussion $discussion){
         $discussion ->delete();
-        return redirect()->route('users.discussion',  auth()->user()->name);
+        return redirect()->route('users.discussion',  auth()->user());
     }
 
     public function add_cover(Discussion $discussion){
@@ -45,7 +46,7 @@ class DiscussionController extends Controller
             Discussion::where('id', $discussion->id)
                 ->update(['files'=> $filename]);
          }
-         return redirect()->route('users.discussion', auth()->user()->name);
+         return redirect()->route('users.discussion', auth()->user());
     }
 
     public function manage(User $user, Discussion $discussion){
@@ -122,12 +123,21 @@ class DiscussionController extends Controller
             'topics'=>$request-> topics,
             'date'=>$request-> date,
         ]);
+        $users = User::all();
+
+        // Notification::send($users, new \App\Notifications\DiscussionCreated($request->title, $discussion->id,
+        // $request->start_time, $request->end_time,  $request->link));
+
+        foreach ($users as $key => $value) {
+            $value->notify(new \App\Notifications\DiscussionCreated($request->title, $discussion->id,
+            $request->start_time, $request->end_time,  $request->link));
+        }
         // if ($discussion) {
         //     auth()->user()->notify(new \App\Notifications\DiscussionCreated($request->title, $discussion->id,
-        //     $request->start_time, $request->end_time, auth()->user()->name, $request->link));
+        //     $request->start_time, $request->end_time, auth()->user(), $request->link));
         // }
         
-        return redirect()->route('users.discussion',  auth()->user()->name);
+        return redirect()->route('users.discussion',  auth()->user());
     }
 
 
@@ -158,6 +168,6 @@ class DiscussionController extends Controller
             'date'=>$request-> date !== null && $request-> date !== '' ?  $request-> date : $discussion-> date,
         ]);
 
-        return redirect()->route('users.discussion',  auth()->user()->name);
+        return redirect()->route('users.discussion',  auth()->user());
     }
 }

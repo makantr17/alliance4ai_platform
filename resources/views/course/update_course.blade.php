@@ -27,7 +27,7 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.createcourse',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.createcourse',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new course</button>
                         </form>
@@ -35,11 +35,11 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add lesson</button>
                         </form>
-                        <form action="{{ route('users.updatecourses',  [auth()->user()->name, $course->id] ) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.updatecourses',  [auth()->user(), $course->id] ) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-edit"></i> Update</button>
                         </form>
-                        <form action="{{ route('users.course',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.course',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Courses</button>
                         </form>
@@ -81,7 +81,7 @@
     
 
     <div class="col-lg-8 py-1">
-    <form class="needs-validation" novalidate action="{{ route('users.updatecourses',  [auth()->user()->name, $course] ) }}" method="post">
+    <form class="needs-validation" novalidate action="{{ route('users.updatecourses',  [auth()->user(), $course] ) }}" method="post">
           <div class="row g-3">
             @csrf
 

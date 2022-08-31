@@ -28,7 +28,7 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Hackathons</button>
                         </form>
@@ -333,7 +333,7 @@
 
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Register</button>
-                                <a href="{{ route('users.hackerthon',  auth()->user()->name) }}" class="btn btn-danger">Cancel</a>
+                                <a href="{{ route('users.hackerthon',  auth()->user()) }}" class="btn btn-danger">Cancel</a>
                             </div>
                             
                         </form>

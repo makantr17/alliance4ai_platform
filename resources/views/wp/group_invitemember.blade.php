@@ -249,23 +249,59 @@
             <div class="col-md-4 bg-light border">
                 <div class="my-3 p-1 rounded">
                     <div class="d-flex justify-content-right pb-3">
-                        <!-- Invite future makers ############### -->
-                        <form action="{{ route('groups.members.invite', [$groups ->id]) }}" method="get" class="">
-                        @csrf
-                            <button type="submit"class="btn btn-muted btn-sm text-info border my-1"><i class="fa fa-user-o"></i> Invite Future Makers</button>
+
+
+
+                        <!-- Form Add invite users ####################### -->
+                        <form class="needs-validation" novalidate action="{{ route('group.addmember',  $groups->id) }}" method="post">
+                        
+                            @csrf
+                            <div class="col-lg-12 my-3">
+                                <label for="peoples" class="form-label">Invite Peoples</label>
+                                <textarea type="text" name="peoples" id="peoples" placeholder="peoples" cols="30" rows="10"
+                                class="form-control py-2 text-info  rounded-lg @error('peoples') border border-danger @enderror" value="{{ old('peoples')}}"></textarea>
+            
+                                @error('peoples')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="listofpeople  container-fluid d-flex flex-wrap border p-2 bg-white fw-light text-secondary" >
+                                @if ($allusers -> count())
+                                    @foreach($allusers as $userof)
+                                        <label class="border d-flex mr-1 justify-content-arround bg-light rounded p-1 align-items-center"><input type="checkbox" value="{{$userof->email}}"> {{$userof->email}}</label><br>
+                                    @endforeach
+                                @else
+                                    <option value="">no user</option>
+                                @endif 
+                            </div>
+                            
+                            <hr class="my-4">
+                            <div class="d-flex">
+                                <button class="w-100 btn btn-primary" type="submit">Send Invitation</button>
+                                <a href="{{ route('users.group.manage', [$groups->user, $groups->id]) }}" class="w-100 btn btn-danger mr-2">Cancel</a>
+                            </div>
                         </form>
+                        <!-- End add users ###################### -->
+
+
+
+
+
+
                     </div>
-                    
-                    <h6 class=" pb-4 mb-0">Future Makers</h6>
-                    @if ($group_members -> count())
-                        @foreach($group_members as $group_member)
-                            <!-- MEMBERS LISTED HERE -->
-                            <x-members :group_members="$group_member" />
-                            <!-- MEMBERS LISTED STOP HERE -->
-                        @endforeach
-                    @else
-                        <p></p>
-                    @endif
+                
+                <h6 class=" pb-4 mb-0">Future Makers</h6>
+                @if ($group_members -> count())
+                    @foreach($group_members as $group_member)
+                        <!-- MEMBERS LISTED HERE -->
+                        <x-members :group_members="$group_member" />
+                        <!-- MEMBERS LISTED STOP HERE -->
+                    @endforeach
+                @else
+                    <p></p>
+                @endif
 
                 <div class="col-lg-12 d-flex mt-5 flex-wrap justify-content-center">
                     {{ $group_members -> links()}}

@@ -7,22 +7,22 @@
     <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ route('users.profile',  auth()->user()->name) }}">Profile</a>
+                <a class="nav-link active" aria-current="page" href="{{ route('users.profile',  auth()->user()) }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.discussion',  auth()->user()->name) }}">Discussions</a>
+                <a class="nav-link" href="{{ route('users.discussion',  auth()->user()) }}">Discussions</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.topics',  auth()->user()->name) }}">Topics</a>
+                <a class="nav-link" href="{{ route('users.topics',  auth()->user()) }}">Topics</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.group',  auth()->user()->name) }}">Groups</a>
+                <a class="nav-link" href="{{ route('users.group',  auth()->user()) }}">Groups</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.hackerthon',  auth()->user()->name) }}">Hackathons</a>
+                <a class="nav-link" href="{{ route('users.hackerthon',  auth()->user()) }}">Hackathons</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.course',  auth()->user()->name) }}">Courses</a>
+                <a class="nav-link" href="{{ route('users.course',  auth()->user()) }}">Courses</a>
             </li>
         </ul>
     </div>

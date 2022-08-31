@@ -29,21 +29,21 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.creategroups',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.creategroups',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> New Circle</button>
                         </form>
-                        <form action="{{ route('group.addmember',  $groups->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('group.addmember',  $groups->id) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Invite FM</button>
-                        </form>
-                        <form action="" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Activities</button>
                         </form>
                         <form action="{{ route('users.updategroup',  [$groups->user, $groups]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"> Update</button>
+                        </form>
+                        <form action="{{ route('users.group.manage', [$groups->user, $groups->id]) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Back</button>
                         </form>
                     @endauth
                 </div>
@@ -109,7 +109,7 @@
         </div>
       
         <div class="col-lg-7 col-lg-7 border">
-            <form class="needs-validation" novalidate action="{{ route('group.addmember',  $groups->name) }}" method="post">
+            <form class="needs-validation" novalidate action="{{ route('group.addmember',  $groups->id) }}" method="post">
                     
                 @csrf
                 <div class="col-lg-12 my-3">
@@ -135,8 +135,8 @@
                 
                 <hr class="my-4">
                 <div class="d-flex">
-                    <button class="w-100 btn btn-primary btn-lg" type="submit">Send Invitation</button>
-                    <a href="{{ route('users.group.manage', [$groups->user, $groups->id]) }}" class="w-100 btn btn-danger btn-lg mr-1">Cancel</a>
+                    <button class="w-100 btn btn-primary" type="submit">Send Invitation</button>
+                    <a href="{{ route('users.group.manage', [$groups->user, $groups->id]) }}" class="w-100 btn btn-danger ml-2">Cancel</a>
                 </div>
             </form>
         </div>

@@ -29,11 +29,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.createtopics',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
                         </form>
-                        <form action="{{ route('users.topics.manage', [auth()->user()->name, $exercise-> topic->id]) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.topics.manage', [auth()->user(), $exercise-> topic->id]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Back</button>
                         </form>
@@ -62,7 +62,7 @@
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" topic="Jason Sykes" alt="s">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" topic="Ajith Pushparaj" alt="j">
             </div>
-            <form action="" method="get" >
+            <form action="{{ route('topics.details', [$exercise->topic_id]) }}" method="get" >
             @csrf
                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
             </form>
@@ -80,7 +80,7 @@
                         
                         @csrf
                         <div class="col-12">
-                            <h5 class="py-4 fw-bold text-info">Update Topics</h5>
+                            <h5 class="py-4 fw-bold text-info">Update Exercise</h5>
                         </div>
 
                         <div class="col-md-12">
@@ -99,7 +99,7 @@
 
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('users.topics.manage', [auth()->user()->name, $exercise->topic->id]) }}" class="btn btn-danger">Cancel</a>
+                            <a href="{{ route('users.topics.manage', [auth()->user(), $exercise->topic->id]) }}" class="btn btn-danger">Cancel</a>
                         </div>
                     </form>
                 </div>

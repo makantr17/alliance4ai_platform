@@ -9,7 +9,7 @@
   <div class="row g-5 py-3 mx-2 justify-content-center">
     
     <div class="col-md-7 col-lg-7">
-      <form class="needs-validation" novalidate action="{{ route('users.createtopics',  auth()->user()->name ) }}" method="post" enctype="multipart/form-data">
+      <form class="needs-validation" novalidate action="{{ route('users.createtopics',  auth()->user() ) }}" method="post" enctype="multipart/form-data">
         <div class="row g-3">
           @csrf
 

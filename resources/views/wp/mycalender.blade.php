@@ -35,7 +35,7 @@
                                 </div>
                             </form>
                             @auth
-                                <form action="{{ route('users.calendardiscussion.mycalendar', auth()->user()->name) }}" method="get" >
+                                <form action="{{ route('users.calendardiscussion.mycalendar', auth()->user()) }}" method="get" >
                                 @csrf
                                     <button type="submit" class="btn btn-md ml-1 text-white " style="background:#F87B06">My calender</button>
                                 </form>

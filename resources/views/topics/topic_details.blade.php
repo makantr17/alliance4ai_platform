@@ -59,7 +59,7 @@
 
             <div class="container d-flex flex-row-reverse">
                 <a href="{{ route('topics')}}">
-                    <button class="btn btn-sm btn-primary border "> back</button>
+                    <button class="btn btn-sm btn-primary border "> Back</button>
                 </a>
             </div>
             <!-- END Topic here  #################################################-->
@@ -72,7 +72,8 @@
                 <!-- START Prompts here #######################" -->
                 @if ($topics[0]->prompts-> count())
                     @foreach($topics[0]->prompts as $prompts)
-                    <a href="{{ route('topics.prompts', $prompts) }}" style="background:#F2F2F2" class="list-group-item list-group-item-action border d-flex bg-light gap-3 py-2 m-2" aria-current="true">
+                    <!--{{ route('topics.prompts', $prompts) }} -->
+                    <a href="#" style="background:#F2F2F2" class="list-group-item list-group-item-action border d-flex bg-light gap-3 py-2 m-2" aria-current="true">
                         <div class="d-flex gap-2 w-100 justify-content-between">
                             <div class="d-flex gap-2 w-100 justify-content-arround">
                                 <nav><i class="p-1 fa fa-question-circle-o" style="font-size:30px;" aria-hidden="true"></i></nav>

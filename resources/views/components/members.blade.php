@@ -4,7 +4,7 @@
     @if ($group_member ->user->image)
         <img class="bd-placeholder-img flex-shrink-0 me-2 rounded-circle border shadow-sm" width="40" height="40" src="{{ '/storage/images/'.$group_member->user_id.'/'.$group_member -> user ->image}}" alt="12">
     @else
-        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded-circle border " width="40" height="40" src="/images/icon-alliance/man.png" alt="default">
+        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded-circle border " width="40" height="40" src="/images/cxc.jpg" alt="default">
     @endif
     <p class="pb-2 col mb-0 small lh-sm ">
         <span class="d-flex justify-content-between pb-1">

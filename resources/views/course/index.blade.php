@@ -28,15 +28,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.createcourse',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.createcourse',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new course</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add lesson</button>
-                        </form>
-                        <form action="{{ route('users.course',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.course',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Courses</button>
                         </form>

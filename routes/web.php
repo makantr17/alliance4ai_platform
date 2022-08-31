@@ -80,7 +80,7 @@ Route::get('/discussion/topic/messages/{topic}', [NavigationController::class, '
 Route::post('/discussion/topic/messages/{topic}', [NavigationController::class, 'comment_topic']);
 
 // user messages here
-Route::get('/discussion/user/messages/{user:name}/posts', [UserMessageController::class, 'index'])->name('discussion.user.messages.posts');
+Route::get('/discussion/user/messages/{user:id}/posts', [UserMessageController::class, 'index'])->name('discussion.user.messages.posts');
 
 // Route::get('/circle/topic/messages/{topic}', [NavigationController::class, 'topic_circle'])->name('circle.topic.messages');
 // Route::post('/circle/topic/messages/{topic}', [NavigationController::class, 'comment_topic_circle']);
@@ -101,6 +101,9 @@ Route::get('/groups/members/joined/{group}', [NavigationController::class, 'join
 
 Route::delete('/groups/members/unjoin/{group}', [NavigationController::class, 'unjoin'])->name('groups.members.unjoin');
 Route::post('/groups_details/{group}', [NavigationController::class, 'join_member']);
+
+Route::get('/groups/members/invite/{group}', [NavigationController::class, 'user_invite'])->name('groups.members.invite');
+Route::post('/groups/members/invite/{group}', [NavigationController::class, 'send_invite']);
 
 
 
@@ -133,91 +136,90 @@ Route::post('/reset-password', [ResetPasswordController::class, 'store'])->name(
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dash', [DashboardController::class, 'dash'])->name('dash');
 
-Route::get('/user/{user:name}/profile', [ProfileController::class, 'index'])->name('users.profile');
-Route::post('/user/{user:name}/profile', [ProfileController::class, 'upload']);
-Route::get('/user/{user:name}/update-profile', [ProfileController::class, 'update'])->name('user.update-profile');
-Route::post('/user/{user:name}/update-profile', [ProfileController::class, 'store']);
+Route::get('/user/{user:id}/profile', [ProfileController::class, 'index'])->name('users.profile');
+Route::post('/user/{user:id}/profile', [ProfileController::class, 'upload']);
+Route::get('/user/{user:id}/update-profile', [ProfileController::class, 'update'])->name('user.update-profile');
+Route::post('/user/{user:id}/update-profile', [ProfileController::class, 'store']);
+Route::get('/user/{user:id}/score', [ScoreController::class, 'index'])->name('users.score');
 
-Route::get('/user/{user:name}/score', [ScoreController::class, 'index'])->name('users.score');
 
+Route::get('/user/{user:id}/course', [CourseController::class, 'index'])->name('users.course');
+Route::delete('/user/{user:id}/course/delete/{course}', [CourseController::class, 'destroy'])->name('users.course.delete');
 
-Route::get('/user/{user:name}/course', [CourseController::class, 'index'])->name('users.course');
-Route::delete('/user/{user:name}/course/delete/{course}', [CourseController::class, 'destroy'])->name('users.course.delete');
+Route::get('/user/{user:id}/course/manage/{course}', [CourseController::class, 'manage'])->name('users.course.manage');
+Route::post('/user/{user:id}/course/manage/{course}/saveCourseUser', [CourseController::class, 'saveCourseUser'])->name('users.course.manage.saveCourseUser');
+Route::get('/user/{user:id}/updatecourses/{course}', [CourseController::class, 'update'])->name('users.updatecourses');
+Route::post('/user/{user:id}/updatecourses/{course}', [CourseController::class, 'updatestore']);
 
-Route::get('/user/{user:name}/course/manage/{course}', [CourseController::class, 'manage'])->name('users.course.manage');
-Route::post('/user/{user:name}/course/manage/{course}/saveCourseUser', [CourseController::class, 'saveCourseUser'])->name('users.course.manage.saveCourseUser');
-Route::get('/user/{user:name}/updatecourses/{course}', [CourseController::class, 'update'])->name('users.updatecourses');
-Route::post('/user/{user:name}/updatecourses/{course}', [CourseController::class, 'updatestore']);
+Route::get('/user/{user:id}/createcourse', [CourseController::class, 'create'])->name('users.createcourse');
+Route::post('/user/{user:id}/createcourse', [CourseController::class, 'store']);
 
-Route::get('/user/{user:name}/createcourse', [CourseController::class, 'create'])->name('users.createcourse');
-Route::post('/user/{user:name}/createcourse', [CourseController::class, 'store']);
+Route::get('/user/{user:id}/createlessons/{course}', [LessonsController::class, 'index'])->name('users.createlessons');
+Route::post('/user/{user:id}/createlessons/{course}', [LessonsController::class, 'store']);
 
-Route::get('/user/{user:name}/createlessons/{course}', [LessonsController::class, 'index'])->name('users.createlessons');
-Route::post('/user/{user:name}/createlessons/{course}', [LessonsController::class, 'store']);
+Route::get('/user/{user:id}/lesson/details/{lesson}', [LessonsController::class, 'details'])->name('users.lesson.details');
 
-Route::get('/user/{user:name}/lesson/details/{lesson}', [LessonsController::class, 'details'])->name('users.lesson.details');
-
-Route::delete('/user/{user:name}/lessons/delete/{lesson}', [LessonsController::class, 'destroy'])->name('users.lessons.delete');
+Route::delete('/user/{user:id}/lessons/delete/{lesson}', [LessonsController::class, 'destroy'])->name('users.lessons.delete');
 
 Route::get('/user/{lesson:title}/updatelessons', [LessonsController::class, 'update'])->name('users.updatelessons');
 Route::post('/user/{lesson:title}/updatelessons', [LessonsController::class, 'updatestore']);
 
-Route::get('/user/{user:name}/group', [GroupController::class, 'index'])->name('users.group');
-Route::delete('/user/{user:name}/group/delete/{group}', [GroupController::class, 'destroy'])->name('users.group.delete');
+Route::get('/user/{user:id}/group', [GroupController::class, 'index'])->name('users.group');
+Route::delete('/user/{user:id}/group/delete/{group}', [GroupController::class, 'destroy'])->name('users.group.delete');
 
-Route::get('/user/{user:name}/group/manage/{group}', [GroupController::class, 'manage'])->name('users.group.manage');
-Route::get('/user/{user:name}/updategroup/{group}', [GroupController::class, 'update'])->name('users.updategroup');
-Route::post('/user/{user:name}/updategroup/{group}', [GroupController::class, 'updatestore']);
+Route::get('/user/{user:id}/group/manage/{group}', [GroupController::class, 'manage'])->name('users.group.manage');
+Route::get('/user/{user:id}/updategroup/{group}', [GroupController::class, 'update'])->name('users.updategroup');
+Route::post('/user/{user:id}/updategroup/{group}', [GroupController::class, 'updatestore']);
 
-Route::get('/user/{user:name}/creategroups', [GroupController::class, 'create'])->name('users.creategroups');
-Route::post('/user/{user:name}/creategroups', [GroupController::class, 'store']);
+Route::get('/user/{user:id}/creategroups', [GroupController::class, 'create'])->name('users.creategroups');
+Route::post('/user/{user:id}/creategroups', [GroupController::class, 'store']);
 
-Route::get('/user/{group:name}/addmember', [GroupMemberController::class, 'add'])->name('group.addmember');
-Route::post('/user/{group:name}/addmember', [GroupMemberController::class, 'adduser']);
+Route::get('/user/{group:id}/addmember', [GroupMemberController::class, 'add'])->name('group.addmember');
+Route::post('/user/{group:id}/addmember', [GroupMemberController::class, 'adduser']);
 
-Route::get('/user/{user:name}/jobs', [UserJobsController::class, 'index'])->name('users.jobs');
-Route::get('/user/{user:name}/jobs/manage/{jobs}', [UserJobsController::class, 'manage'])->name('users.jobs.manage');
+Route::get('/user/{user:id}/jobs', [UserJobsController::class, 'index'])->name('users.jobs');
+Route::get('/user/{user:id}/jobs/manage/{jobs}', [UserJobsController::class, 'manage'])->name('users.jobs.manage');
 
-Route::get('/user/{user:name}/addjob', [UserJobsController::class, 'addjob'])->name('users.addjob');
-Route::post('/user/{user:name}/addjob', [UserJobsController::class, 'storejob']);
+Route::get('/user/{user:id}/addjob', [UserJobsController::class, 'addjob'])->name('users.addjob');
+Route::post('/user/{user:id}/addjob', [UserJobsController::class, 'storejob']);
 
-Route::get('/user/{user:name}/hackerthon', [HackerthonController::class, 'index'])->name('users.hackerthon');
-Route::delete('/user/{user:name}/hackerthon/delete/{hackerthon}', [HackerthonController::class, 'destroy'])->name('users.hackerthon.delete');
+Route::get('/user/{user:id}/hackerthon', [HackerthonController::class, 'index'])->name('users.hackerthon');
+Route::delete('/user/{user:id}/hackerthon/delete/{hackerthon}', [HackerthonController::class, 'destroy'])->name('users.hackerthon.delete');
 
-Route::get('/user/{user:name}/hackerthon/manage/{hackerthon}', [HackerthonController::class, 'manage'])->name('users.hackerthon.manage');
-Route::get('/user/{user:name}/hackerthon/manage/competitors/{hackerthon}', [HackerthonController::class, 'competitors'])->name('users.hackerthon.manage.competitors');
-Route::get('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'create'])->name('users.create_hackerthon');
-Route::post('/user/{user:name}/create_hackerthon', [HackerthonController::class, 'store']);
+Route::get('/user/{user:id}/hackerthon/manage/{hackerthon}', [HackerthonController::class, 'manage'])->name('users.hackerthon.manage');
+Route::get('/user/{user:id}/hackerthon/manage/competitors/{hackerthon}', [HackerthonController::class, 'competitors'])->name('users.hackerthon.manage.competitors');
+Route::get('/user/{user:id}/create_hackerthon', [HackerthonController::class, 'create'])->name('users.create_hackerthon');
+Route::post('/user/{user:id}/create_hackerthon', [HackerthonController::class, 'store']);
 
 Route::get('/user/{hackerthon:id}/update_hackerthon', [HackerthonController::class, 'update'])->name('users.update_hackerthon');
-Route::post('/user/{user:name}/update/hackerthon/{hackerthon}', [HackerthonController::class, 'updatestore'])->name('users.update.hackerthon');
+Route::post('/user/{user:id}/update/hackerthon/{hackerthon}', [HackerthonController::class, 'updatestore'])->name('users.update.hackerthon');
 
-Route::get('/user/{user:name}/discussion', [DiscussionController::class, 'index'])->name('users.discussion');
-Route::delete('/user/{user:name}/discussion/delete/{discussion}', [DiscussionController::class, 'destroy'])->name('users.discussion.delete');
+Route::get('/user/{user:id}/discussion', [DiscussionController::class, 'index'])->name('users.discussion');
+Route::delete('/user/{user:id}/discussion/delete/{discussion}', [DiscussionController::class, 'destroy'])->name('users.discussion.delete');
 
-Route::get('/user/{user:name}/discussion/manage/{discussion}', [DiscussionController::class, 'manage'])->name('users.discussion.manage');
+Route::get('/user/{user:id}/discussion/manage/{discussion}', [DiscussionController::class, 'manage'])->name('users.discussion.manage');
 Route::get('/user/{discussion}/discussion/add_cover', [DiscussionController::class, 'add_cover'])->name('users.discussion.add_cover');
 Route::post('/user/{discussion}/discussion/add_cover', [DiscussionController::class, 'upload']);
 
 
-Route::get('/user/{user:name}/topics', [TopicController::class, 'adminTopics'])->name('users.topics');
-Route::delete('/user/{user:name}/topics/delete/{topic}', [TopicController::class, 'destroy'])->name('users.topics.delete');
+Route::get('/user/{user:id}/topics', [TopicController::class, 'adminTopics'])->name('users.topics');
+Route::delete('/user/{user:id}/topics/delete/{topic}', [TopicController::class, 'destroy'])->name('users.topics.delete');
 
-Route::get('/user/{user:name}/topics/manage/{topic}', [TopicController::class, 'manage'])->name('users.topics.manage');
+Route::get('/user/{user:id}/topics/manage/{topic}', [TopicController::class, 'manage'])->name('users.topics.manage');
 
 
-Route::get('/user/{user:name}/creatediscussion', [DiscussionController::class, 'create'])->name('users.creatediscussion');
-Route::post('/user/{user:name}/creatediscussion', [DiscussionController::class, 'store']);
+Route::get('/user/{user:id}/creatediscussion', [DiscussionController::class, 'create'])->name('users.creatediscussion');
+Route::post('/user/{user:id}/creatediscussion', [DiscussionController::class, 'store']);
 
-Route::get('/user/{user:name}/updatediscussion/{discussion}', [DiscussionController::class, 'update'])->name('users.updatediscussion');
-Route::post('/user/{user:name}/savediscussion/{discussion}', [DiscussionController::class, 'storeupdates'])->name('users.savediscussion');
+Route::get('/user/{user:id}/updatediscussion/{discussion}', [DiscussionController::class, 'update'])->name('users.updatediscussion');
+Route::post('/user/{user:id}/savediscussion/{discussion}', [DiscussionController::class, 'storeupdates'])->name('users.savediscussion');
 
 
 Route::get('/topiccircle/{group:id}/createcirclediscussion', [TopicCircleController::class, 'indexcircle'])->name('topiccircle.createcirclediscussion');
 Route::post('/topiccircle/{group:id}/createcirclediscussion', [TopicCircleController::class, 'storecircle']);
 
-Route::get('/user/{user:name}/createtopics', [TopicController::class, 'index'])->name('users.createtopics');
-Route::post('/user/{user:name}/createtopics', [TopicController::class, 'store']);
+Route::get('/user/{user:id}/createtopics', [TopicController::class, 'index'])->name('users.createtopics');
+Route::post('/user/{user:id}/createtopics', [TopicController::class, 'store']);
 
 Route::get('/user/{topic:topic}/updatetopics', [TopicController::class, 'update'])->name('users.updatetopics');
 Route::post('/user/{topic:topic}/updatetopics', [TopicController::class, 'updatestore']);
@@ -225,25 +227,25 @@ Route::post('/user/{topic:topic}/updatetopics', [TopicController::class, 'update
 Route::get('/user/{topic}/addcontent', [ContentController::class, 'index'])->name('users.addcontent');
 
 Route::post('/user/{topic}/addcontent', [ContentController::class, 'register']);
-Route::delete('/user/{user:name}/deletecontents/{content}', [ContentController::class, 'delete'])->name('users.deletecontents');
-Route::get('/user/{user:name}/{content}/updatecontents', [ContentController::class, 'update'])->name('users.updatecontents');
-Route::post('/user/{user:name}/{content}/updatecontents', [ContentController::class, 'updatestore']);
+Route::delete('/user/{user:id}/deletecontents/{content}', [ContentController::class, 'delete'])->name('users.deletecontents');
+Route::get('/user/{user:id}/{content}/updatecontents', [ContentController::class, 'update'])->name('users.updatecontents');
+Route::post('/user/{user:id}/{content}/updatecontents', [ContentController::class, 'updatestore']);
 
 Route::get('/user/{topic}/addprompt', [PromptsController::class, 'index'])->name('users.addprompt');
-Route::get('/user/{user:name}/{prompts}/updateprompts', [PromptsController::class, 'update'])->name('users.updateprompts');
-Route::post('/user/{user:name}/{prompts}/updateprompts', [PromptsController::class, 'updatestore']);                         
+Route::get('/user/{user:id}/{prompts}/updateprompts', [PromptsController::class, 'update'])->name('users.updateprompts');
+Route::post('/user/{user:id}/{prompts}/updateprompts', [PromptsController::class, 'updatestore']);                         
 Route::post('/user/{topic}/addprompt', [PromptsController::class, 'upload']);
-Route::delete('/user/{user:name}/deleteprompts/{prompts}', [PromptsController::class, 'delete'])->name('users.deleteprompts');
+Route::delete('/user/{user:id}/deleteprompts/{prompts}', [PromptsController::class, 'delete'])->name('users.deleteprompts');
 
-Route::get('/user/{user:name}/{topic}/addexercise', [ExerciseController::class, 'createExercise'])->name('users.addexercise');
+Route::get('/user/{user:id}/{topic}/addexercise', [ExerciseController::class, 'createExercise'])->name('users.addexercise');
 Route::get('/user/{topic}/takeexercise', [ExerciseController::class, 'take'])->name('users.takeexercise');
-Route::post('/user/{user:name}/{topic}/addexercise', [ExerciseController::class, 'register']);
-Route::delete('/user/{user:name}/deleteexercise/{exercise}', [ExerciseController::class, 'delete'])->name('users.deleteexercise');
-Route::get('/user/{user:name}/{exercise}/updateexercise', [ExerciseController::class, 'update'])->name('users.updateexercise');
-Route::post('/user/{user:name}/{exercise}/updateexercise', [ExerciseController::class, 'updatestore']);
+Route::post('/user/{user:id}/{topic}/addexercise', [ExerciseController::class, 'register']);
+Route::delete('/user/{user:id}/deleteexercise/{exercise}', [ExerciseController::class, 'delete'])->name('users.deleteexercise');
+Route::get('/user/{user:id}/{exercise}/updateexercise', [ExerciseController::class, 'update'])->name('users.updateexercise');
+Route::post('/user/{user:id}/{exercise}/updateexercise', [ExerciseController::class, 'updatestore']);
 
 Route::get('/user/calendardiscussion', [CalenderController::class, 'index'])->name('users.calendardiscussion');
-Route::get('/user/calendardiscussion/{user:name}', [CalenderController::class, 'mycalendar'])->name('users.calendardiscussion.mycalendar');
+Route::get('/user/calendardiscussion/{user:id}', [CalenderController::class, 'mycalendar'])->name('users.calendardiscussion.mycalendar');
 Route::post('/user/calendardiscussion', [CalenderController::class, 'filter']);
 
 Route::get('/fullcalendareventmaster', [FullCalendarEventMasterController::class, 'index'])->name('fullcalendareventmaster');
@@ -252,13 +254,13 @@ Route::post('/fullcalendareventmaster', [FullCalendarEventMasterController::clas
 Route::post('/fullcalendareventmaster', [FullCalendarEventMasterController::class, 'destroy']);
 
 
-Route::get('/setting/{user:name}', [AdminController::class, 'index'])->name('setting');
-Route::post('/setting/{user:name}', [AdminController::class, 'admin']);
-Route::post('/setting/{user:name}/saveCourse/{course}', [AdminController::class, 'saveCourse'])->name('setting.saveCourse');
-Route::post('/setting/{user:name}/saveDiscussion/{discussion}', [AdminController::class, 'saveDiscussion'])->name('setting.saveDiscussion');
-Route::post('/setting/{user:name}/saveTopic/{topic}', [AdminController::class, 'saveTopic'])->name('setting.saveTopic');
-Route::post('/setting/{user:name}/saveHackathon/{hackerthon}', [AdminController::class, 'saveHackathon'])->name('setting.saveHackathon');
-Route::get('/setting/{user:name}/grant-admin', [AdminController::class, 'find'])->name('setting.grant-admin');
+Route::get('/setting/{user:id}', [AdminController::class, 'index'])->name('setting');
+Route::post('/setting/{user:id}', [AdminController::class, 'admin']);
+Route::post('/setting/{user:id}/saveCourse/{course}', [AdminController::class, 'saveCourse'])->name('setting.saveCourse');
+Route::post('/setting/{user:id}/saveDiscussion/{discussion}', [AdminController::class, 'saveDiscussion'])->name('setting.saveDiscussion');
+Route::post('/setting/{user:id}/saveTopic/{topic}', [AdminController::class, 'saveTopic'])->name('setting.saveTopic');
+Route::post('/setting/{user:id}/saveHackathon/{hackerthon}', [AdminController::class, 'saveHackathon'])->name('setting.saveHackathon');
+Route::get('/setting/{user:id}/grant-admin', [AdminController::class, 'find'])->name('setting.grant-admin');
 
 
 

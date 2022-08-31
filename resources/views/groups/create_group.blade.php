@@ -8,11 +8,11 @@
 <div class="row g-5 py-3 mx-2 justify-content-center">
     <div class="col-md-7 col-lg-7">
         <form class="row g-3 needs-validation d-flex flex-row align-items-center justify-content-center" enctype="multipart/form-data"
-            novalidate action="{{ route('users.creategroups',  auth()->user()->name) }}" method="post">
+            novalidate action="{{ route('users.creategroups',  auth()->user()) }}" method="post">
             
             @csrf
             <div class="col-md-6">
-                <label for="name" class="form-label">Circle Name</label>
+                <label for="name" class="form-label"><strong class="text-danger">* </strong>  Circle Name</label>
                 <input type="text" name="name" id="name" placeholder="circle name" 
                 class="form-control py-2  rounded-lg @error('name') border border-danger @enderror" value="{{ old('name')}}">
                 
@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-md-6">
-                <label for="location" class="form-label">Location</label>
+                <label for="location" class="form-label"><strong class="text-danger">* </strong>  Location</label>
                 <input type="text" name="location" id="location" placeholder="circle location" 
                 class="form-control py-2  rounded-lg @error('location') border border-danger @enderror" value="{{ old('location')}}">
                 @error('location')
@@ -47,7 +47,7 @@
 
             
             <div class="mb-3">
-                <label for="image" class="form-label">Upload Cover</label>
+                <label for="image" class="form-label"><strong class="text-danger">* </strong>  Upload Cover</label>
                 <input class="form-control @error('image') border border-danger @enderror" name="image" type="file" id="image" value="{{ old('image')}}" onchange="loadFile(event)">
 
                 @error('image')
@@ -69,7 +69,8 @@
             
 
             <div class="col-md-12">
-                <button type="submit" class="btn btn-primary">Add Group</button>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <a href="{{ route('users.group',  auth()->user()) }}" class="btn btn-danger">Cancel</a>
             </div>
             
         </form>

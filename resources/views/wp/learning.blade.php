@@ -36,7 +36,7 @@
                             </div>
                             <div class=" d-flex flex-wrap align-items-center px-0 pt-2">
                                 @auth
-                                    <form action="{{ route('users.createcourse',  auth()->user()->name) }}" method="get" class="m-1">
+                                    <form action="{{ route('users.createcourse',  auth()->user()) }}" method="get" class="m-1">
                                     @csrf
                                         <button type="submit" style="font-size: 14px;" class="btn btn-lg btn-info">New Course</button>
                                     </form>

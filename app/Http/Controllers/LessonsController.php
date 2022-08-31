@@ -30,7 +30,7 @@ class LessonsController extends Controller
 
     public function destroy(User $user, lessons $lesson){
         $lesson ->delete();
-        return redirect()->route('users.course',  auth()->user()->name);
+        return redirect()->route('users.course',  auth()->user());
     }
 
     public function manage(User $user, Course $course){
@@ -80,7 +80,7 @@ class LessonsController extends Controller
             'status'=>false,
         ]);
 
-        return redirect()->route('users.course',  auth()->user()->name);
+        return redirect()->route('users.course',  auth()->user());
     }
 
     public function updatestore(Request $request, lessons $lesson){

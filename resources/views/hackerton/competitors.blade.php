@@ -85,7 +85,7 @@
                                             @if ($competitor->user->image )
                                                 <img src="{{ '/storage/images/'.$competitor->user_id.'/'.$competitor->user->image }}" alt="twbs" width="70" height="70" class="rounded-circle border border flex-shrink-0">
                                             @else
-                                                <img src="/images/icon-alliance/hacker.png" alt="twbs" width="70" height="70" class="rounded-circle border border-info p-1 flex-shrink-0">
+                                                <img src="/images/cxc.jpg" alt="twbs" width="70" height="70" class="rounded-circle border border-info p-1 flex-shrink-0">
                                             @endif
                                             <div class="d-flex gap-2 w-100 justify-content-between">
                                                 <div>

@@ -29,7 +29,7 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.create_hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.create_hackerthon',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Hackathon</button>
                         </form>
@@ -41,11 +41,11 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Edit</button>
                         </form>
-                        <form action="{{ route('users.hackerthon.manage.competitors', [auth()->user()->name, $hackerthon]) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon.manage.competitors', [auth()->user(), $hackerthon]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm">Participants</button>
                         </form>
-                        <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left pr-1"></i> Back</button>
                         </form>
@@ -83,13 +83,35 @@
         </div>
         <div class="p-3 gray-bg my-2 rounded">
             <p class="text-secondary pb-2">Delete Hackathon</p>
-            @auth
-                <form action="{{ route('users.hackerthon.delete', [$hackerthon->user, $hackerthon->id]) }}" method="post" class="mr-1">
-                @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            @endauth
+            <button  id="link" class="btn btn-danger">Delete</button>
+
+             <!-- Modal Pop up confirmation -->
+             <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to delete the <span class="text-primary">{{ $hackerthon-> title}}</span>  hackerthon?</p>
+                </div>
+                <div class="modal-footer">
+                    @auth
+                    <form action="{{ route('users.hackerthon.delete', [$hackerthon->user, $hackerthon->id]) }}" method="post" class="mr-1">
+                    @csrf
+                        @method('DELETE')
+                            <button type="submit" id="link" class="btn btn-danger">Delete</button>
+                        </form>
+                    @endauth
+                    <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Pop up confirmation  -->
         </div>
     </div>
     

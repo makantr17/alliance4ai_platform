@@ -29,21 +29,22 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.creategroups',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.creategroups',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> New Circle</button>
                         </form>
-                        <form action="{{ route('group.addmember',  $group[0]->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('group.addmember',  $group[0]->id) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Invite FM</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Activities</button>
-                        </form>
+                        
                         <form action="{{ route('users.updategroup',  [$group[0]->user, $group[0]]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"> Update</button>
+                        </form>
+                        <form action="{{ route('users.group.manage', [$group[0]->user, $group[0]->id]) }}" method="get" class="mr-1">
+                        @csrf
+                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Back</button>
                         </form>
                     @endauth
                 </div>
@@ -90,13 +91,36 @@
         </div>
         <div class="p-3 gray-bg my-2 rounded">
             <p class="text-secondary pb-2">Delete Circle</p>
-            @auth
-                <form action="{{ route('users.group.delete', [$group[0]->user, $group[0]->id]) }}" method="post" class="mr-1">
-                @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            @endauth
+            <button  id="link" class="btn btn-danger">Delete</button>
+
+             <!-- Modal Pop up confirmation -->
+             <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to delete the <span class="text-primary">{{ $groups-> name}}</span>  group?</p>
+                </div>
+                <div class="modal-footer">
+                    @auth
+                        <form action="{{ route('users.group.delete', [$group[0]->user, $group[0]->id]) }}" method="post" class="mr-1">
+                        @csrf
+                            @method('DELETE')
+                            <button type="submit" id="link" class="btn btn-danger">Delete</button>
+                        </form>
+                    @endauth
+                    <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Pop up confirmation  -->
+
         </div>
     </div>
     
@@ -110,7 +134,7 @@
                     @if ($group_members->user->image)
                         <img src="{{ '/storage/images/'.$group_members->user->id.'/'.$group_members->user->image }}" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-1 border border-secondary">
                     @else
-                        <img src="/images/user.png" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-1 border border-secondary">
+                        <img src="/images/cxc.jpg" alt="twbs" width="60" height="60" class="rounded-circle flex-shrink-0 shadow-sm p-1 border border-secondary">
                     @endif
                     <div class="d-flex gap-2 w-100 justify-content-between">
                         <div>

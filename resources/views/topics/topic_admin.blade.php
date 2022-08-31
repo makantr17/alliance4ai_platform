@@ -30,11 +30,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.createtopics',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
                         </form>
-                        <form action="{{ route('users.topics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.topics',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Topics</button>
                         </form>
@@ -70,7 +70,7 @@
               
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-topic">
-                    <form novalidate action="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}">
+                    <form novalidate action="{{ route('users.topics.manage', [auth()->user(), $topic->id]) }}">
                         <button class="btn btn-muted btn-sm border" type="submit"><i class="fa fa-wrench"></i> Manage</button>
                     </form>
                 </div>

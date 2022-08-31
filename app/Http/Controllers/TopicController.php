@@ -24,6 +24,7 @@ class TopicController extends Controller
         $topics = Topic::latest()->with(['content', 'likes', 'message'])->where('user_id', '=', $user->id)->get();
         // $topics = Topic::latest()->where('discussion_id', '=', $discussion->id)->where('user_id', '=', $user->id)->get();
         // $discussions = $user->discussion()->where('id', '=', $discussion->id)->get();
+      
         return view('topics.topic_admin', [
             'topics' => $topics,
         ]);
@@ -32,6 +33,7 @@ class TopicController extends Controller
     public function manage(User $user, Topic $topic){
         $topic = $user->topic()->where('id', '=', $topic->id)->with(['content','prompts', 'exercise', 'likes', 'message'])->get();
         // $questions = $topic->questions()->paginate(10);
+        
         return view('topics.topic_manage', [
             'topics' => $topic,
         ]);
@@ -39,7 +41,7 @@ class TopicController extends Controller
 
     public function destroy(User $user, Topic $topic){
         $topic ->delete();
-        return redirect()->route('users.topics',  auth()->user()->name);
+        return redirect()->route('users.topics',  auth()->user());
     }
 
 
@@ -142,6 +144,6 @@ class TopicController extends Controller
             'status'=>false,
         ]);
 
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
+        return redirect()->route('users.topics.manage', [auth()->user(), $topic->id]);
     }
 }

@@ -29,7 +29,7 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.create_hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.create_hackerthon',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Hackathon</button>
                         </form>
@@ -41,11 +41,11 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Edit</button>
                         </form>
-                        <form action="{{ route('users.hackerthon.manage.competitors', [auth()->user()->name, $hackerthon[0]]) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon.manage.competitors', [auth()->user(), $hackerthon[0]]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm">Participants</button>
                         </form>
-                        <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left pr-1"></i> Back</button>
                         </form>
@@ -103,7 +103,7 @@
                                             @if ($competitor->user->image )
                                                 <img src="{{ '/storage/images/'.$competitor->user_id.'/'.$competitor->user->image }}" alt="twbs" width="70" height="70" class="rounded-circle border border flex-shrink-0">
                                             @else
-                                                <img src="/images/icon-alliance/hacker.png" alt="twbs" width="70" height="70" class="rounded-circle border border-info p-1 flex-shrink-0">
+                                                <img src="/images/cxc.jpg" alt="twbs" width="70" height="70" class="rounded-circle border border-info p-1 flex-shrink-0">
                                             @endif
                                             <div class="d-flex gap-2 w-100 justify-content-between">
                                                 <div>

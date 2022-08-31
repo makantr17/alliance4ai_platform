@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CircleCreated extends Notification
+class SendInvitation extends Notification
 {
     use Queueable;
 
@@ -16,11 +16,11 @@ class CircleCreated extends Notification
      *
      * @return void
      */
-    public function __construct($titre, $id, $start_at)
+    public function __construct($name, $id, $invitedby)
     {
-        $this->titre = $titre;
+        $this->name = $name;
         $this->id = $id;
-        $this->start_at = $start_at;
+        $this->invitedby = $invitedby;
     }
 
     /**
@@ -31,7 +31,7 @@ class CircleCreated extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -43,18 +43,10 @@ class CircleCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Hello Futur Maker, 
-                    You have created a new topcic on the A4ai-App. 
-                    Topic:', $this->titre, '. Start reading via https://a4ai-App.com/groups/details', $this->id)
-                    ->action('Go to topic', url('groups/details',$this->id))
-                    ->line('Thank you for using our application, see you soon!');
-    }
-
-    public function toDatabase(){
-        return [
-            'titre' => $this->titre,
-            'id' => $this->id,
-        ];
+            ->line('Hello Futur Maker, 
+            You have been invited by'. $this->invitedby .' to join the '.  $this->name .'. You can access the group via https://a4ai-App.com/groups/members/'.$this->id )
+            ->action('Go to circle', url('groups/members',$this->id))
+            ->line('Thank you for using our a4ai-app, see you soon!');
     }
 
     /**
@@ -66,7 +58,9 @@ class CircleCreated extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'name' => $this->name,
+            'id' => $this->id,
+            'invitedby' => $this->invitedby,
         ];
     }
 }

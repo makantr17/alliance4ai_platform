@@ -49,7 +49,7 @@ class HackerthonController extends Controller
 
     public function destroy(User $user, Hackerthon $hackerthon){
         $hackerthon ->delete();
-        return redirect()->route('users.hackerthon',  auth()->user()->name);
+        return redirect()->route('users.hackerthon',  auth()->user());
     }
 
 
@@ -131,7 +131,7 @@ class HackerthonController extends Controller
             'third_prize'=>$request-> third_prize !== null && $request-> third_prize !== '' ?  $request-> third_prize : $hackerthon-> third_prize,
         ]);
 
-        return redirect()->route('users.hackerthon',  auth()->user()->name);
+        return redirect()->route('users.hackerthon',  auth()->user());
     }
 
     public function update(Hackerthon $hackerthon){

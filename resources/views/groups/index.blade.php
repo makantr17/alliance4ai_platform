@@ -30,15 +30,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.creategroups',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.creategroups',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Circle</button>
                         </form>
-                        <form action="" method="get" class="mr-1">
-                        @csrf
-                            <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Invite members</button>
-                        </form>
-                        <form action="" method="get" class="mr-1">
+                        <form action="{{ route('users.group',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Circles</button>
                         </form>

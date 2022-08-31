@@ -73,7 +73,7 @@
                     @if ($topics ->user->image)
                         <img class="bd-placeholder-img flex-shrink-0 me-2 rounded border" width="42" height="42" src="{{ '/storage/images/'.$topics->user_id.'/'.$topics -> user ->image}}" alt="12">
                     @else
-                        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded border" width="42" height="42" src="/images/icon-alliance/man.png" alt="default">
+                        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded border" width="42" height="42" src="/images/cxc.jpg" alt="default">
                     @endif
                     <div class="col"> <a href="{{ route('discussion.topic.messages', [$topics->id]) }}" class="text-big" data-abc="true">{{ $topics-> question_1}} ?</a>
                         <div class="text-muted small mt-1">Started {{ $topics-> created_at->diffForHumans()}} &nbsp;·&nbsp; <a href="javascript:void(0)" class="text-muted" data-abc="true">{{ $topics ->user->name }}</a></div>

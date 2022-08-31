@@ -59,7 +59,7 @@
                         </div>
                     </form>
                     @auth
-                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="m-1">
+                        <form action="{{ route('users.createtopics',  auth()->user()) }}" method="get" class="m-1">
                         @csrf
                             @method('DELETE')
                             <button type="submit" style="font-size: 14px;" class="btn btn-info">New topic</button>

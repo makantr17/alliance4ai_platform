@@ -39,7 +39,7 @@ class QuestionController extends Controller
         ]);
 
         $status = $question->answers()->createMany($data['answers'])->push();
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id])
+        return redirect()->route('users.topics.manage', [auth()->user(), $topic->id])
             ->withSuccess('Question created successfully');
     }
     

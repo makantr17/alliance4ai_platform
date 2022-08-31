@@ -30,15 +30,15 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.creatediscussion',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Host discussion</button>
                         </form>
-                        <form action="{{ route('users.updatediscussion',  [auth()->user()->name, $discussion] ) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.updatediscussion',  [auth()->user(), $discussion] ) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-edit"></i> Edit</button>
                         </form>
-                        <form action="{{ route('users.discussion',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.discussion',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left pr-1"></i> Back</button>
                         </form>
@@ -83,13 +83,42 @@
 
         <div class="p-3 gray-bg my-2 rounded">
             <p class="text-secondary pb-2">Delete Discussion</p>
-            @auth
-                <form action="{{ route('users.discussion.delete', [$discussion->user, $discussion->id]) }}" method="post" class="mr-1">
-                @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            @endauth
+            <button  id="link" class="btn btn-danger">Delete</button>
+
+            <!-- <div class="btn btn-primary" id="link">Open meeting</div> -->
+
+            <!-- Modal Pop up confirmation -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to delete the <span class="text-primary">{{ $discussion-> title}}</span>  discussion ?</p>
+                </div>
+                <div class="modal-footer">
+                    @auth
+                        <form action="{{ route('users.discussion.delete', [$discussion->user, $discussion->id]) }}" method="post" class="mr-1">
+                        @csrf
+                            @method('DELETE')
+                            <button type="submit" id="link" class="btn btn-danger">Delete</button>
+                        </form>
+                    @endauth
+                    <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Pop up confirmation  -->
+
+
+
+
+
         </div>
     </div>
     <div class="col-lg-8 mx-2 bg-light py-2">

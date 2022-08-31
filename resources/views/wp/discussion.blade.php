@@ -8,7 +8,7 @@
         <div class="container px-1 px-lg-1 h-100">
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center ">
                 <div class="col-lg-6 align-self-center pl-5">
-                        <h1 class="font-weight-bold" style="color:#ffc000">Future Maker Discussions</h1>
+                        <!-- <h1 class="font-weight-bold" style="color:#ffc000">Future Maker Discussions</h1> -->
                 </div>
                 <div class="col-lg-6 align-self-baseline">
                     <!-- <p class="text-white-75 mb-5">Start Alliance4ai can help you build better experience with the Future Maker!</p> -->
@@ -67,15 +67,14 @@
                         <p style="font-size: 14px;"> <i class="fa fa-bell-o"></i> Notifications <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">{{ auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated')->count()}}</span> </p>
                         <div class="dropdown-content">
                             @foreach (auth()->user()->notifications->where('type', 'App\Notifications\DiscussionCreated') as $notification) 
-                            <a href="{{ route('discussion.details', $notification->data['id']) }}" style="font-size: 14px; opacity: 0.9; color:black" class="border-bottom p-1">
-                                {{$notification->data['title']}} 
-                            </a>
+                            
+                                <p>index</p>
                             @endforeach
                         </div>
                     </div>
                     @endauth
                     @auth
-                        <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-0">
+                        <form action="{{ route('users.creatediscussion',  auth()->user()) }}" method="get" class="mr-0">
                         @csrf
                             <button type="submit" class="btn btn btn-info " style=""> New discussion</button>
                         </form>
@@ -129,14 +128,14 @@
                                     </nav>
                                     @if (($discussions -> date) > Carbon\Carbon::now())
                                         <nav class="mb-0 opacity-100 my-1 text-info">upcoming</nav>
+                                    @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && 
+                                        (Carbon\Carbon::now() )->toTimeString() >= $discussions -> start_time && 
+                                        $discussions -> end_time  > (Carbon\Carbon::now())->toTimeString() )
+                                        <nav class="mb-0 opacity-100 my-1 text-info">ongoing</nav>
                                     @elseif (Carbon\Carbon::now() > ($discussions -> date))
                                         <nav class="mb-0 opacity-100 my-1 text-info">past</nav>
                                     @elseif (($discussions -> date) === Carbon\Carbon::now() && $discussions -> end_time > (Carbon\Carbon::now())->toTimeString() )
                                         <nav class="mb-0 opacity-100 my-1 text-info">past</nav>
-                                    @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && (
-                                        (Carbon\Carbon::now() )->toTimeString() >= $discussions -> start_time && 
-                                        $discussions -> end_time  >= (Carbon\Carbon::now())->toTimeString() ))
-                                        <nav class="mb-0 opacity-100 my-1 text-info">ongoing</nav>
                                     @elseif (($discussions -> date) === (Carbon\Carbon::now())->toDateString() && 
                                         (Carbon\Carbon::now()) ->toTimeString() > $discussions -> end_time )
                                         <nav class="mb-0 opacity-100 my-1 text-info">past</nav>

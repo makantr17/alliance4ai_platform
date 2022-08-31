@@ -30,11 +30,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.creatediscussion',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Host discussion</button>
                         </form>
-                        <form action="{{ route('users.discussion',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.discussion',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Discussions</button>
                         </form>

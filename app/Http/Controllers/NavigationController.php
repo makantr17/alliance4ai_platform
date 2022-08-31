@@ -188,6 +188,29 @@ class NavigationController extends Controller
         ]);
     }
 
+    public function user_invite(Group $group){
+        $group_member = Group_member::latest()->where('group_id', '=', $group->id)->paginate(5);
+        $groups = Group::latest()->where('id', '=', $group->id)->get();
+        $users = User::latest()->get();
+        // The actuel day is past of day or the we are in the same day but past time
+        $future_discussion = Discussion::latest()->where('date','>=',carbon\carbon::now()->todatestring())
+                ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
+                    $query->whereDate('start_time','>=',carbon\carbon::now()->totimestring());
+                })->with(['registeration'])->get();
+        // The actual day isnot arrived or the same day but the time is not arrived 
+        $past_discussion = Discussion::latest()->where('date','<=',carbon\carbon::now()->todatestring())
+                ->orwhere('date','=',carbon\carbon::now()->todatestring())-> where(function($query){
+                    $query->whereDate('end_time','<',carbon\carbon::now()->totimestring());
+                })->with(['registeration'])->get();
+        return view('wp.group_invitemember', [
+            'group' => $groups,
+            'allusers' => $users,
+            'group_members'=> $group_member,
+            'past_discussions' => $past_discussion,
+            'future_discussions' => $future_discussion,
+        ]);
+    }
+
     public function joined(Group $group){
         $group_member = Group_member::latest()->where('group_id', '=', $group->id)->paginate(20);
         $groups = Group::latest()->where('id', '=', $group->id)->get();

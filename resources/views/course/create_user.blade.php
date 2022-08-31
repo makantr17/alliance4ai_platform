@@ -10,12 +10,12 @@
   <div class="row g-5 py-3 mx-2 justify-content-center">
       
       <div class="col-md-7 col-lg-7">
-        <form class="needs-validation" novalidate action="{{ route('users.createcourse',  auth()->user()->name) }}" method="post">
+        <form class="needs-validation" novalidate action="{{ route('users.createcourse',  auth()->user()) }}" method="post">
           <div class="row g-3">
             @csrf
 
             <div class="col-md-12">
-                <label for="category" class="form-label">Category Theme</label>
+                <label for="category" class="form-label"><strong class="text-danger">* </strong> Category Theme</label>
                     <select name="category" id="category"
                         class="form-control py-2  rounded-lg @error('category') border border-danger @enderror" value="{{ old('category')}}">
                         <option value="">Choose Category</option>
@@ -31,7 +31,7 @@
                 @enderror
             </div>
             <div class="col-md-12">
-                <label for="name" class="form-label">Course Name</label>
+                <label for="name" class="form-label"><strong class="text-danger">* </strong> Course Name</label>
                 <input type="text" name="name" id="name" placeholder="Your name" 
                 class="form-control py-2  rounded-lg @error('name') border border-danger @enderror" value="{{ old('name')}}">
                 
@@ -43,7 +43,7 @@
             </div>
             
             <div class="col-md-12">
-              <label for="description" class="form-label">Course Description</label>
+              <label for="description" class="form-label"><strong class="text-danger">* </strong> Course Description</label>
               <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="4" value="{{ $user->description}}"></textarea>
 
               @error('description')
@@ -53,7 +53,7 @@
               @enderror
             </div>
             <div class="mb-3">
-                <label for="image" class="form-label">Upload Cover</label>
+                <label for="image" class="form-label"><strong class="text-danger">* </strong> Upload Cover</label>
                 <input class="form-control @error('image') border border-danger @enderror" name="image" type="file" id="image" value="{{ old('image')}}" onchange="loadFile(event)">
 
                 @error('image')

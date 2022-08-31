@@ -9,7 +9,7 @@
                     
                     <div class="col-md-7 col-lg-7">
                         <form class="row g-3 needs-validation d-flex flex-row align-items-center justify-content-center"
-                            novalidate action="{{ route('users.create_hackerthon',  auth()->user()->name) }}" method="post" enctype="multipart/form-data">
+                            novalidate action="{{ route('users.create_hackerthon',  auth()->user()) }}" method="post" enctype="multipart/form-data">
                             
                             @csrf
                             <div class="col-12">
@@ -269,7 +269,7 @@
 
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Register</button>
-                                <a href="{{ route('users.hackerthon',  auth()->user()->name) }}" class="btn btn-danger">Cancel</a>
+                                <a href="{{ route('users.hackerthon',  auth()->user()) }}" class="btn btn-danger">Cancel</a>
                             </div>
                             
                         </form>

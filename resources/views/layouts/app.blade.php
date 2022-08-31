@@ -205,10 +205,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('community') }}" style="color:#115978">
+                                <i class="fa fa-hourglass-half pr-1" style="font-size:20px; color:#115978"></i>
+                                Community
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('users.calendardiscussion') }}" style="color:#115978">
                                     <i class="fa fa-calendar pr-1" aria-hidden="true" style="font-size:20px; color:#115978"></i>
                                     My Calender
-                                    <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">27</span>
+                                    <!-- <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">27</span> -->
                                 </a>
                             </li>
                         </ul>
@@ -240,6 +246,27 @@
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
 
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery-1.10.1.min.js"><\/script>')</script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    $('#link').click(function () {
+        var src = 'http://www.youtube.com/v/FSi2fJALDyQ&amp;autoplay=1';
+        $('#myModal').modal('show');
+        $('#myModal iframe').attr('src', src);
+    });
+
+    $('#myModal #close').click(function () {
+        $('#myModal').modal('hide');
+        $('#myModal iframe').removeAttr('src');
+    });
+</script>
+
+
+
+
+
     <script>
         // function updateTextArea() {     
         //     var allVals = [];
@@ -255,6 +282,15 @@
         //     updateTextArea();
         // });
 
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
 
         // Group function  #############
         function updateGroup() {     
@@ -292,7 +328,7 @@
             var peoples = [];
             $('.listofpeople :checked').each(function(i) {
                     
-                peoples.push((i!=0?"\r\n":"")+ $(this).val());
+                peoples.push((i!=0?"":"")+ $(this).val());
             });
             $('#peoples').val(peoples).attr('rows',peoples.length) ;
             

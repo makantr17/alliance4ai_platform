@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-12">
                 <div class="container d-flex flex-row-reverse">
-                    <a href="{{ route('setting', auth()->user()->name)}}">
+                    <a href="{{ route('setting', auth()->user())}}">
                         <button class="btn btn-secondary">Go back</button>
                     </a>
                 </div>
@@ -35,7 +35,7 @@
                                         @endif
                                     </li>
                                     <li><strong>@name</strong> {{$user-> name}}</li>
-                                    <form novalidate action="{{ route('setting', auth()->user()->name)}}" method="post">
+                                    <form novalidate action="{{ route('setting', auth()->user())}}" method="post">
                                         @csrf
                                         <li><strong>@email:</strong> <input type="email" name="email"  id="email" placeholder="{{$user-> email}}" 
                                                 class="email-style"  value="{{$user-> email}}"></li>

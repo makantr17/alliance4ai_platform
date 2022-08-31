@@ -40,7 +40,7 @@ class ContentController extends Controller
             'title'=> $request->title,
         ]);
         
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
+        return redirect()->route('users.topics.manage', [auth()->user(), $topic->id]);
     }
 
     public function delete(Request $request, User $user, Content $content){
@@ -76,7 +76,7 @@ class ContentController extends Controller
             'description'=> $request-> description !== null && $request-> description !== '' ?  $request-> description : $content-> description,
             'link'=> $request-> link !== null && $request-> link !== '' ?  $request-> link : $content-> link,
         ]);
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $content->topic_id]);
+        return redirect()->route('users.topics.manage', [auth()->user(), $content->topic_id]);
     }
     
 }

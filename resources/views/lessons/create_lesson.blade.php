@@ -15,7 +15,7 @@
 
                 <p class="text-info pb-2"><i class="fa fa-edit"></i> Section 1</p>
                 <div class="col-md-12">
-                    <label for="title" class="form-label">title</label>
+                    <label for="title" class="form-label"><strong class="text-danger">* </strong> title</label>
                     <input type="text" name="title" id="title" placeholder="Your title" 
                     class="form-control py-2  rounded-lg @error('title') border border-danger @enderror" value="{{ $user->title}}">
                     
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label"><strong class="text-danger">* </strong> Description</label>
                     <textarea class="form-control py-2  rounded-lg @error('description') border border-danger @enderror" name="description" id="description" cols="30" rows="5" value="{{ old('description')}}"></textarea>
 
                     @error('description')
@@ -38,7 +38,7 @@
                 </div>
                 
                 <div class="col-md-12">
-                    <label for="content" class="form-label">Content</label>
+                    <label for="content" class="form-label"><strong class="text-danger">* </strong> Content</label>
                     <textarea class="form-control py-2  rounded-lg @error('content') border border-danger @enderror" name="content" id="content" cols="30" rows="5" value="{{ old('content')}}"></textarea>
 
                     @error('content')
@@ -51,7 +51,7 @@
                 <p class="text-info py-3"><i class="fa fa-edit"></i> Section 1m</p>
 
                 <div class="col-md-12">
-                    <label for="subtitle1" class="form-label">subtitle1</label>
+                    <label for="subtitle1" class="form-label"><strong class="text-danger">* </strong> subtitle1</label>
                     <input type="text" name="subtitle1" id="subtitle1" placeholder="Your subtitle1" 
                     class="form-control py-2  rounded-lg @error('subtitle1') border border-danger @enderror" value="{{ $user->subtitle1}}">
                     
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label for="description1" class="form-label">Description1</label>
+                    <label for="description1" class="form-label"><strong class="text-danger">* </strong> Description1</label>
                     <textarea class="form-control py-2  rounded-lg @error('description1') border border-danger @enderror" name="description1" id="description1" cols="20" rows="4" value="{{ old('description1')}}"></textarea>
 
                     @error('description1')
@@ -192,7 +192,7 @@
 
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Register</button>
-                    <button type="submit" class="btn btn-danger">Cancel</button>
+                    <a class="btn btn-danger" href="{{ route('users.course', auth()->user())}}">Cancel</a>
                 </div>
                 
             </form>

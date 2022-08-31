@@ -27,7 +27,7 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.createcourse',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.createcourse',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new course</button>
                         </form>
@@ -35,11 +35,11 @@
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-plus"></i> Add lesson</button>
                         </form>
-                        <form action="{{ route('users.updatecourses',  [auth()->user()->name, $course[0]->id] ) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.updatecourses',  [auth()->user(), $course[0]->id] ) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-edit"></i> Update</button>
                         </form>
-                        <form action="{{ route('users.course',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.course',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-braille"></i> Courses</button>
                         </form>
@@ -100,13 +100,38 @@
 
         <div class="p-3 gray-bg my-2 rounded">
             <p class="text-secondary pb-2">Delete course</p>
-            @auth
-                <form action="{{ route('users.course.delete', [$course[0] ->user, $course[0]->id]) }}" method="post" class="mr-1">
-                @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            @endauth
+            <button type="submit" id="link" class="btn btn-danger">Delete</button>
+               
+            <!-- Modal Pop up confirmation -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to delete the <span class="text-primary">{{ $courses-> name}}</span>  course? And all the
+                     lessons added will be deleted
+                </p>
+                </div>
+                <div class="modal-footer">
+                    @auth
+                    <form action="{{ route('users.course.delete', [$course[0] ->user, $course[0]->id]) }}" method="post" class="mr-1">
+                    @csrf
+                        @method('DELETE')
+                            <button type="submit" id="link" class="btn btn-danger">Delete</button>
+                        </form>
+                    @endauth
+                    <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Pop up confirmation  -->
+
         </div>
     </div>
     
@@ -116,26 +141,27 @@
     <div class="col-lg-8 py-1">
         @if ($lessons -> count())
             @foreach($lessons as $lesson)
-                <a href="{{ route('users.lesson.details', [$lesson->user, $lesson->id]) }}" class="list-group-item-action d-flex my-1 flex-wrap justify-content-between align-items-center gap-3 py-1 bg-light rounded border" aria-current="true">
-                    <div class="col-sm-2 overflow-hidden" >
-                        <img src="/images/icon/plan2.png" alt="twbs" width="60px" height="60px" class="rounded flex-shrink-0">
-                    </div>
-                    <div class="col-sm-9 d-flex gap-2 w-100 justify-content-between align-items-start">
-                        <div class="">
-                            <p class="pt-2 mt-2 mb-2 lh-1 text-black fw-bold"  > {{ $lesson-> title}} </p>
-                            <nav class="mb-0 opacity-100 my-1 text-secondary"> 
-                                <p class="text-info" style="font-size: 14px">{{ Str :: limit($lesson-> description, 105) }}</p>
-                            </nav>
-                            <p class="opacity-80 text-nowrap" style="font-size: 14px">{{ $lesson-> created_at->diffForHumans() }}</p>
+                <a href="{{ route('users.lesson.details', [$lesson->user, $lesson->id]) }}" class="list-group-item-action d-flex my-1 flex-wrap justify-contents-between align-items-top gap-3 py-1 bg-light rounded border" aria-current="true">
+                    <div class="col-sm-9 overflow-hidden d-flex align-items-center">
+                        <div class="overflow-hidden" >
+                            <img src="/images/icon/plan2.png" alt="twbs" width="80px" height="80px" class="rounded flex-shrink-0">
+                        </div>
+                        <div class="col d-flex gap-2 w-100 justify-content-between align-items-start">
+                            <div class="">
+                                <p class="mb-0 lh-1 text-black fw-bold"  > {{ $lesson-> title}} </p>
+                                <nav class="mb-0 opacity-100 my-0 text-secondary"> 
+                                    <p class="text-info" style="font-size: 14px">{{ Str :: limit($lesson-> description, 105) }}</p>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                     <!-- Delete Lessons -->
-                    <div class="container d-flex justify-content-between align-tems-center">
+                    <div class="col mt-2">
                         <nav></nav>
                         <div class="d-flex">
                             <form  novalidate action="{{ route('users.updatelessons', $lesson) }}" method="get">
                                 @csrf
-                                <button class="btn btn-primary btn-sm mr-1" type="submit">edit</button>
+                                <button class="btn btn-primary btn-sm mr-1" type="submit">Edit</button>
                             </form>
                             <form  novalidate action="{{ route('users.lessons.delete', [$lesson->user, $lesson->id]) }}" method="post">
                                 @csrf      
@@ -144,19 +170,11 @@
                             </form>
                         </div>
                     </div>
-                    
                 </a>
             @endforeach
         @else
             <p class="text-center pt-5 fw-light">No lessons added</p>
         @endif
-           
     </div>
-        
 </div>
-    
-
-
-
-    
 @endsection

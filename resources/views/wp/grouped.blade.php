@@ -61,7 +61,7 @@
                             </div>
                         </form>
                         @auth
-                            <form action="{{ route('users.creategroups',  auth()->user()->name) }}" method="get" class="mr-1">
+                            <form action="{{ route('users.creategroups',  auth()->user()) }}" method="get" class="mr-1">
                             @csrf
                                 <button type="submit" class="btn btn-md" style="font-size: 14px; background:#3E8F78; color:white;">New Circle</button>
                             </form>

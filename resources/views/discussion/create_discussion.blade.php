@@ -11,7 +11,7 @@
     <div class="row g-5 py-2  d-flex justify-content-center align-items-center">
       
       <div class="col-md-8 col-lg-8 bg-light shadow-sm p-5">
-        <form class="needs-validation" novalidate action="{{ route('users.creatediscussion',  auth()->user()->name) }}" method="post">
+        <form class="needs-validation" novalidate action="{{ route('users.creatediscussion',  auth()->user()) }}" method="post">
           <div class="row g-3">
             @csrf
             <div class="col-md-12">
@@ -28,7 +28,7 @@
 
             <div class="col-md-12">
                 <p class="">Add topics</p>
-                <textarea type="text" name="topics" id="topics" placeholder="added topics" cols="15" rows="2"
+                <textarea type="text" style="display:none" name="topics" id="topics" placeholder="added topics" cols="15" rows="2"
                 class="form-control py-2 text-info  rounded-lg @error('topics') border border-danger @enderror" value="{{ old('topics')}}">{{ old('topics')}}</textarea>
                 @error('topics')
                     <div class="text-danger">
@@ -186,7 +186,7 @@
 
             <div class="col-md-12">
                 <label for="peoples" class="form-label">Invite Peoples</label>
-                <textarea type="text" name="peoples" id="peoples" placeholder="peoples" cols="20" rows="3"
+                <textarea type="text" style="display:none" name="peoples" id="peoples" placeholder="peoples" cols="20" rows="3"
                 class="form-control py-2 text-info  rounded-lg @error('peoples') border border-danger @enderror" value="{{ old('peoples')}}">{{ old('peoples')}}</textarea>
                 @error('peoples')
                     <div class="text-danger">
@@ -207,7 +207,7 @@
 
             <div class="col-md-12">
                 <label for="groups" class="form-label">Add Groups</label>
-                <textarea type="text" name="groups" id="groups" placeholder="groups" cols="20" rows="3"
+                <textarea type="text" style="display:none" name="groups" id="groups" placeholder="groups" cols="20" rows="3"
                 class="form-control py-2  rounded-lg @error('groups') border border-danger @enderror" value="{{ old('groups')}}"> {{ old('groups')}}</textarea>
                 @error('groups')
                     <div class="text-danger">

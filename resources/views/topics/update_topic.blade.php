@@ -29,11 +29,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.createtopics',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
                         </form>
-                        <form action="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.topics.manage', [auth()->user(), $topic->id]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Back</button>
                         </form>
@@ -62,7 +62,7 @@
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/897193_small500.png" topic="Jason Sykes" alt="s">
                 <img width="20" height="20" class="rounded-circle flex-shrink-0" class="sc-jtmhnJ jpjECk" src="/images/cxc.jpg" topic="Ajith Pushparaj" alt="j">
             </div>
-            <form action="" method="get" >
+            <form action="{{ route('topics.details', [$topic->id]) }}" method="get" >
             @csrf
                 <button type="submit" class="btn btn-sm my-2 btn-secondary">Go to site</button>
             </form>
@@ -127,7 +127,7 @@
 
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}" class="btn btn-danger">Cancel</a>
+                                <a href="{{ route('users.topics.manage', [auth()->user(), $topic->id]) }}" class="btn btn-danger">Cancel</a>
                             </div>
 
                         </form>

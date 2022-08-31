@@ -26,7 +26,7 @@ class PromptsController extends Controller
             'topic_id'=> $topic-> id,
             'question'=> $request->question,
         ]);
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
+        return redirect()->route('users.topics.manage', [auth()->user(), $topic->id]);
     }
 
     public function delete(Request $request, User $user, Prompts $prompts){
@@ -52,7 +52,7 @@ class PromptsController extends Controller
             ->update([
             'question'=> $request-> question !== null && $request-> question !== '' ?  $request-> question : $question-> question,
         ]);
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $prompts->topic_id]);
+        return redirect()->route('users.topics.manage', [auth()->user(), $prompts->topic_id]);
     }
 
 

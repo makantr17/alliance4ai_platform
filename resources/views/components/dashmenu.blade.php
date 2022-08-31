@@ -10,20 +10,20 @@
 <ul class="nav flex-column mb-2">
     
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('users.profile',  auth()->user()->name) }}">
+        <a class="nav-link" href="{{ route('users.profile',  auth()->user()) }}">
         <span data-feather="user"></span>
         Profile
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('users.score', auth()->user()->name) }}">
+        <a class="nav-link" href="{{ route('users.score', auth()->user()) }}">
             <span data-feather="book"></span>Score
-            <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">27</span>
+            <!-- <span class="badge p-1 bg-light border text-dark rounded-pill align-text-bottom">27</span> -->
         </a>
     </li>
     @if (auth()->user()->isAdmin)
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('setting', auth()->user()->name)}}">
+            <a class="nav-link" href="{{ route('setting', auth()->user())}}">
             <span data-feather="user"></span>
             Settings
             </a>

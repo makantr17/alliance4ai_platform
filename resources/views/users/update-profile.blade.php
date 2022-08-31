@@ -18,7 +18,7 @@
             @endif
             @auth
             <div>
-                <form action="{{ route('users.profile',  auth()->user()->name) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('users.profile',  auth()->user()) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <small>Change your profile</small>
@@ -62,7 +62,7 @@
             </form>
             
             <div class="container d-flex flex-row-reverse">
-                <form  action="{{ route('user.update-profile', auth()->user()->name) }}">
+                <form  action="{{ route('user.update-profile', auth()->user()) }}">
                     <button type="submit" class="btn btn-primary border btn-sm"> <i class="fa fa-edit"></i> Edit profile </button>
                 </form>
             </div>
@@ -87,7 +87,7 @@
             
 
 
-            <form class="needs-validation" novalidate action="{{ route('user.update-profile',  auth()->user()->name) }}" method="post">
+            <form class="needs-validation" novalidate action="{{ route('user.update-profile',  auth()->user()) }}" method="post">
                 <div class="row g-3">
                     @csrf
 
@@ -225,8 +225,11 @@
                     </div>
                 </div>
                 <hr class="my-4">
-
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Sauvegarde</button>
+                
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <a class="btn btn-danger" href="{{ route('users.profile', auth()->user())}}">Cancel</a>
+                </div>
             </form>
 
 

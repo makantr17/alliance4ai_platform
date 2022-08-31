@@ -30,11 +30,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.create_hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.create_hackerthon',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create new Hackathon</button>
                         </form>
-                        <form action="{{ route('users.hackerthon',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.hackerthon',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"> {{$hackerthons -> count()}} Hackathons</button>
                         </form>

@@ -40,7 +40,7 @@ class ExerciseController extends Controller
             // 'is_active'=> $request->is_active,
         ]);
 
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $topic->id]);
+        return redirect()->route('users.topics.manage', [auth()->user(), $topic->id]);
     }
 
     public function delete(Request $request, User $user, Exercise $exercise){
@@ -67,6 +67,6 @@ class ExerciseController extends Controller
             ->update([
             'question'=> $request-> question !== null && $request-> question !== '' ?  $request-> question : $question-> question,
         ]);
-        return redirect()->route('users.topics.manage', [auth()->user()->name, $exercise->topic_id]);
+        return redirect()->route('users.topics.manage', [auth()->user(), $exercise->topic_id]);
     }
 }

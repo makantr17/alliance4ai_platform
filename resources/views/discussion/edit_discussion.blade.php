@@ -11,7 +11,7 @@
     <div class="row g-5 py-2  d-flex justify-content-center align-items-center">
       
       <div class="col-md-8 col-lg-8 bg-light shadow-sm p-5">
-        <form class="needs-validation" novalidate action="{{ route('users.savediscussion',  [auth()->user()->name, $discussion]) }}" method="post">
+        <form class="needs-validation" novalidate action="{{ route('users.savediscussion',  [auth()->user(), $discussion]) }}" method="post">
           <div class="row g-3">
             @csrf
             <div class="col-md-12">

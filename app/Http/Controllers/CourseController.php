@@ -44,7 +44,7 @@ class CourseController extends Controller
 
     public function destroy(User $user, Course $course){
         $course ->delete();
-        return redirect()->route('users.course',  auth()->user()->name);
+        return redirect()->route('users.course',  auth()->user());
     }
 
 
@@ -74,7 +74,7 @@ class CourseController extends Controller
             'images'=> $filename,
             'isvalidate'=>false,
         ]);
-        return redirect()->route('users.course',  auth()->user()->name);
+        return redirect()->route('users.course',  auth()->user());
     }
 
 
@@ -99,7 +99,7 @@ class CourseController extends Controller
             'isvalidate'=>false,
         ]);
 
-        return redirect()->route('users.course.manage', [auth()->user()->name, $course->id]);
+        return redirect()->route('users.course.manage', [auth()->user(), $course->id]);
     }
 
 

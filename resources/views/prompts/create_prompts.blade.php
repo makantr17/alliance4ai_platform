@@ -29,11 +29,11 @@
             <div class="">
                 <div class=" d-flex flex-wrap align-items-center px-0 pt-0">
                     @auth
-                        <form action="{{ route('users.createtopics',  auth()->user()->name) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.createtopics',  auth()->user()) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-bookmark-o"></i> Create Topic</button>
                         </form>
-                        <form action="{{ route('users.topics.manage', [auth()->user()->name, $topic->id]) }}" method="get" class="mr-1">
+                        <form action="{{ route('users.topics.manage', [auth()->user(), $topic->id]) }}" method="get" class="mr-1">
                         @csrf
                             <button type="submit"class="btn btn-muted btn-sm"><i class="fa fa-arrow-left"></i> Back</button>
                         </form>
@@ -97,7 +97,7 @@
 
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Register</button>
-                                <a href="{{ route('users.topics',  auth()->user()->name) }}" class="btn btn-danger">Cancel</a>
+                                <a href="{{ route('users.topics',  auth()->user()) }}" class="btn btn-danger">Cancel</a>
                             </div>
 
                         </form>

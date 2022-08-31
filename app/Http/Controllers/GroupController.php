@@ -31,14 +31,14 @@ class GroupController extends Controller
     }
     public function destroy(User $user, Group $group){
         $group ->delete();
-        return redirect()->route('users.group',  auth()->user()->name);
+        return redirect()->route('users.group',  auth()->user());
     }
 
     public function store(Request $request){
         $this->validate($request, [
             'name'=> 'required|unique:groups',
             'location'=>'required',
-            'image'=>'required',
+            'image'=>'required|mimes:jpeg,png,jpg,gif',
         ]);
        
         if ($request->hasFile('image')) {
@@ -57,7 +57,7 @@ class GroupController extends Controller
             //     auth()->user()->notify(new \App\Notifications\CircleCreated($circle->titre, $circle->id));
             // }
 
-            return redirect()->route('users.group',  auth()->user()->name);
+            return redirect()->route('users.group',  auth()->user());
          }
 
         return redirect()->back();

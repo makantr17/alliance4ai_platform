@@ -10,7 +10,7 @@
       <p class="lead mb-2">Participate to the hackerthons hosted by Future Maker.</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         @auth
-            <form action="{{ route('users.create_hackerthon',  auth()->user()->name) }}" method="get" class="">
+            <form action="{{ route('users.create_hackerthon',  auth()->user()) }}" method="get" class="">
             @csrf
                 <button type="submit"  class="btn btn-primary btn-lg px-4 gap-3">New Hackerthon</button>
             </form>
